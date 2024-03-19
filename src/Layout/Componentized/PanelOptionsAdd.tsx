@@ -9,7 +9,7 @@ import Moaui, {
 } from '@midasit-dev/moaui';
 import ToPropComponents, { type EnableSamplePropComponent } from './ToPropComponents';
 import { LayersState, OpacityBySelectedLayerIdState, PropComponentLayerAddValueState, SelectedLayerIdState, SelectedLayerState } from '../recoilState';
-import { Layer, Layers } from '../../../types';
+import { Layer, Layers } from '../../Common/types';
 import { v4 as uuid4 } from 'uuid';
 import ShowHideButton from '../../Shared/ShowHideButton';
 

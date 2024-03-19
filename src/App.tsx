@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Layout from './Layout/index'; 
+import { RecoilRoot } from 'recoil';
 export default function App() {
   return (
-    <div>
+    <RecoilRoot>
       <Layout />
-    </div>
+    </RecoilRoot>
   );
 }

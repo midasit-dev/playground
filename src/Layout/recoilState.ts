@@ -3,7 +3,7 @@ import {
 	type Layers, 
 	type Layer,
 	type Box,
-} from '../../types';
+} from '../Common/types';
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
 import {
@@ -90,7 +90,7 @@ export const SelectedLayerState = selector<Layer | null>({
 		const selectedLayerId = get(SelectedLayerIdState);
 		const layers = get(LayersState);
 		if (selectedLayerId === null) return null;
-		return layers.find((layer) => layer.id === selectedLayerId) || null;
+		return layers.find((layer: any) => layer.id === selectedLayerId) || null;
 	},
 });
 

@@ -5,7 +5,7 @@ import {
 	Icon,
 	IconButton, Typography
 } from '@midasit-dev/moaui';
-import { type Layer, type Layers } from '../../../types';
+import { type Layer, type Layers } from '../../Common/types';
 import { useRecoilState } from 'recoil';
 import { LayersState } from '../recoilState';
 
@@ -83,8 +83,8 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 
 	const onUpdateLayer = (x: number, y: number, width: number, height: number) => {
 		if (setLayers) {
-			setLayers((prev) => {
-				const newBoxlayers = prev.map((box) => {
+			setLayers((prev: any) => {
+				const newBoxlayers = prev.map((box: any) => {
 					if (box.id === id) {
 						return {
 							...box,

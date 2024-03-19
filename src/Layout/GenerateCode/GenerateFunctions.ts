@@ -1,4 +1,4 @@
-import { Canvas, Layer } from "../../../types";
+import { Canvas, Layer } from "../../Common/types";
 
 //sampleLayers to sampleResult 형태로 변환하는 함수
 const toStringJSXElement = (layers: Layer[]): string => {

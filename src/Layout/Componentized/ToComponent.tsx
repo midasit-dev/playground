@@ -12,7 +12,7 @@ import {
 	TextField,
 	TextFieldV2,
 } from '@midasit-dev/moaui';
-import { type Layer } from '../../../types';
+import { type Layer } from '../../Common/types';
 import '../SelectedLayer.css';
 
 const ToFloatingBox = (props: { layer: Layer; }) => {

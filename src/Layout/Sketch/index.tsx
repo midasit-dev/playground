@@ -1,6 +1,6 @@
 import { GuideBox } from '@midasit-dev/moaui';
 import React from 'react';
-import { type Layers } from '../../../types';
+import { type Layers } from '../../Common/types';
 import { useRecoilValue } from 'recoil';
 import { LayersState } from '../recoilState';
 

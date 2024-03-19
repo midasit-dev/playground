@@ -13,7 +13,7 @@ import {
 } from '@midasit-dev/moaui';
 import { LayersState, OpacityBySelectedLayerIdState, SelectedLayerGuideBoxPropsState, SelectedLayerIdState, SelectedLayerState } from '../recoilState';
 import { useCallback, useEffect, useState } from 'react';
-import { Layer, Layers } from '../../../types';
+import { Layer, Layers } from '../../Common/types';
 import ShowHideButton from '../../Shared/ShowHideButton';
 
 const TextFieldV2Component = (props: { 
