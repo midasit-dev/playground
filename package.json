@@ -1,0 +1,74 @@
+{
+  "name": "@midasit-dev/playground",
+  "description": "Playground using moaui to create midas plugin UI",
+  "keywords": [
+    "playground",
+    "moaui",
+    "midasit",
+    "plugin",
+    "react",
+    "react-components"
+  ],
+  "author": {
+    "name": "APIDEV Team",
+    "email": "developer@midasit.com",
+    "url": "https://github.com/midasit-dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/midasit-dev/playground.git"
+  },
+  "homepage": "https://midasit-dev.github.io/playground",
+  "contributors": [
+    {
+      "name": "lhy0118"
+    },
+    {
+      "name": "kh1012"
+    }
+  ],
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.89",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/midasit-dev/playground/issues"
+  },
+  "readme": "ERROR: No README data found!"
+}
