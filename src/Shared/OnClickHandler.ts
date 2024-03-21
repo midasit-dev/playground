@@ -1,5 +1,3 @@
-import Constant from '../../constant.json';
-
 interface OnClickHandlerProps {
 	/**
 	 * url path
@@ -23,11 +21,16 @@ interface OnClickHandlerProps {
 	method: 'put' | 'post' | 'delete' | 'get';
 }
 
+//defaultProps
+/**
+ * 
+ * @param {OnClickHandlerProps} props 
+ */
 const onClickHandler = async (props: OnClickHandlerProps) => {
 	const { path, body, method } = props;
 
 	try {
-		const response = await fetch(`${Constant.baseUrl}${path}`, {
+		const response = await fetch(`http://localhost:3010${path}`, {
 			method: method,
 			headers: {
 				'Content-Type': 'application/json',
@@ -46,5 +49,11 @@ const onClickHandler = async (props: OnClickHandlerProps) => {
 		console.error('An error occurred:', error);
 	}
 }
+
+onClickHandler.defaultProps = {
+	path: '',
+	body: {},
+	method: 'get',
+};
 
 export default onClickHandler;

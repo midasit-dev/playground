@@ -3,7 +3,7 @@ import { GuideBox, Icon, IconButton, TextField, Tooltip } from '@midasit-dev/moa
 import onClickHandler from '../../Shared/OnClickHandler';
 import { useRecoilValue } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
-import { ExportLayers, Layer, Layers } from '../../../types';
+import { ExportLayers, Layer, Layers } from '../../Common/types';
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
 import { getCurrentTime } from '../../Shared/GetCurrentTime';

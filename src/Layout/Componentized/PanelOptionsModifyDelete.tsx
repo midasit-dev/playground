@@ -11,7 +11,7 @@ import {
 } from '@midasit-dev/moaui';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LayersState, OpacityBySelectedLayerIdState, SelectedLayerIdState, SelectedLayerState, PropComponentLayerModifyValueState } from '../recoilState';
-import { Layer } from '../../../types';
+import { Layer } from '../../Common/types';
 import ToPropComponents from './ToPropComponents';
 import ShowHideButton from '../../Shared/ShowHideButton';
 

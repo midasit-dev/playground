@@ -1,6 +1,6 @@
 import React from 'react';
 import { DraggableResizableBox } from './DraggableResizableBox';
-import { ControllerInputs } from '../../../types';
+import { ControllerInputs } from '../../Common/types';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
 import { v4 as uuid4 } from 'uuid';

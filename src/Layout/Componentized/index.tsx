@@ -9,7 +9,7 @@ import {
 	Separator,
 } from '@midasit-dev/moaui';
 import { Rnd } from 'react-rnd';
-import { type Layer } from '../../../types';
+import { type Layer } from '../../Common/types';
 import PanelSelectedLayerId from './PanelSelectedLayer';
 import PanelOptionsAdd from './PanelOptionsAdd';
 import PanelOptionsModifyDelete from './PanelOptionsModifyDelete';

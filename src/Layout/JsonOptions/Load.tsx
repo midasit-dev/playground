@@ -3,7 +3,7 @@ import { Button, Dialog, DropList, GuideBox, Icon, IconButton, Panel, Tooltip } 
 import onClickHandler from '../../Shared/OnClickHandler';
 import { useSetRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
-import { Canvas, ExportLayers, Layers } from '../../../types';
+import { Canvas, ExportLayers, Layers } from '../../Common/types';
 
 const App = () => {
 	const [open, setOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { Layer } from '../../../types';
+import { Layer } from '../../Common/types';
 import Moaui, {
 	TextFieldV2,
 	TextField,
