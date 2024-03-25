@@ -58,7 +58,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "move": "rmdir /s /q docs && rename build docs",
+    "build": "react-scripts build && npm run move",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
