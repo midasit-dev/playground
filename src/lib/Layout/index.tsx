@@ -19,7 +19,7 @@ const App = () => {
 	//Toogle Menu Event 등록/삭제
 	useEffect(() => {
 		window.addEventListener('keydown', (e) => {
-			if (e.ctrlKey && e.key === ']') setMenu((prev) => prev === 'Layers' ? 'Componentized' : 'Layers');
+			if (e.ctrlKey && e.key === ']') setMenu((prev: any) => prev === 'Layers' ? 'Componentized' : 'Layers');
 		});
 
 		return () => window.removeEventListener('keydown', () => { });
