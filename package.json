@@ -1,5 +1,5 @@
 {
-  "name": "@midasit-dev/playground",
+  "name": "moa-playground",
   "description": "Playground using moaui to create midas plugin UI",
   "keywords": [
     "playground",
@@ -9,25 +9,17 @@
     "react",
     "react-components"
   ],
-  "author": {
-    "name": "APIDEV Team",
-    "email": "developer@midasit.com",
-    "url": "https://github.com/midasit-dev"
-  },
+  "author": "APIDEV Team <developer@midasit.com> (https://github.com/midasit-dev)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/midasit-dev/playground.git"
   },
   "homepage": "https://midasit-dev.github.io/playground",
   "contributors": [
-    {
-      "name": "lhy0118"
-    },
-    {
-      "name": "kh1012"
-    }
+    "lhy0118",
+    "kh1012"
   ],
-  "version": "0.1.0",
+  "version": "0.0.3",
   "private": false,
   "dependencies": {
     "@midasit-dev/moaui": "^0.1.111",
@@ -60,6 +52,10 @@
     "start": "react-scripts start",
     "move": "rmdir /s /q docs && rename build docs",
     "build": "react-scripts build && npm run move",
+    "publish-npm": " && npm run reset && npm run copy && npm run prepare && npm publish --access public",
+    "reset": "rmdir /s /q dist && mkdir dist",
+    "copy": "xcopy /E /Y docs dist",
+    "prepare": "node prepare.js ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -84,5 +80,9 @@
   "bugs": {
     "url": "https://github.com/midasit-dev/playground/issues"
   },
-  "readme": "ERROR: No README data found!"
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "license": "MIT"
 }
