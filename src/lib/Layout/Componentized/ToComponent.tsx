@@ -4,13 +4,14 @@ import {
 	SelectedLayerIdState
 } from '../recoilState';
 import {
+	type FloatingBoxProps,
 	Button,
 	FloatingBox,
-	type FloatingBoxProps,
 	Panel,
 	DropList,
 	TextField,
 	TextFieldV2,
+	Alert,
 } from '@midasit-dev/moaui';
 import { type Layer } from '../../Common/types';
 import '../SelectedLayer.css';
@@ -99,6 +100,11 @@ const ToTextFieldV2 = (props: { layer: Layer; }) => {
 	return <TextFieldV2 {...JSON.parse(JSON.stringify(layer.props))} />;
 }
 
+const ToAlert = (props: { layer: Layer; }) => {
+	const { layer, } = props;
+	return <Alert {...JSON.parse(JSON.stringify(layer.props))} />;
+}
+
 const ToComponent = (props: { layer: Layer; }) => {
 	const { layer, } = props;
 
@@ -109,6 +115,7 @@ const ToComponent = (props: { layer: Layer; }) => {
 		case 'DropList' : return <ToDropList layer={layer} />;
 		case 'TextField': return <ToTextField layer={layer} />;
 		case 'TextFieldV2': return <ToTextFieldV2 layer={layer} />;
+		case 'Alert': return <ToAlert layer={layer} />;
 		default: {
 			console.error('Unknown Layer Type:', layer.type);
 			return null;

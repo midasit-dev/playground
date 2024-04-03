@@ -7,7 +7,9 @@ import Moaui, {
 	Button,
 	Dialog,
 } from '@midasit-dev/moaui';
-import ToPropComponents, { type EnableSamplePropComponent } from './ToPropComponents';
+//TODO 임시
+// import ToPropComponents, { type EnableSamplePropComponent } from './ToPropComponents';
+import ToPropComponents, { TempProps } from './ToPropComponents';
 import { LayersState, OpacityBySelectedLayerIdState, PropComponentLayerAddValueState, SelectedLayerIdState, SelectedLayerState } from '../recoilState';
 import { Layer, Layers } from '../../Common/types';
 import { v4 as uuid4 } from 'uuid';
@@ -40,7 +42,9 @@ const App = () => {
 	const [propCompLayerAddValue, setPropCompLayerAddValue] = useRecoilState(PropComponentLayerAddValueState);
 	const selectedLayer = useRecoilValue(SelectedLayerState);
 	useEffect(() => {
-		const curComponentType = reverseItems.get(value) as EnableSamplePropComponent;
+		//TODO 임시
+		// const curComponentType = reverseItems.get(value) as EnableSamplePropComponent;
+		const curComponentType = reverseItems.get(value);
 		if (!curComponentType) return;
 		setPropCompLayerAddValue((prev: Layer) => {
 			const isEqualType = curComponentType === prev.type;
@@ -54,7 +58,9 @@ const App = () => {
 			//ToPropComponents.tsx 참고 (Function하고 Map type은 우선 제외한다.)
 			let newProps: { [key: string]: any } = {};
 			if (!isEqualType) {
-				const sampleProps = Moaui[curComponentType].sampleProps as { [key: string]: any };
+				//TODO 임시
+				// const sampleProps = Moaui[curComponentType].sampleProps as { [key: string]: any };
+				const sampleProps = TempProps as { [key: string]: any };
 				for (const key of Object.keys(sampleProps)) {
 					if (sampleProps[key] instanceof Map) continue;
 					if (typeof sampleProps[key] === 'function') continue;
@@ -208,7 +214,7 @@ const excludeComponentList = [
 	'Dialog',
 	'ChartLine',
 	'GuideBox',
-	'Alert',
+	// 'Alert',
 	'Chip',
 	'Tooltip',
 	'FloatingBox',

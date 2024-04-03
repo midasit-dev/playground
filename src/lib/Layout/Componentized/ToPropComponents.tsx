@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Layer } from '../../Common/types';
 import Moaui, {
+	type CustomUnionType,
 	TextFieldV2,
 	TextField,
 	Switch,
 	Typography,
 	GuideBox,
+	DropList,
 } from '@midasit-dev/moaui';
 import { PropComponentLayerAddValueState, PropComponentLayerModifyValueState } from '../recoilState';
 import ToPropComponentArray from './ToPropComponentsArray';
@@ -46,6 +48,32 @@ export const usePropComponent = (type: string, name: string, value: any, hookTyp
 		setLocalValue,
 		updateGlobalValue: setValue,
 	};
+}
+
+const ToPropComponentUnion = (props: PropComponentProps<CustomUnionType>): JSX.Element => {
+	const { type, name, value, hookType } = props;
+	const { localValue, setLocalValue, updateGlobalValue } = usePropComponent(type, name, value.defaultValue, hookType);
+	return (
+		<GuideBox width="100%" row horSpaceBetween verCenter>
+			<Typography variant='body1'>{name}</Typography>
+			<DropList
+				itemList={value.values.map((value: string) => [value, value])}
+				defaultValue={localValue}
+				value={localValue}
+				onChange={(e: any) => {
+					setLocalValue(String(e.target.value));
+					updateGlobalValue((prev: any) => ({ 
+						...prev, 
+						props: {
+							...prev.props,
+							[name]: String(e.target.value),
+						}
+					}));
+				}}
+				width='100px'
+			/>
+		</GuideBox>
+	);
 }
 
 const ToPropComponentMap = (props: PropComponentProps<Map<any, any>>): JSX.Element => {
@@ -193,7 +221,9 @@ const ToPropComponentDefault = (props: PropComponentProps<any>): JSX.Element => 
 const ToPropComponent = (props: PropComponentProps<any>): JSX.Element => {
 	const { type, name, value, hookType } = props;
 
-	if (value instanceof Array) {
+	if ((value as CustomUnionType).isUnion) {
+		return <ToPropComponentUnion type={type} name={name} value={value} hookType={hookType} />;
+	} else if (value instanceof Array) {
 		return <ToPropComponentArray type={type} name={name} value={value} hookType={hookType} />;
 	} else if (value instanceof Map) {
 		return <ToPropComponentMap type={type} name={name} value={value} hookType={hookType} />;
@@ -227,19 +257,44 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 
 	const [options, setOptions] = useState({});
 	useEffect(() => {
-		//지금은 아래 컴포넌트들만 sampleProps을 가지고 있음.
-		//추후에 다른 컴포넌트들도 추가되면 아래 case 분기가 필요 없어짐.
-		const enableSamplePropComp: EnableSamplePropComponent = componentType as EnableSamplePropComponent;
-		if (!enableSamplePropComp) return;
-		
-		if (customProps) setOptions(customProps);
-		else setOptions(Moaui[enableSamplePropComp].sampleProps);
+		//TODO 임시
+		if (componentType === 'Button') {
+			if (customProps) {
+				//Mod 대화상자 오픈 시 사용
+				//라이브러리 Property에서 Union Type인지 검사 한 후,
+				//Union Type이면 defaultValue에 customProps에서 넘어온 값을 채워준다.
 
-	}, [componentType, customProps]);
+				let modifiedCustomProps = { ...customProps};
+				for (const [key, value] of Array.from(Object.entries(TempProps))) {
+					if ((value as CustomUnionType).isUnion) {
+						const unionValue = value as CustomUnionType;
+						unionValue.defaultValue = customProps[key];
+						modifiedCustomProps[key] = unionValue;
+					}
+				}
+				console.log(modifiedCustomProps);
+				setOptions(modifiedCustomProps);
+			}
+			else {
+				//Add 대화상자 오픈 시 사용
+				const playgroundProps = TempProps;
+				setOptions(playgroundProps);
+			}
+		} else {
+			// //지금은 아래 컴포넌트들만 sampleProps을 가지고 있음.
+			// //추후에 다른 컴포넌트들도 추가되면 아래 case 분기가 필요 없어짐.
+			// const enableSamplePropComp: EnableSamplePropComponent = componentType as EnableSamplePropComponent;
+			// if (!enableSamplePropComp) return;
+			
+			// if (customProps) setOptions(customProps);
+			// else setOptions(Moaui[enableSamplePropComp].sampleProps);
+		}
+	}, [customProps, componentType]);
 
 	return (
 		<GuideBox width="100%" horSpaceBetween verCenter spacing={0.5}>
 			{Object.entries(options).map(([name, value], index: number) => {
+				console.log(index, componentType, name, value, customHookType);
 				return <ToPropComponent key={index} type={componentType} name={name} value={value} hookType={customHookType} />;
 			})}
 		</GuideBox>
@@ -248,10 +303,32 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 
 export default ToPropComponents;
 
-export type EnableSamplePropComponent = 
-	'Button'
-	| 'Panel'
-	| 'DropList'
-	| 'TextField'
-	| 'TextFieldV2'
+// //TODO 임시
+// export type EnableSamplePropComponent = 
+// 	'Button'
+// 	| 'Panel'
+// 	| 'DropList'
+// 	| 'TextField'
+// 	| 'TextFieldV2'
+// 	| 'Alert'
 	//추가되면 여기에;
+	
+//TODO 임시
+const toUnionType = (props: Partial<CustomUnionType>): CustomUnionType => {
+	const { values, defaultValue } = props;
+	return {
+		isUnion: true,
+		values: values || [],
+		defaultValue: defaultValue || values?.[0] || null,
+	};
+}
+
+export const TempProps = {
+	children: "Button",
+	onClick: () => {},
+	variant: toUnionType({ values: ['contained', 'outlined', 'text'] }),
+	disabled: false,
+	width: '100px',
+	color: toUnionType({ values: ['normal', 'negative'] }),
+	loading: false,
+}
