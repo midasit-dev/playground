@@ -221,6 +221,9 @@ const ToPropComponentDefault = (props: PropComponentProps<any>): JSX.Element => 
 const ToPropComponent = (props: PropComponentProps<any>): JSX.Element => {
 	const { type, name, value, hookType } = props;
 
+	//function등과 같이 아직 global 데이터를 업데이트하지 않는 변수들은 이곳에 들어올 수 있다.
+	if (value === undefined) return <></>;
+
 	if ((value as CustomUnionType).isUnion) {
 		return <ToPropComponentUnion type={type} name={name} value={value} hookType={hookType} />;
 	} else if (value instanceof Array) {
@@ -255,7 +258,7 @@ interface ToPropComponentsProps {
 const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 	const { componentType, customProps, customHookType } = props;
 
-	const [options, setOptions] = useState({});
+	const [options, setOptions] = useState<any[][]>([]);
 	useEffect(() => {
 		//TODO 임시
 		if (componentType === 'Button') {
@@ -263,22 +266,23 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 				//Mod 대화상자 오픈 시 사용
 				//라이브러리 Property에서 Union Type인지 검사 한 후,
 				//Union Type이면 defaultValue에 customProps에서 넘어온 값을 채워준다.
-
-				let modifiedCustomProps = { ...customProps};
+				let modCustomProps = { ...customProps};
 				for (const [key, value] of Array.from(Object.entries(TempProps))) {
 					if ((value as CustomUnionType).isUnion) {
 						const unionValue = value as CustomUnionType;
 						unionValue.defaultValue = customProps[key];
-						modifiedCustomProps[key] = unionValue;
+						modCustomProps[key] = unionValue;
 					}
 				}
-				console.log(modifiedCustomProps);
-				setOptions(modifiedCustomProps);
+
+				const sortedKeys = Object.keys(TempProps);
+				const modSortedCustomPropsArray = sortedKeys.map((key: string) => [key, modCustomProps[key]]);
+				setOptions(modSortedCustomPropsArray);
 			}
 			else {
 				//Add 대화상자 오픈 시 사용
 				const playgroundProps = TempProps;
-				setOptions(playgroundProps);
+				setOptions(Array.from(Object.entries(playgroundProps)));
 			}
 		} else {
 			// //지금은 아래 컴포넌트들만 sampleProps을 가지고 있음.
@@ -293,9 +297,21 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 
 	return (
 		<GuideBox width="100%" horSpaceBetween verCenter spacing={0.5}>
-			{Object.entries(options).map(([name, value], index: number) => {
+			{/* {Object.entries(options).map(([name, value], index: number) => {
 				console.log(index, componentType, name, value, customHookType);
 				return <ToPropComponent key={index} type={componentType} name={name} value={value} hookType={customHookType} />;
+			})} */}
+			{options.map(([name, value], index: number) => {
+				console.log(index, name, value);
+				return (
+					<ToPropComponent 
+						key={index} 
+						type={componentType} 
+						name={name} 	
+						value={value} 
+						hookType={customHookType}
+					/>
+				);
 			})}
 		</GuideBox>
 	)
