@@ -1,7 +1,4 @@
-import {
-	Icon, 
-	IconButton,
-} from "@midasit-dev/moaui";
+import { Icon, IconButton } from '@midasit-dev/moaui';
 import { useRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
 import { toStringFunctionalComponent } from './GenerateFunctions';
@@ -13,15 +10,13 @@ const createFileName = (fileName: string) => {
 	if (fileName === '') return getCurrentTime().fullWithExtension('tsx');
 	if (fileName.includes('.tsx')) return fileName;
 	return fileName + '.tsx';
-}
+};
 
-const GenerateButton = (props: {
-	fileName: string;
-}) => {
-	const {fileName} = props;
+const GenerateButton = (props: { fileName: string }) => {
+	const { fileName } = props;
 
-	const [canvas, ] = useRecoilState(CanvasState);
-	const [layers,] = useRecoilState(LayersState);
+	const [canvas] = useRecoilState(CanvasState);
+	const [layers] = useRecoilState(LayersState);
 
 	const { enqueueSnackbar } = useSnackbar();
 
@@ -45,12 +40,13 @@ const GenerateButton = (props: {
 					}
 				} catch (err) {
 					console.error(err);
-				} finally {}
+				} finally {
+				}
 			}}
 		>
-			<Icon iconName="FileDownload" />
+			<Icon iconName='FileDownload' />
 		</IconButton>
-	)
-}
+	);
+};
 
 export default GenerateButton;

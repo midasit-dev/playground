@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
-import { GuideBox, TextField, Tooltip, Typography } from "@midasit-dev/moaui";
-import GenerateButton from "./GenerateButton";
-import { getCurrentTime } from "../../Shared/GetCurrentTime";
+import { useCallback, useState } from 'react';
+import { GuideBox, TextField, Tooltip, Typography } from '@midasit-dev/moaui';
+import GenerateButton from './GenerateButton';
+import { getCurrentTime } from '../../Shared/GetCurrentTime';
 
 const wrappedGuideBoxStyle = {
 	show: true,
@@ -13,7 +13,7 @@ const wrappedGuideBoxStyle = {
 	paddingY: 1,
 	paddingX: 2,
 	spacing: 2,
-}
+};
 
 const GenerateCode = () => {
 	const [fileName, setFileName] = useState<string>('');
@@ -21,7 +21,7 @@ const GenerateCode = () => {
 
 	return (
 		<GuideBox {...wrappedGuideBoxStyle}>
-			<Typography variant="h1">CODE</Typography>
+			<Typography variant='h1'>CODE</Typography>
 			<GuideBox row verCenter spacing={1}>
 				<TextField
 					width='200px'
@@ -34,7 +34,7 @@ const GenerateCode = () => {
 				</Tooltip>
 			</GuideBox>
 		</GuideBox>
-	)
-}
+	);
+};
 
 export default GenerateCode;

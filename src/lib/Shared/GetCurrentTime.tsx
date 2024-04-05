@@ -37,10 +37,8 @@ const getCurrentTime = (): Time => {
 		fullString,
 		fullStringWithDash,
 		fullWithExtension: (postfix: string) => `${fullStringWithDash}.${postfix}`,
-		sample: (extension: string) => `currentTime.${extension}`
+		sample: (extension: string) => `currentTime.${extension}`,
 	};
 };
 
-export {
-	getCurrentTime,
-};
+export { getCurrentTime };

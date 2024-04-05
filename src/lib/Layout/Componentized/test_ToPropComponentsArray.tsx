@@ -1,10 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { 
-	Panel, 
-	DataGrid, 
-	Typography,
-	GuideBox
-} from '@midasit-dev/moaui';
+import { Panel, DataGrid, Typography, GuideBox } from '@midasit-dev/moaui';
 import { PropComponentProps, usePropComponent } from './ToPropComponents';
 
 //for hoisting
@@ -34,57 +29,67 @@ const defaultColumnProperties = {
 //1차원 배열 판단 함수
 const is1DArray = (arr: any[]) => arr.every((elem) => !Array.isArray(elem));
 //2차원 배열 판단 함수
-const is2DArray = (arr: any[]) => arr.every((elem) => Array.isArray(elem) && elem.every((elem) => !Array.isArray(elem)));
+const is2DArray = (arr: any[]) =>
+	arr.every((elem) => Array.isArray(elem) && elem.every((elem) => !Array.isArray(elem)));
 //convert arr to Rows by array 조건에 따라
 const convertArrToRows = (arr: any[]): Row[] => {
 	if (is1DArray(arr)) {
 		return arr.map((elem: any, index: number) => ({ id: index + 1, elemValue: elem }));
 	} else if (is2DArray(arr)) {
-		return arr.map((elem: any[], index: number) => ({ id: index + 1, elemValue1: elem[0], elemValue2: elem[1] }));
+		return arr.map((elem: any[], index: number) => ({
+			id: index + 1,
+			elemValue1: elem[0],
+			elemValue2: elem[1],
+		}));
 	} else {
 		console.error('3차원 이상의 배열은 지원하지 않습니다.');
 		return [];
 	}
-}
+};
 //convert Arr to Cols by array 조건에 따라
 const convertArrToCols = (arr: any[]): any[] => {
 	if (is1DArray(arr)) {
-		return [ { ...defaultColumnProperties, field: 'elemValue', 	headerName: 'value', }, ];
+		return [{ ...defaultColumnProperties, field: 'elemValue', headerName: 'value' }];
 	} else if (is2DArray(arr)) {
 		return [
-			{ ...defaultColumnProperties, field: 'elemValue1', 	headerName: 'value1', },
-			{ ...defaultColumnProperties, field: 'elemValue2', 	headerName: 'value2',  },
+			{ ...defaultColumnProperties, field: 'elemValue1', headerName: 'value1' },
+			{ ...defaultColumnProperties, field: 'elemValue2', headerName: 'value2' },
 		];
 	} else {
 		console.error('3차원 이상의 배열은 지원하지 않습니다.');
 		return [];
 	}
-}
+};
 //convert Rows to arr by array 조건에 따라
 const convertRowsToArr = (rows: Row[]): any[] => {
 	if (rows.every((row: Row) => row.elemValue !== undefined)) {
 		return rows.map((row: Row) => row.elemValue);
-	} else if (rows.every((row: Row) => row.elemValue1 !== undefined && row.elemValue2 !== undefined)) {
+	} else if (
+		rows.every((row: Row) => row.elemValue1 !== undefined && row.elemValue2 !== undefined)
+	) {
 		return rows.map((row: Row) => [row.elemValue1, row.elemValue2]);
 	} else {
 		console.error('3차원 이상의 배열은 지원하지 않습니다.');
 		return [];
 	}
-}
+};
 //row와 newRow의 key들의 typeof를 확인해서 동일하게 변환한후 반환한다.
 const updateRowsBySameKeyType = (row: Row, newRow: any) => {
 	const newTemp = { ...newRow };
 	for (const key in row) {
 		const keyType = typeof row[key];
-		if (keyType === 'string') { /* 할짓이 없음 */ }
-		else if (keyType === 'number') newTemp[key] = Number(newTemp[key]);
+		if (keyType === 'string') {
+			/* 할짓이 없음 */
+		} else if (keyType === 'number') newTemp[key] = Number(newTemp[key]);
 		else if (keyType === 'boolean') newTemp[key] = newTemp[key] === 'true';
 		else if (keyType === 'object') newTemp[key] = JSON.parse(newTemp[key]);
 		else if (keyType === 'undefined') newTemp[key] = undefined;
-		else { console.error('지원하지 않는 타입입니다.'); }
+		else {
+			console.error('지원하지 않는 타입입니다.');
+		}
 	}
 	return newTemp;
-}
+};
 
 const DataGridRowUpdate = (props: {
 	name: string;
@@ -101,13 +106,17 @@ const DataGridRowUpdate = (props: {
 	}, [arr]);
 
 	//Row가 업데이트 될 때 마다 호출된다.
-	const processRowUpdateHandler = useCallback((newRow: any) => {
-		setRows((prev: Row[]) => prev.map((row: Row) => {
-			return row.id === newRow.id ? 
-				updateRowsBySameKeyType(row, newRow) : row;
-		}));
-		return newRow;
-	}, [setRows]);
+	const processRowUpdateHandler = useCallback(
+		(newRow: any) => {
+			setRows((prev: Row[]) =>
+				prev.map((row: Row) => {
+					return row.id === newRow.id ? updateRowsBySameKeyType(row, newRow) : row;
+				}),
+			);
+			return newRow;
+		},
+		[setRows],
+	);
 
 	//Row가 업데이트되면, processRowUpdateHandler이후 글로벌 값도 업데이트한다.
 	useEffect(() => {
@@ -122,7 +131,7 @@ const DataGridRowUpdate = (props: {
 
 	return (
 		<Panel variant='box' width={columnWidth * 2 + 5} height='200px' padding={0}>
-			<DataGrid 
+			<DataGrid
 				rows={rows}
 				columns={cols}
 				hideFooter
@@ -131,7 +140,7 @@ const DataGridRowUpdate = (props: {
 			/>
 		</Panel>
 	);
-}
+};
 
 const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => {
 	//1차원 배열은 Column1, 2차원 배열은 Column2로 구분
@@ -140,7 +149,7 @@ const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => 
 	const { localValue, updateGlobalValue } = usePropComponent(type, name, value, hookType);
 
 	return (
-		<GuideBox width="100%" row horSpaceBetween verCenter>
+		<GuideBox width='100%' row horSpaceBetween verCenter>
 			<Typography variant='body1'>{name}</Typography>
 			<DataGridRowUpdate name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
 

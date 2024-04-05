@@ -1,14 +1,14 @@
 interface OnClickHandlerProps {
 	/**
 	 * url path
-	 * 
+	 *
 	 * @example
 	 * `${Constant.baseUrl}/src/wrapper-tsx`
 	 */
-	path: string; 
+	path: string;
 	/**
 	 * commonly used in object
-	 * 
+	 *
 	 * @example
 	 * {
 	 * 	color: color
@@ -23,8 +23,8 @@ interface OnClickHandlerProps {
 
 //defaultProps
 /**
- * 
- * @param {OnClickHandlerProps} props 
+ *
+ * @param {OnClickHandlerProps} props
  */
 const onClickHandler = async (props: OnClickHandlerProps) => {
 	const { path, body, method } = props;
@@ -35,9 +35,11 @@ const onClickHandler = async (props: OnClickHandlerProps) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			...(method === 'post' || method === 'put' ? {
-				body: JSON.stringify(body),
-			} : {}), // if method is post or put, then add body to the request
+			...(method === 'post' || method === 'put'
+				? {
+						body: JSON.stringify(body),
+				  }
+				: {}), // if method is post or put, then add body to the request
 		});
 
 		if (response.ok) {
@@ -48,7 +50,7 @@ const onClickHandler = async (props: OnClickHandlerProps) => {
 	} catch (error) {
 		console.error('An error occurred:', error);
 	}
-}
+};
 
 onClickHandler.defaultProps = {
 	path: '',

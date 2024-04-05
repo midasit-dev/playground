@@ -52,12 +52,13 @@
     "start": "react-scripts start",
     "move": "rmdir /s /q docs && rename build docs",
     "build": "react-scripts build && npm run move",
-    "publish-npm": " && npm run reset && npm run copy && npm run prepare && npm publish --access public",
+    "publish-npm": " && npm run reset && npm run copy && npm run prepare-npm && npm publish --access public",
+    "prepare-npm": "node prepare.js ",
     "reset": "rmdir /s /q dist && mkdir dist",
     "copy": "xcopy /E /Y docs dist",
-    "prepare": "node prepare.js ",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+		"prettier": "prettier --write --config ./.prettierrc src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
   },
   "eslintConfig": {
     "extends": [

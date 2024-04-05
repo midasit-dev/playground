@@ -1,6 +1,3 @@
-import { default as Playground } from "./playground";
+import { default as Playground } from './playground';
 
-
-export {
-    Playground
-};
+export { Playground };

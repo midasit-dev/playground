@@ -1,21 +1,23 @@
 # Layout JSON Concept
 
 ## 구조
+
 - canvas
-	- layers의 기반이 되는 컴포넌트 (Panel)
+  - layers의 기반이 되는 컴포넌트 (Panel)
 - layers
-	- 리사이징과 위치 이동이 가능한 Layer의 배열
+  - 리사이징과 위치 이동이 가능한 Layer의 배열
 - layer
-	- 개별 Component 레벨
-	- id, type, props, children으로 구성됨.
-		- id: 식별을 위한 고유값
-		- type: Component 타입
-		- props: Component에 Optional하게 넣을 수 있는 Properties
-		- children: Component의 하위 Components (Layer[])
-	- id 컨셉
-		- {count}-{component type}-{create uuid}-{save uuid}
+  - 개별 Component 레벨
+  - id, type, props, children으로 구성됨.
+    - id: 식별을 위한 고유값
+    - type: Component 타입
+    - props: Component에 Optional하게 넣을 수 있는 Properties
+    - children: Component의 하위 Components (Layer[])
+  - id 컨셉
+    - {count}-{component type}-{create uuid}-{save uuid}
 
 ## Example
+
 ```json
 {
   "canvas": {

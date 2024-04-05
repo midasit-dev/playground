@@ -1,14 +1,7 @@
-import { 
-	ControllerInputs, 
-	type Layers, 
-	type Layer,
-	type Box,
-} from '../Common/types';
+import { ControllerInputs, type Layers, type Layer, type Box } from '../Common/types';
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
-import {
-	type GuideBoxProps,
-} from '@midasit-dev/moaui';
+import { type GuideBoxProps } from '@midasit-dev/moaui';
 
 export const LayersMenuState = atom<{
 	canvas: RndProps;
@@ -18,18 +11,18 @@ export const LayersMenuState = atom<{
 	key: 'LayersMenuState',
 	default: {
 		canvas: {
-			default: { x: -300, y: 0, width: 300, height: 0, },
+			default: { x: -300, y: 0, width: 300, height: 0 },
 			enableResizing: false,
 		},
 		controller: {
-			default: { x: -300, y: 172 + 16, width: 300, height: 0, },
+			default: { x: -300, y: 172 + 16, width: 300, height: 0 },
 			enableResizing: false,
 		},
 		json: {
-			default: { x: -300, y: 172 + 16 + 394 + 16, width: 300, height: 0, },
+			default: { x: -300, y: 172 + 16 + 394 + 16, width: 300, height: 0 },
 			enableResizing: false,
 		},
-	}
+	},
 });
 
 export const CanvasState = atom({
@@ -37,7 +30,7 @@ export const CanvasState = atom({
 	default: {
 		width: 592,
 		height: 512,
-	}
+	},
 });
 
 export const defaultControllerState = {
@@ -54,7 +47,7 @@ export const ControllerState = atom<ControllerInputs>({
 });
 
 export const LayerRenderingBoxesState = atom<Box[]>({
-  key: 'LayerRenderingBoxesState',
+	key: 'LayerRenderingBoxesState',
 	default: [],
 });
 
@@ -78,7 +71,7 @@ export const OpacityBySelectedLayerIdState = selector<number>({
 	key: 'OpacityBySelectedLayerIdState',
 	get: ({ get }) => {
 		const selectedLayerId = get(SelectedLayerIdState);
-		if (selectedLayerId === null) return .3;
+		if (selectedLayerId === null) return 0.3;
 		return 1;
 	},
 });
@@ -100,7 +93,7 @@ export const SelectedLayerGuideBoxPropsState = atom<GuideBoxProps | null>({
 	default: {},
 });
 
-export const defaultLayerProps ={
+export const defaultLayerProps = {
 	id: '',
 	type: '',
 	props: {},

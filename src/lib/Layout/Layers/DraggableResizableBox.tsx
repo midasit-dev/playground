@@ -1,47 +1,38 @@
 import React, { useState } from 'react';
 import { Rnd } from 'react-rnd';
-import {
-	GuideBox,
-	Icon,
-	IconButton, Typography
-} from '@midasit-dev/moaui';
+import { GuideBox, Icon, IconButton, Typography } from '@midasit-dev/moaui';
 import { type Layer, type Layers } from '../../Common/types';
 import { useRecoilState } from 'recoil';
 import { LayersState } from '../recoilState';
 
 export const style: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: 'solid 1px #ddd',
-  background: '#f0f0f0',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	border: 'solid 1px #ddd',
+	background: '#f0f0f0',
 };
 
 export interface RndBoxProps {
 	key: string;
-  id: string;
-  defaultX: number;
-  defaultY: number;
-  defaultWidth: number;
-  defaultHeight: number;
-  dragGrid?: [number, number];
-  bounds?: string;
-  resizeGrid?: [number, number];
-  children?: React.ReactNode;
-  spacing: number;
+	id: string;
+	defaultX: number;
+	defaultY: number;
+	defaultWidth: number;
+	defaultHeight: number;
+	dragGrid?: [number, number];
+	bounds?: string;
+	resizeGrid?: [number, number];
+	children?: React.ReactNode;
+	spacing: number;
 
 	//Buttons
-  onDelete?: any;
-  onSendStyleToController?: (inputs: any) => void;
+	onDelete?: any;
+	onSendStyleToController?: (inputs: any) => void;
 }
 
 export const DraggableResizableBox = (props: RndBoxProps) => {
-	const {
-		id, 
-		children, 
-		onDelete, 
-		onSendStyleToController,
-	} = props;
+	const { id, children, onDelete, onSendStyleToController } = props;
 
 	const [layers, setLayers] = useRecoilState(LayersState);
 
@@ -88,7 +79,7 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 					if (box.id === id) {
 						return {
 							...box,
-							props: { ...box.props, x, y, width, height, },
+							props: { ...box.props, x, y, width, height },
 						};
 					}
 					return box;
@@ -116,7 +107,7 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 				if (
 					curLayer.props.x >= layer.props.x &&
 					curLayer.props.y >= layer.props.y &&
-					curLayer.props.x + curLayer.props.width <=  layer.props.x + layer.props.width &&
+					curLayer.props.x + curLayer.props.width <= layer.props.x + layer.props.width &&
 					curLayer.props.y + curLayer.props.height <= layer.props.y + layer.props.height
 				) {
 					if (curLayer.id === layer.id) continue;
@@ -150,12 +141,7 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 	}, []);
 
 	return (
-		<div 
-			key={id}
-			id={id}
-			onClick={onClickHandler} 
-			onMouseDown={onMouseDownHandler}
-		>
+		<div key={id} id={id} onClick={onClickHandler} onMouseDown={onMouseDownHandler}>
 			<Rnd
 				style={{
 					...style,
@@ -174,30 +160,30 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 				onDragStop={handleDragStop}
 			>
 				<Typography>{`[${x}, ${y}] ${width} x ${height}`}</Typography>
-					<div style={{ position: 'absolute', top: 0, right: 0 }}>
-						<GuideBox row>
-							<IconButton
-								transparent
-								onClick={() => {
-									onSendStyleToController &&
-										onSendStyleToController({
-											x,
-											y,
-											width,
-											height,
-											spacing: props.spacing,
-										});
-								}}
-							>
-								<Icon iconName='Style' />
+				<div style={{ position: 'absolute', top: 0, right: 0 }}>
+					<GuideBox row>
+						<IconButton
+							transparent
+							onClick={() => {
+								onSendStyleToController &&
+									onSendStyleToController({
+										x,
+										y,
+										width,
+										height,
+										spacing: props.spacing,
+									});
+							}}
+						>
+							<Icon iconName='Style' />
+						</IconButton>
+						{onDelete && (
+							<IconButton transparent onClick={() => onDelete(id)}>
+								<Icon iconName='Close' />
 							</IconButton>
-							{onDelete && (
-								<IconButton transparent onClick={() => onDelete(id)}>
-									<Icon iconName='Close' />
-								</IconButton>
-							)}
-						</GuideBox>
-					</div>
+						)}
+					</GuideBox>
+				</div>
 				{children}
 			</Rnd>
 		</div>

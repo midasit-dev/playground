@@ -22,10 +22,10 @@ function replaceIds(layers: Layers, saveUUID: string): Layers {
 			...layer,
 			id: createNewId(layer.id),
 			children: layer.children ? layer.children.map(findAndReplaceId) : [],
-		}
+		};
 	}
 
-	return layers.map(layer => findAndReplaceId(layer));
+	return layers.map((layer) => findAndReplaceId(layer));
 }
 
 const App = () => {
@@ -38,7 +38,7 @@ const App = () => {
 	return (
 		<GuideBox row horSpaceBetween spacing={1}>
 			<GuideBox flexGrow={1}>
-				<TextField 
+				<TextField
 					width='200px'
 					placeholder={getCurrentTime().sample('.json')}
 					value={value}
@@ -85,7 +85,7 @@ const App = () => {
 				</IconButton>
 			</Tooltip>
 		</GuideBox>
-	)
-}
+	);
+};
 
 export default App;

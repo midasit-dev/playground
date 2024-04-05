@@ -1,48 +1,45 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import JSONEditor, { type JSONEditorOptions } from 'jsoneditor';
 import { debounce } from 'lodash';
-import { 
-	Typography,
-	GuideBox
-} from '@midasit-dev/moaui';
+import { Typography, GuideBox } from '@midasit-dev/moaui';
 import { PropComponentProps, usePropComponent } from './ToPropComponents';
 
 import 'jsoneditor/dist/jsoneditor.min.css';
 
-const JsonEditor = (props: {
-	name: string;
-	arr: any[];
-	updateGlobalValue: (prev: any) => any;
-}) => {
+const JsonEditor = (props: { name: string; arr: any[]; updateGlobalValue: (prev: any) => any }) => {
 	const { name, arr, updateGlobalValue } = props;
 
 	const editorContainerRef = useRef<HTMLDivElement | null>(null);
 	const [, setEditor] = useState<JSONEditor | null>(null);
 
-	const updateGlobalValueHandler = useCallback((json: any) => {
-		updateGlobalValue((prev: any) => {
-			return {
-				...prev,
-				props: {
-					...prev.props,
-					[name]: json,
-				},
-		}});
-	}, [name, updateGlobalValue]);
+	const updateGlobalValueHandler = useCallback(
+		(json: any) => {
+			updateGlobalValue((prev: any) => {
+				return {
+					...prev,
+					props: {
+						...prev.props,
+						[name]: json,
+					},
+				};
+			});
+		},
+		[name, updateGlobalValue],
+	);
 
 	//초기화
 	useEffect(() => {
-	  // create the editor
-	  const container = editorContainerRef.current;
-	  if (!container) return;
+		// create the editor
+		const container = editorContainerRef.current;
+		if (!container) return;
 
-	  const options: JSONEditorOptions = {
+		const options: JSONEditorOptions = {
 			mode: 'tree',
 			modes: ['tree'], // set all allowed modes
 			onChangeText: debounce((jsonString: any) => {
 				//내부 값이 변경되면 Global Add or Modify 데이터를 업데이트 한다.
 				updateGlobalValueHandler(JSON.parse(jsonString));
-	    }, 500),
+			}, 500),
 			onSelectionChange(start, end) {
 				// tree모드에서 변경 될 때,
 			},
@@ -50,24 +47,24 @@ const JsonEditor = (props: {
 				// tree모드에서 변경 될 때,
 			},
 		};
-	  const newEditor = new JSONEditor(container, options);
-	  setEditor(newEditor);
+		const newEditor = new JSONEditor(container, options);
+		setEditor(newEditor);
 
-	  // set initial JSON
+		// set initial JSON
 		const initialJson = arr;
-	  newEditor.set(initialJson);
+		newEditor.set(initialJson);
 
-	  // cleanup when the component is unmounted
-	  return () => {
-	    newEditor.destroy();
-	  };
+		// cleanup when the component is unmounted
+		return () => {
+			newEditor.destroy();
+		};
 		// eslint-disable-next-line
 	}, []);
 
 	return (
-	  <GuideBox>
-	    <div ref={editorContainerRef} style={{ width: '100%', height: '300px' }} />
-	  </GuideBox>
+		<GuideBox>
+			<div ref={editorContainerRef} style={{ width: '100%', height: '300px' }} />
+		</GuideBox>
 	);
 };
 
@@ -78,7 +75,7 @@ const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => 
 	const { localValue, updateGlobalValue } = usePropComponent(type, name, value, hookType);
 
 	return (
-		<GuideBox width="100%" horSpaceBetween verCenter spacing={1}>
+		<GuideBox width='100%' horSpaceBetween verCenter spacing={1}>
 			<Typography variant='body1'>{name}</Typography>
 			<JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
 		</GuideBox>
