@@ -8,9 +8,13 @@ const ShowHideButton = (props: {
 	const [show, setShow] = state;
 	return (
 		<IconButton onClick={() => setShow((prev) => !prev)} transparent={show}>
-			{show ? <Icon iconName='KeyboardDoubleArrowUp' /> : <Icon iconName='KeyboardDoubleArrowDown' />}
+			{show ? (
+				<Icon iconName='KeyboardDoubleArrowUp' />
+			) : (
+				<Icon iconName='KeyboardDoubleArrowDown' />
+			)}
 		</IconButton>
 	);
-}
+};
 
 export default ShowHideButton;

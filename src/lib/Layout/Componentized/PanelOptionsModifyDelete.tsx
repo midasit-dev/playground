@@ -10,13 +10,19 @@ import {
 	Color,
 } from '@midasit-dev/moaui';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { LayersState, OpacityBySelectedLayerIdState, SelectedLayerIdState, SelectedLayerState, PropComponentLayerModifyValueState } from '../recoilState';
+import {
+	LayersState,
+	OpacityBySelectedLayerIdState,
+	SelectedLayerIdState,
+	SelectedLayerState,
+	PropComponentLayerModifyValueState,
+} from '../recoilState';
 import { Layer } from '../../Common/types';
 import ToPropComponents from './ToPropComponents';
 import ShowHideButton from '../../Shared/ShowHideButton';
 
-const ModifyDeleteComponent = (props: { layer: Layer, index: number, }) => {
-	const { layer, index, } = props;
+const ModifyDeleteComponent = (props: { layer: Layer; index: number }) => {
+	const { layer, index } = props;
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 	const [, setLayers] = useRecoilState(LayersState);
 
@@ -32,28 +38,28 @@ const ModifyDeleteComponent = (props: { layer: Layer, index: number, }) => {
 	}, [layer.id, modifyValue]);
 
 	return (
-		<GuideBox width="100%" spacing={2}>
-			<GuideBox width="100%" row verCenter horSpaceBetween>
+		<GuideBox width='100%' spacing={2}>
+			<GuideBox width='100%' row verCenter horSpaceBetween>
 				<GuideBox row verCenter spacing={1}>
 					<Typography variant='body1'>{`(${index})`}</Typography>
 					<Typography variant='body1'>{layer.type}</Typography>
 				</GuideBox>
 				<GuideBox row horSpaceBetween verCenter spacing={1}>
-					{selected &&
+					{selected && (
 						<IconButton transparent onClick={() => setModifyValue(null)}>
-							<Icon iconName='KeyboardDoubleArrowRight'  />
+							<Icon iconName='KeyboardDoubleArrowRight' />
 						</IconButton>
-					}
-					{!selected &&
-						<IconButton 
+					)}
+					{!selected && (
+						<IconButton
 							disabled={modifyValue ? modifyValue.id !== layer.id : false}
 							onClick={() => setModifyValue(layer)}
 						>
-							<Icon iconName='Palette'/>
+							<Icon iconName='Palette' />
 						</IconButton>
-					}
-					<IconButton 
-						disabled={selectedLayerId === null} 
+					)}
+					<IconButton
+						disabled={selectedLayerId === null}
 						color='negative'
 						onClick={() => {
 							if (modifyValue && modifyValue.id === layer.id) {
@@ -77,8 +83,8 @@ const ModifyDeleteComponent = (props: { layer: Layer, index: number, }) => {
 				</GuideBox>
 			</GuideBox>
 		</GuideBox>
-	)
-}
+	);
+};
 
 const PanelModify = () => {
 	const [, setLayers] = useRecoilState(LayersState);
@@ -96,48 +102,67 @@ const PanelModify = () => {
 							if (child.id === modifyValue.id) return modifyValue;
 							return child;
 						}),
-					}
+					};
 				}
 				return prevLayer;
 			});
 		});
 	}, [modifyValue, selectedLayer, setLayers]);
 
-	const onKeyDownHandler = useCallback((e: React.KeyboardEvent) => {
-		if (e.ctrlKey && e.key === 'Enter') onClickApply();
-		if (e.key === 'Escape') setModifyValue(null);
-	}, [onClickApply, setModifyValue]);
+	const onKeyDownHandler = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.ctrlKey && e.key === 'Enter') onClickApply();
+			if (e.key === 'Escape') setModifyValue(null);
+		},
+		[onClickApply, setModifyValue],
+	);
 
 	return (
-		<FloatingBox {...{ x: -400-32, y: 0, width: 400, height: 300, border: '1px solid #d1d1d1'}}>
-			<div onKeyDown={onKeyDownHandler} style={{width: '100%', height: 'auto'}}>
-				<Panel width="100%" variant='shadow2' padding={2} border={`1px solid ${Color.primaryNegative.main}`} backgroundColor='#f5f5f7'>
-					<GuideBox width="100%" spacing={2}>
+		<FloatingBox {...{ x: -400 - 32, y: 0, width: 400, height: 300, border: '1px solid #d1d1d1' }}>
+			<div onKeyDown={onKeyDownHandler} style={{ width: '100%', height: 'auto' }}>
+				<Panel
+					width='100%'
+					variant='shadow2'
+					padding={2}
+					border={`1px solid ${Color.primaryNegative.main}`}
+					backgroundColor='#f5f5f7'
+				>
+					<GuideBox width='100%' spacing={2}>
 						<GuideBox width='100%' row verCenter horSpaceBetween>
 							<Typography variant='h1'>Modify Component Props</Typography>
-							<Icon iconName='KeyboardDoubleArrowRight' toButton onClick={() => setModifyValue(null)} />
+							<Icon
+								iconName='KeyboardDoubleArrowRight'
+								toButton
+								onClick={() => setModifyValue(null)}
+							/>
 						</GuideBox>
-						{modifyValue && 
-							<GuideBox width="100%" spacing={2}>
+						{modifyValue && (
+							<GuideBox width='100%' spacing={2}>
 								<Typography variant='body1'>{`${modifyValue.id}`}</Typography>
-								<ToPropComponents componentType={modifyValue.type} customProps={modifyValue.props} customHookType="Modify" />
-								<GuideBox width="100%" row horRight verCenter spacing={2}>
+								<ToPropComponents
+									componentType={modifyValue.type}
+									customProps={modifyValue.props}
+									customHookType='Modify'
+								/>
+								<GuideBox width='100%' row horRight verCenter spacing={2}>
 									<Typography color='#a5a5a7'>Ctrl + Enter</Typography>
-									<Button color='negative' onClick={onClickApply}>Apply</Button>
+									<Button color='negative' onClick={onClickApply}>
+										Apply
+									</Button>
 									<Button onClick={() => setModifyValue(null)}>Cancel</Button>
 								</GuideBox>
 							</GuideBox>
-						}
+						)}
 					</GuideBox>
 				</Panel>
 			</div>
-		</FloatingBox>	
-	)
-}
+		</FloatingBox>
+	);
+};
 
 const App = () => {
 	const opacityBySelectedLayerId = useRecoilValue(OpacityBySelectedLayerIdState);
-	const [selectedLayerId,] = useRecoilState(SelectedLayerIdState);
+	const [selectedLayerId] = useRecoilState(SelectedLayerIdState);
 	const selectedLayer = useRecoilValue(SelectedLayerState);
 	const [modifyValue, setModifyValue] = useRecoilState(PropComponentLayerModifyValueState);
 
@@ -147,25 +172,27 @@ const App = () => {
 	const [show, setShow] = useState(false);
 
 	return (
-		<Panel width='100%' variant="box" padding={0}>
+		<Panel width='100%' variant='box' padding={0}>
 			<div style={{ position: 'relative', width: 'auto', height: 'auto' }}>
 				{selectedLayer && modifyValue && <PanelModify />}
 			</div>
-			<GuideBox width="100%" spacing={2} opacity={opacityBySelectedLayerId}>
-				<GuideBox width="100%" row horSpaceBetween verCenter>
-					<Typography variant='h1'>{`Modify / Delete Components (${selectedLayer?.children?.length || 0})`}</Typography>
+			<GuideBox width='100%' spacing={2} opacity={opacityBySelectedLayerId}>
+				<GuideBox width='100%' row horSpaceBetween verCenter>
+					<Typography variant='h1'>{`Modify / Delete Components (${
+						selectedLayer?.children?.length || 0
+					})`}</Typography>
 					<ShowHideButton state={[show, setShow]} />
 				</GuideBox>
-				{show && selectedLayer && selectedLayer.children && selectedLayer.children.length > 0 &&
-					<GuideBox width="100%" spacing={1}>
+				{show && selectedLayer && selectedLayer.children && selectedLayer.children.length > 0 && (
+					<GuideBox width='100%' spacing={1}>
 						{selectedLayer.children.map((layer: Layer, index: number) => {
 							return <ModifyDeleteComponent key={index} index={index} layer={layer} />;
 						})}
 					</GuideBox>
-				}
+				)}
 			</GuideBox>
 		</Panel>
-	)
-}
+	);
+};
 
 export default App;

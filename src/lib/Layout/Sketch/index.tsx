@@ -5,26 +5,26 @@ import { useRecoilValue } from 'recoil';
 import { LayersState } from '../recoilState';
 
 const BoxContainerAbsolute = (props: { data: Layers }) => {
-  return (
-    <div style={{ position: 'relative' }}>
-      {props.data.map((box) => {
-        const style: React.CSSProperties = {
-          position: 'absolute',
-          left: `${box.props.x}px`,
-          top: `${box.props.y}px`,
-          width: `${box.props.width}px`,
-          height: `${box.props.height}px`,
-          border: '1px solid black',
-        };
+	return (
+		<div style={{ position: 'relative' }}>
+			{props.data.map((box) => {
+				const style: React.CSSProperties = {
+					position: 'absolute',
+					left: `${box.props.x}px`,
+					top: `${box.props.y}px`,
+					width: `${box.props.width}px`,
+					height: `${box.props.height}px`,
+					border: '1px solid black',
+				};
 
-        return (
-          <div key={box.id} style={style}>
-            {/* You can add content for each box here. */}
-          </div>
-        );
-      })}
-    </div>
-  );
+				return (
+					<div key={box.id} style={style}>
+						{/* You can add content for each box here. */}
+					</div>
+				);
+			})}
+		</div>
+	);
 };
 
 // const BoxContainerRelative = (props: { data: LayoutSchemas }) => {
@@ -73,15 +73,15 @@ const App = () => {
 		return null;
 	}
 
-  return (
-    <div>
-      <GuideBox row spacing={3}>
-        <GuideBox>
-          <BoxContainerAbsolute data={layers} />
-        </GuideBox>
-      </GuideBox>
-    </div>
-  );
+	return (
+		<div>
+			<GuideBox row spacing={3}>
+				<GuideBox>
+					<BoxContainerAbsolute data={layers} />
+				</GuideBox>
+			</GuideBox>
+		</div>
+	);
 };
 
 export default App;

@@ -1,14 +1,7 @@
 import React from 'react';
-import { useRecoilValue } from "recoil";
-import { LayerRenderingBoxesState, LayersState } from "../recoilState";
-import {
-	GuideBox,
-	Dialog,
-	Typography,
-	IconButton,
-	Icon,
-	Tooltip,
-} from "@midasit-dev/moaui";
+import { useRecoilValue } from 'recoil';
+import { LayerRenderingBoxesState, LayersState } from '../recoilState';
+import { GuideBox, Dialog, Typography, IconButton, Icon, Tooltip } from '@midasit-dev/moaui';
 
 const App = () => {
 	const [openLayerJson, setOpenLayerJson] = React.useState<boolean>(false);
@@ -20,7 +13,12 @@ const App = () => {
 		<GuideBox row horSpaceBetween verCenter spacing={2}>
 			<Typography>{`${layers.length}`}</Typography>
 			<Tooltip title='View Layer Json'>
-				<IconButton color='negative' onClick={() => { setOpenLayerJson(true) }}>
+				<IconButton
+					color='negative'
+					onClick={() => {
+						setOpenLayerJson(true);
+					}}
+				>
 					<Icon iconName='ViewDay' />
 				</IconButton>
 			</Tooltip>
@@ -38,6 +36,6 @@ const App = () => {
 			</Dialog>
 		</GuideBox>
 	);
-}
+};
 
 export default App;

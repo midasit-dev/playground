@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import Moaui, {
-	GuideBox,
-	Typography,
-	DropList,
-	Button,
-	Dialog,
-} from '@midasit-dev/moaui';
+import Moaui, { GuideBox, Typography, DropList, Button, Dialog } from '@midasit-dev/moaui';
 import ToPropComponents, { type EnableSamplePropComponent } from './ToPropComponents';
-import { LayersState, OpacityBySelectedLayerIdState, PropComponentLayerAddValueState, SelectedLayerIdState, SelectedLayerState } from '../recoilState';
+import {
+	LayersState,
+	OpacityBySelectedLayerIdState,
+	PropComponentLayerAddValueState,
+	SelectedLayerIdState,
+	SelectedLayerState,
+} from '../recoilState';
 import { Layer, Layers } from '../../Common/types';
 import { v4 as uuid4 } from 'uuid';
 import ShowHideButton from '../../Shared/ShowHideButton';
@@ -18,9 +18,13 @@ const App = () => {
 	const [items, setItems] = useState(new Map<string, number>());
 	const [reverseItems, setReverseItems] = useState(new Map<number, string>());
 	useEffect(() => {
-		setItems(new Map<string, number>(Object.keys(Moaui)
-			.filter((key => !excludeComponentList.includes(key)))
-			.map((key: string, index: number) => [key, index + 1])));
+		setItems(
+			new Map<string, number>(
+				Object.keys(Moaui)
+					.filter((key) => !excludeComponentList.includes(key))
+					.map((key: string, index: number) => [key, index + 1]),
+			),
+		);
 	}, []);
 	useEffect(() => {
 		if (items.size !== 0) {
@@ -37,7 +41,9 @@ const App = () => {
 	}
 
 	//Component Type이 변경되면 propCompLayerAddValue를 초기화
-	const [propCompLayerAddValue, setPropCompLayerAddValue] = useRecoilState(PropComponentLayerAddValueState);
+	const [propCompLayerAddValue, setPropCompLayerAddValue] = useRecoilState(
+		PropComponentLayerAddValueState,
+	);
 	const selectedLayer = useRecoilValue(SelectedLayerState);
 	useEffect(() => {
 		const curComponentType = reverseItems.get(value) as EnableSamplePropComponent;
@@ -68,7 +74,7 @@ const App = () => {
 				type: curComponentType,
 				props: isEqualType ? prev.props : newProps,
 				children: isEqualType ? prev.children : [],
-			}
+			};
 		});
 	}, [reverseItems, setPropCompLayerAddValue, value, selectedLayer?.children]);
 
@@ -76,7 +82,7 @@ const App = () => {
 	const [, setLayers] = useRecoilState(LayersState);
 
 	//for selected ID
-	const [selectedLayerId,] = useRecoilState(SelectedLayerIdState);
+	const [selectedLayerId] = useRecoilState(SelectedLayerIdState);
 	const opacityBySelectedLayerId = useRecoilValue(OpacityBySelectedLayerIdState);
 
 	//for dialog
@@ -87,8 +93,9 @@ const App = () => {
 		setLayers((prev: Layers) => {
 			return prev.map((layer: Layer) => {
 				if (layer.id === selectedLayerId) {
-					const updatedChildren =
-						layer.children ? [...layer.children, propCompLayerAddValue] : [propCompLayerAddValue];
+					const updatedChildren = layer.children
+						? [...layer.children, propCompLayerAddValue]
+						: [propCompLayerAddValue];
 					return {
 						...layer,
 						children: updatedChildren,
@@ -99,37 +106,43 @@ const App = () => {
 		});
 	}, [propCompLayerAddValue, selectedLayerId, setLayers]);
 
-	const onKeyDownHandler = useCallback((e: React.KeyboardEvent) => {
-		if (e.ctrlKey && e.key === 'Enter') onClickHandlerAdd();
-	}, [onClickHandlerAdd]);
+	const onKeyDownHandler = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.ctrlKey && e.key === 'Enter') onClickHandlerAdd();
+		},
+		[onClickHandlerAdd],
+	);
 
 	const [show, setShow] = useState(true);
 
 	return (
 		<div onKeyDown={onKeyDownHandler} style={{ width: '100%' }}>
-			<GuideBox width="100%" spacing={2} opacity={opacityBySelectedLayerId}>
-				<GuideBox width="100%" row horSpaceBetween verCenter>
+			<GuideBox width='100%' spacing={2} opacity={opacityBySelectedLayerId}>
+				<GuideBox width='100%' row horSpaceBetween verCenter>
 					<Typography variant='h1'>Add Component</Typography>
 					<ShowHideButton state={[show, setShow]} />
 				</GuideBox>
-				{show &&
-					<GuideBox width="100%" spacing={2}>
-						<GuideBox width="100%" row horSpaceBetween verCenter>
+				{show && (
+					<GuideBox width='100%' spacing={2}>
+						<GuideBox width='100%' row horSpaceBetween verCenter>
 							<DropList
 								itemList={items}
-								width="100%"
-								defaultValue="Korean"
+								width='100%'
+								defaultValue='Korean'
 								value={value}
 								onChange={onChangeHandler}
 							/>
 						</GuideBox>
-						<GuideBox width="100%" spacing={1}>
-							<GuideBox width="100%" spacing={1}>
-								<ToPropComponents componentType={reverseItems.get(value) as string} customHookType="Add" />
+						<GuideBox width='100%' spacing={1}>
+							<GuideBox width='100%' spacing={1}>
+								<ToPropComponents
+									componentType={reverseItems.get(value) as string}
+									customHookType='Add'
+								/>
 							</GuideBox>
-							<GuideBox width="100%" row spacing={2}>
+							<GuideBox width='100%' row spacing={2}>
 								<GuideBox flexGrow={1}>
-									<GuideBox width="100%" row horRight verCenter spacing={2}>
+									<GuideBox width='100%' row horRight verCenter spacing={2}>
 										<Typography color='#a5a5a7'>Ctrl + Enter</Typography>
 										<Button
 											color='negative'
@@ -138,10 +151,7 @@ const App = () => {
 										>
 											Add
 										</Button>
-										<Button
-											onClick={() => setOpen(true)}
-											disabled={selectedLayerId === null}
-										>
+										<Button onClick={() => setOpen(true)} disabled={selectedLayerId === null}>
 											JSON
 										</Button>
 									</GuideBox>
@@ -152,18 +162,16 @@ const App = () => {
 									setOpen={setOpen}
 									onClose={() => setOpen(false)}
 								>
-									<pre>
-										{JSON.stringify(propCompLayerAddValue, null, 2)}
-									</pre>
+									<pre>{JSON.stringify(propCompLayerAddValue, null, 2)}</pre>
 								</Dialog>
 							</GuideBox>
 						</GuideBox>
 					</GuideBox>
-				}
+				)}
 			</GuideBox>
 		</div>
-	)
-}
+	);
+};
 
 export default App;
 
@@ -217,4 +225,4 @@ const excludeComponentList = [
 	// 'AutoDropList',
 	'ScatterPlot',
 	'Signature',
-]
+];

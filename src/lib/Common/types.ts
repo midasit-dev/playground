@@ -20,7 +20,7 @@
  * 			}
  * 		}
  * }
- * 
+ *
  * @typedef {Object} Layer
  * @property {string} type - UI 요소의 종류 (예: 'Button', 'Input', 'Form', 등)
  * @property {Object} props - UI 요소에 전달되는 속성들
@@ -28,19 +28,12 @@
  */
 interface Layer {
 	id: string;
-	type: 
-		string
-		| 'FloatingBox' 
-		| 'Button' 
-		| 'TextField' 
-		| 'TextFieldV2' 
-		| 'Panel' 
-		| 'DropList';
+	type: string | 'FloatingBox' | 'Button' | 'TextField' | 'TextFieldV2' | 'Panel' | 'DropList';
 	props: Record<string, any>;
 	children?: Array<Layer>;
 }
 
-interface Layers extends Array<Layer> {};
+interface Layers extends Array<Layer> {}
 
 interface Canvas {
 	width: number;
@@ -48,28 +41,28 @@ interface Canvas {
 }
 
 interface ExportLayers {
-	canvas: Canvas,
-	layers: Layers,
+	canvas: Canvas;
+	layers: Layers;
 }
 
 interface LayoutSchema {
 	id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  parent?: string | null;
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	parent?: string | null;
 }
 
 interface LayoutSchemas extends Array<LayoutSchema> {}
 
 type ControllerInputs = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  spacing: number;
-}
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	spacing: number;
+};
 
 interface Box {
 	id: string;
@@ -80,10 +73,9 @@ export type {
 	LayoutSchema,
 	LayoutSchemas,
 	ControllerInputs,
-
 	Layer,
 	Layers,
 	Canvas,
 	ExportLayers,
 	Box,
-}
+};
