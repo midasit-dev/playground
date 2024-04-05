@@ -264,21 +264,88 @@ interface ToPropComponentsProps {
 	customHookType: PropComponentProps<any>['hookType'];
 }
 
+//TODO 임시
+const toUnionType = (props: Partial<CustomUnionType>): CustomUnionType => {
+	const { values, defaultValue } = props;
+	return {
+		isUnion: true,
+		values: values || [],
+		defaultValue: defaultValue || values?.[0] || null,
+	};
+};
+
+//TODO 임시
+export const TempProps = {
+	data: [
+		{
+			id: 'ID1',
+			color: '#87CEEB',
+			data: [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 2, y: 2 },
+				{ x: 3, y: 3 },
+				{ x: 4, y: 4 },
+				{ x: 7, y: 5 },
+			],
+		},
+	],
+	width: '300px',
+	height: '300px',
+	legends: true,
+	axisTop: true,
+	axisTopTickValues: 5,
+	axisTopTickRotation: 0,
+	axisTopDecimals: 0,
+	axisTopLegend: 'Top',
+	axisTopLegendOffset: -36,
+	axisTopLegendPosition: 'middle',
+	axisRight: true,
+	axisRightTickValues: 5,
+	axisRightTickRotation: 0,
+	axisRightDecimals: 0,
+	axisRightLegend: 'Right',
+	axisRightLegendOffset: 50,
+	axisRightLegendPosition: 'middle',
+	axisBottom: true,
+	axisBottomTickValues: 5,
+	axisBottomTickRotation: 0,
+	axisBottomDecimals: 0,
+	axisBottomLegend: 'Bottom',
+	axisBottomLegendOffset: 36,
+	axisBottomLegendPosition: 'middle',
+	axisLeft: true,
+	axisLeftTickValues: 5,
+	axisLeftTickRotation: 0,
+	axisLeftDecimals: 0,
+	axisLeftLegend: 'Left',
+	axisLeftLegendOffset: -50,
+	axisLeftLegendPosition: 'middle',
+	pointSize: 1,
+	marginTop: 50,
+	marginRight: 110,
+	marginBottom: 50,
+	marginLeft: 60,
+	xDecimals: 0,
+	yDecimals: 0,
+};
+
 const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 	const { componentType, customProps, customHookType } = props;
 
 	const [options, setOptions] = useState<any[][]>([]);
 	useEffect(() => {
 		//TODO 임시
-		if (componentType === 'Button') {
+		if (componentType === 'ChartLine') {
 			if (customProps) {
 				//Mod 대화상자 오픈 시 사용
 				//라이브러리 Property에서 Union Type인지 검사 한 후,
 				//Union Type이면 defaultValue에 customProps에서 넘어온 값을 채워준다.
 				let modCustomProps = { ...customProps };
 				for (const [key, value] of Array.from(Object.entries(TempProps))) {
-					if ((value as CustomUnionType).isUnion) {
-						const unionValue = value as CustomUnionType;
+					const unknownValue: unknown = value;
+					if ((unknownValue as CustomUnionType).isUnion) {
+						const unionValue = unknownValue as CustomUnionType;
 						unionValue.defaultValue = customProps[key];
 						modCustomProps[key] = unionValue;
 					}
@@ -312,7 +379,6 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 				return <ToPropComponent key={index} type={componentType} name={name} value={value} hookType={customHookType} />;
 			})} */}
 			{options.map(([name, value], index: number) => {
-				console.log(index, name, value);
 				return (
 					<ToPropComponent
 						key={index}
@@ -338,23 +404,3 @@ export default ToPropComponents;
 // 	| 'TextFieldV2'
 // 	| 'Alert'
 //추가되면 여기에;
-
-//TODO 임시
-const toUnionType = (props: Partial<CustomUnionType>): CustomUnionType => {
-	const { values, defaultValue } = props;
-	return {
-		isUnion: true,
-		values: values || [],
-		defaultValue: defaultValue || values?.[0] || null,
-	};
-};
-
-export const TempProps = {
-	children: 'Button',
-	onClick: () => {},
-	variant: toUnionType({ values: ['contained', 'outlined', 'text'] }),
-	disabled: false,
-	width: '100px',
-	color: toUnionType({ values: ['normal', 'negative'] }),
-	loading: false,
-};
