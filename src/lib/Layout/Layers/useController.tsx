@@ -45,6 +45,7 @@ export const useController = () => {
 			let widthValue = Number(e.target.value);
 			if (controllerState.x + widthValue > canvasState.width) {
 				let xValue = canvasState.width - widthValue;
+				if (xValue < 0) xValue = 0;
 				setControllerState((prev) => ({ ...prev, x: xValue }));
 			}
 			setControllerState((prev) => ({ ...prev, width: widthValue }));
@@ -57,6 +58,7 @@ export const useController = () => {
 			let heightValue = Number(e.target.value);
 			if (controllerState.y + heightValue > canvasState.height) {
 				let yValue = canvasState.height - heightValue;
+				if (yValue < 0) yValue = 0;
 				setControllerState((prev) => ({ ...prev, y: yValue }));
 			}
 			setControllerState((prev) => ({ ...prev, height: Number(e.target.value) }));
