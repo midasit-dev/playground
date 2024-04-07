@@ -10,3 +10,11 @@
 	/* animation: pulsate 6s linear infinite; */
 	background-color: rgba(75, 154, 244, 0.7);
 }
+
+.virtual-layer-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: darkblue;
+	font-weight: 500;
+}

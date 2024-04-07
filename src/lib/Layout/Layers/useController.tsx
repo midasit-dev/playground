@@ -103,7 +103,36 @@ export const useController = () => {
 						y: round(position.y),
 					}));
 				}}
-			/>
+			>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexDirection: 'column',
+						height: controllerState.height,
+					}}
+				>
+					<div
+						className='virtual-layer-content'
+						style={{
+							fontSize: controllerState.height < 90 ? '12px' : '15px',
+							marginBottom: controllerState.height < 90 ? '8px' : '15px',
+						}}
+					>
+						Create layer
+					</div>
+					<div
+						className='virtual-layer-content'
+						style={{
+							color: 'gray',
+							fontSize: controllerState.height < 90 ? '12px' : '15px',
+						}}
+					>
+						'Ctrl + Enter'
+					</div>
+				</div>
+			</Rnd>
 		);
 	}, [
 		controllerState.height,
