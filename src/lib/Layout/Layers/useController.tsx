@@ -67,8 +67,21 @@ export const useController = () => {
 					height: controllerState.height,
 				}}
 				bounds='parent'
-				enableResizing={false}
-				disableDragging={true}
+				enableResizing={true}
+				disableDragging={false}
+				onDragStop={(e, d) => {
+					setControllerState((prev) => ({ ...prev, x: d.x, y: d.y }));				
+				}}
+				onResizeStop={(e, direction, ref, delta, position) => {
+					setControllerState((prev) => ({
+						...prev,
+						width: ref.offsetWidth,
+						height: ref.offsetHeight,
+						x: position.x,
+						y: position.y,
+					}));
+				
+				}}
 			/>
 		);
 	}, [
