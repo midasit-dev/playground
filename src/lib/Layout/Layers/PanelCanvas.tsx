@@ -9,6 +9,13 @@ const App = () => {
 	const [_canvasWidth, _setCanvasWidth] = React.useState<number>(canvasState.width);
 	const [_canvasHeight, _setCanvasHeight] = React.useState<number>(canvasState.height);
 
+	function onClickApply() {
+		setCanvasState({
+			width: _canvasWidth,
+			height: _canvasHeight,
+		});
+	}
+
 	return (
 		<GuideBox width='100%' spacing={2}>
 			<GuideBox width='100%' spacing={1} horRight>
@@ -28,16 +35,7 @@ const App = () => {
 				/>
 			</GuideBox>
 			<GuideBox width='100%' horRight>
-				<Button
-					onClick={() => {
-						setCanvasState({
-							width: _canvasWidth,
-							height: _canvasHeight,
-						});
-					}}
-				>
-					Apply
-				</Button>
+				<Button onClick={onClickApply}>Apply</Button>
 			</GuideBox>
 		</GuideBox>
 	);
