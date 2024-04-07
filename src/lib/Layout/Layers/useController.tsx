@@ -3,6 +3,7 @@ import { Rnd } from 'react-rnd';
 import '../VirtualLayer.css';
 import { useRecoilState } from 'recoil';
 import { defaultControllerState, ControllerState } from '../recoilState';
+import { round } from 'lodash';
 
 export const useController = () => {
 	const [controllerState, setControllerState] = useRecoilState(ControllerState);
@@ -70,7 +71,7 @@ export const useController = () => {
 				enableResizing={true}
 				disableDragging={false}
 				onDragStop={(e, d) => {
-					setControllerState((prev) => ({ ...prev, x: d.x, y: d.y }));				
+					setControllerState((prev) => ({ ...prev, x: d.x, y: round(d.y) }));				
 				}}
 				onResizeStop={(e, direction, ref, delta, position) => {
 					setControllerState((prev) => ({
@@ -78,7 +79,7 @@ export const useController = () => {
 						width: ref.offsetWidth,
 						height: ref.offsetHeight,
 						x: position.x,
-						y: position.y,
+						y: round(position.y),
 					}));
 				
 				}}
