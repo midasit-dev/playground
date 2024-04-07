@@ -1,5 +1,7 @@
 import { GuideBox, IconButton, Icon, TextFieldV2, Tooltip } from '@midasit-dev/moaui';
+import { useRecoilValue } from 'recoil';
 import { useController } from './useController';
+import { CanvasState } from '../recoilState';
 
 const App = () => {
 	const {
@@ -11,34 +13,44 @@ const App = () => {
 		handleChangeHeight,
 	} = useController();
 
+	const canvasState = useRecoilValue(CanvasState);
+
 	return (
 		<GuideBox width='100%'>
 			<GuideBox width='100%' spacing={1}>
 				<TextFieldV2
 					title='x'
 					onChange={handleChangeX}
-					numberOptions={{ onlyInteger: true, min: 0 }}
+					numberOptions={{
+						onlyInteger: true,
+						min: 0,
+						max: canvasState.width - controllerState.width,
+					}}
 					type='number'
 					value={controllerState.x.toString()}
 				/>
 				<TextFieldV2
 					title='y'
 					onChange={handleChangeY}
-					numberOptions={{ onlyInteger: true, min: 0 }}
+					numberOptions={{
+						onlyInteger: true,
+						min: 0,
+						max: canvasState.height - controllerState.height,
+					}}
 					type='number'
 					value={controllerState.y.toString()}
 				/>
 				<TextFieldV2
 					title='width'
 					onChange={handleChangeWidth}
-					numberOptions={{ onlyInteger: true, min: 0 }}
+					numberOptions={{ onlyInteger: true, min: 0, max: canvasState.width }}
 					type='number'
 					value={controllerState.width.toString()}
 				/>
 				<TextFieldV2
 					title='height'
 					onChange={handleChangeHeight}
-					numberOptions={{ onlyInteger: true, min: 0 }}
+					numberOptions={{ onlyInteger: true, min: 0, max: canvasState.height }}
 					type='number'
 					value={controllerState.height.toString()}
 				/>
