@@ -80,6 +80,9 @@ const App = () => {
 				style={{
 					width: '100%',
 					height: 'calc(100vh - 32px)',
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
 				}}
 			>
 				<div
