@@ -6,57 +6,62 @@ import Layers from './Layers';
 import Componentized from './Componentized';
 import GenerateCode from './GenerateCode';
 import Navbar from './navbar';
+import Menu from './menu';
 
 function useStateApp() {
-	const [menu, setMenu] = React.useState<'Layers' | 'Componentized'>('Layers');
-	return { menu, setMenu };
+	const [mode, setMode] = React.useState<'Layers' | 'Componentized'>('Layers');
+	return { mode, setMode };
 }
 
 const App = () => {
-	const { menu, setMenu } = useStateApp();
+	const { mode, setMode } = useStateApp();
+	const [openSideMenu, setOpenSideMenu] = React.useState(false);
 
 	//Toogle Menu Event 등록/삭제
 	useEffect(() => {
 		window.addEventListener('keydown', (e) => {
 			if (e.ctrlKey && e.key === ']')
-				setMenu((prev: any) => (prev === 'Layers' ? 'Componentized' : 'Layers'));
+				setMode((prev: any) => (prev === 'Layers' ? 'Componentized' : 'Layers'));
 		});
 
 		return () => window.removeEventListener('keydown', () => {});
-	}, [setMenu]);
+	}, [setMode]);
 
 	return (
 		<>
-			<Navbar />
-			<GuideBox width='100%' height='inherit' spacing={2}>
-				<GuideBox row width='100%' verCenter horSpaceBetween>
-					<GuideBox row verCenter spacing={2} marginTop={7}>
-						<JsonOptions />
-						<GenerateCode />
-					</GuideBox>
-					{/** Sidebar Buttons */}
-					<GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
-						<Typography color='#a5a5a7'>Ctrl + ]</Typography>
-						<GuideBox row verCenter>
-							<SideBarButton
-								currentMenuState={[menu, setMenu]}
-								iconName='Dashboard'
-								menuName='Layers'
-							/>
-							<SideBarButton
-								currentMenuState={[menu, setMenu]}
-								iconName='Adjust'
-								menuName='Componentized'
-							/>
+			<Navbar setOpenSideMenu={setOpenSideMenu} />
+			<div onClick={() => setOpenSideMenu(false)} style={{ width: '100%', height: '1200px' }}>
+				<Menu openSideMenu={openSideMenu} />
+				<GuideBox width='100%' height='inherit' spacing={2}>
+					<GuideBox row width='100%' verCenter horSpaceBetween>
+						<GuideBox row verCenter spacing={2} marginTop={7}>
+							<JsonOptions />
+							<GenerateCode />
+						</GuideBox>
+						{/** Sidebar Buttons */}
+						<GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
+							<Typography color='#a5a5a7'>Ctrl + ]</Typography>
+							<GuideBox row verCenter>
+								<SideBarButton
+									currentMenuState={[mode, setMode]}
+									iconName='Dashboard'
+									menuName='Layers'
+								/>
+								<SideBarButton
+									currentMenuState={[mode, setMode]}
+									iconName='Adjust'
+									menuName='Componentized'
+								/>
+							</GuideBox>
 						</GuideBox>
 					</GuideBox>
-				</GuideBox>
 
-				<GuideBox width='100%' row height='inherit' spacing={3}>
-					{menu === 'Layers' && <Layers />}
-					{menu === 'Componentized' && <Componentized />}
+					<GuideBox width='100%' row height='inherit' spacing={3}>
+						{mode === 'Layers' && <Layers />}
+						{mode === 'Componentized' && <Componentized />}
+					</GuideBox>
 				</GuideBox>
-			</GuideBox>
+			</div>
 		</>
 	);
 };
