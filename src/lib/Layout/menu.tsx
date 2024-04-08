@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
+import styled from 'styled-components';
 
 const commonStyle = {
 	marginLeft: '15px',
 	marginTop: '10px',
 	marginBottom: '10px',
 	backgroundColor: 'transparent',
-	borderLeft: '2px solid skyblue',
+	borderLeft: '2px solid gray',
 	paddingLeft: '10px',
 	height: '25px',
 	display: 'flex',
@@ -17,8 +18,16 @@ const commonStyle = {
 const commonAnimation = {
 	initial: { opacity: 0, x: -100 }, // 초기 상태
 	animate: { opacity: 1, x: 0 }, // 최종 상태
-	transition: { delay: 0.8, duration: 0.5 }, // 딜레이 0.8초, 애니메이션 전환 지속 시간 0.5초
+	transition: { delay: 0.7, duration: 0.5 }, // 딜레이 0.8초, 애니메이션 전환 지속 시간 0.5초
 };
+
+const StyledMotionDiv = styled(motion.div)`
+  ${commonStyle};
+  &:hover {
+    border-left: 2px solid skyblue;
+    font-weight: 500;
+  }
+`;
 
 export default function Menu(props: {
 	openSideMenu: boolean;
@@ -43,7 +52,7 @@ export default function Menu(props: {
 						initial={{ opacity: 0, x: -300 }} // 초기 상태
 						animate={{ opacity: 1, x: 0 }} // 최종 상태
 						exit={{ x: -200, opacity: 0 }} // 제거될 때의 상태. 왼쪽으로 슬라이드하며 투명해집니다.
-						transition={{ duration: 0.8 }} // 애니메이션 전환 지속 시간
+						transition={{ duration: 0.7 }} // 애니메이션 전환 지속 시간
 						style={{
 							width: '300px',
 							backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -56,12 +65,12 @@ export default function Menu(props: {
 						}}
 					>
 						Playground
-						<motion.div {...commonAnimation} style={commonStyle} onClick={onClickJson}>
+						<StyledMotionDiv {...commonAnimation} onClick={onClickJson}>
 							JSON
-						</motion.div>
-						<motion.div {...commonAnimation} style={commonStyle} onClick={onClickCode}>
+						</StyledMotionDiv>
+						<StyledMotionDiv {...commonAnimation} transition={{ delay: 1, duration: 0.5 }} onClick={onClickCode}>
 							CODE
-						</motion.div>
+						</StyledMotionDiv>
 					</motion.div>
 				)}
 			</AnimatePresence>
