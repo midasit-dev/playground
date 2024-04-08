@@ -22,11 +22,11 @@ const commonAnimation = {
 };
 
 const StyledMotionDiv = styled(motion.div)`
-  ${commonStyle};
-  &:hover {
-    border-left: 2px solid skyblue;
-    font-weight: 500;
-  }
+	${commonStyle};
+	&:hover {
+		border-left: 2px solid skyblue;
+		font-weight: 500;
+	}
 `;
 
 export default function Menu(props: {
@@ -68,7 +68,11 @@ export default function Menu(props: {
 						<StyledMotionDiv {...commonAnimation} onClick={onClickJson}>
 							JSON
 						</StyledMotionDiv>
-						<StyledMotionDiv {...commonAnimation} transition={{ delay: 1, duration: 0.5 }} onClick={onClickCode}>
+						<StyledMotionDiv
+							{...commonAnimation}
+							transition={{ delay: 1, duration: 0.5 }}
+							onClick={onClickCode}
+						>
 							CODE
 						</StyledMotionDiv>
 					</motion.div>
