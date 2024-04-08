@@ -16,6 +16,8 @@ function useStateApp() {
 const App = () => {
 	const { mode, setMode } = useStateApp();
 	const [openSideMenu, setOpenSideMenu] = React.useState(false);
+	const [openJsonMenu, setOpenJsonMenu] = React.useState(false);
+	const [openCodeMenu, setOpenCodeMenu] = React.useState(false);
 
 	//Toogle Menu Event 등록/삭제
 	useEffect(() => {
@@ -31,12 +33,16 @@ const App = () => {
 		<>
 			<Navbar setOpenSideMenu={setOpenSideMenu} />
 			<div onClick={() => setOpenSideMenu(false)} style={{ width: '100%', height: '1200px' }}>
-				<Menu openSideMenu={openSideMenu} />
+				<Menu
+					openSideMenu={openSideMenu}
+					setOpenJsonMenu={setOpenJsonMenu}
+					setOpenCodeMenu={setOpenCodeMenu}
+				/>
 				<GuideBox width='100%' height='inherit' spacing={2}>
 					<GuideBox row width='100%' verCenter horSpaceBetween>
 						<GuideBox row verCenter spacing={2} marginTop={7}>
-							<JsonOptions />
-							<GenerateCode />
+							{openJsonMenu && <JsonOptions />}
+							{openCodeMenu && <GenerateCode />}
 						</GuideBox>
 						{/** Sidebar Buttons */}
 						<GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
