@@ -9,4 +9,5 @@
 	overflow: hidden;
 	/* animation: pulsate 6s linear infinite; */
 	background-color: rgba(75, 154, 244, 0.7);
+	border-radius: 0.25rem;
 }
