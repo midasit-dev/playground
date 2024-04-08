@@ -11,3 +11,11 @@
 	background-color: rgba(75, 154, 244, 0.7);
 	border-radius: 0.25rem;
 }
+
+.virtual-layer-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: darkblue;
+	font-weight: 500;
+}
