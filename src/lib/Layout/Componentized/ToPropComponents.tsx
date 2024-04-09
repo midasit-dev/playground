@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Layer } from '../../Common/types';
-import Moaui, { TextFieldV2, TextField, Switch, Typography, GuideBox } from '@midasit-dev/moaui';
+import Moaui, {
+	type CustomUnionType,
+	TextFieldV2,
+	TextField,
+	Switch,
+	Typography,
+	GuideBox,
+	DropList,
+} from '@midasit-dev/moaui';
 import {
 	PropComponentLayerAddValueState,
 	PropComponentLayerModifyValueState,
@@ -43,6 +51,37 @@ export const usePropComponent = (type: string, name: string, value: any, hookTyp
 		setLocalValue,
 		updateGlobalValue: setValue,
 	};
+};
+
+const ToPropComponentUnion = (props: PropComponentProps<CustomUnionType>): JSX.Element => {
+	const { type, name, value, hookType } = props;
+	const { localValue, setLocalValue, updateGlobalValue } = usePropComponent(
+		type,
+		name,
+		value.defaultValue,
+		hookType,
+	);
+	return (
+		<GuideBox width='100%' row horSpaceBetween verCenter>
+			<Typography variant='body1'>{name}</Typography>
+			<DropList
+				itemList={value.values.map((value: string) => [value, value])}
+				defaultValue={localValue}
+				value={localValue}
+				onChange={(e: any) => {
+					setLocalValue(String(e.target.value));
+					updateGlobalValue((prev: any) => ({
+						...prev,
+						props: {
+							...prev.props,
+							[name]: String(e.target.value),
+						},
+					}));
+				}}
+				width='100px'
+			/>
+		</GuideBox>
+	);
 };
 
 const ToPropComponentMap = (props: PropComponentProps<Map<any, any>>): JSX.Element => {
@@ -189,7 +228,12 @@ const ToPropComponentDefault = (props: PropComponentProps<any>): JSX.Element => 
 const ToPropComponent = (props: PropComponentProps<any>): JSX.Element => {
 	const { type, name, value, hookType } = props;
 
-	if (value instanceof Array) {
+	//function등과 같이 아직 global 데이터를 업데이트하지 않는 변수들은 이곳에 들어올 수 있다.
+	if (value === undefined) return <></>;
+
+	if ((value as CustomUnionType).isUnion) {
+		return <ToPropComponentUnion type={type} name={name} value={value} hookType={hookType} />;
+	} else if (value instanceof Array) {
 		return <ToPropComponentArray type={type} name={name} value={value} hookType={hookType} />;
 	} else if (value instanceof Map) {
 		return <ToPropComponentMap type={type} name={name} value={value} hookType={hookType} />;
@@ -223,21 +267,41 @@ interface ToPropComponentsProps {
 const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 	const { componentType, customProps, customHookType } = props;
 
-	const [options, setOptions] = useState({});
+	const [options, setOptions] = useState<any[][]>([]);
 	useEffect(() => {
-		//지금은 아래 컴포넌트들만 sampleProps을 가지고 있음.
-		//추후에 다른 컴포넌트들도 추가되면 아래 case 분기가 필요 없어짐.
-		const enableSamplePropComp: EnableSamplePropComponent =
-			componentType as EnableSamplePropComponent;
-		if (!enableSamplePropComp) return;
+		if (!componentType) return;
 
-		if (customProps) setOptions(customProps);
-		else setOptions(Moaui[enableSamplePropComp].sampleProps);
-	}, [componentType, customProps]);
+		const SampleProps = Moaui[(componentType + 'Sample') as keyof typeof Moaui];
+		if (customProps) {
+			//Mod 대화상자 오픈 시 사용
+			//라이브러리 Property에서 Union Type인지 검사 한 후,
+			//Union Type이면 defaultValue에 customProps에서 넘어온 값을 채워준다.
+			let modCustomProps = { ...customProps };
+			for (const [key, value] of Array.from(Object.entries(SampleProps))) {
+				const unknownValue: unknown = value;
+				if ((unknownValue as CustomUnionType).isUnion) {
+					const unionValue = unknownValue as CustomUnionType;
+					unionValue.defaultValue = customProps[key];
+					modCustomProps[key] = unionValue;
+				}
+			}
+
+			const sortedKeys = Object.keys(SampleProps);
+			const modSortedCustomPropsArray = sortedKeys.map((key: string) => [
+				key,
+				modCustomProps[key],
+			]);
+			setOptions(modSortedCustomPropsArray);
+		} else {
+			//Add 대화상자 오픈 시 사용
+			const playgroundProps = SampleProps;
+			setOptions(Array.from(Object.entries(playgroundProps)));
+		}
+	}, [customProps, componentType]);
 
 	return (
 		<GuideBox width='100%' horSpaceBetween verCenter spacing={0.5}>
-			{Object.entries(options).map(([name, value], index: number) => {
+			{options.map(([name, value], index: number) => {
 				return (
 					<ToPropComponent
 						key={index}
@@ -253,11 +317,3 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 };
 
 export default ToPropComponents;
-
-export type EnableSamplePropComponent =
-	| 'Button'
-	| 'Panel'
-	| 'DropList'
-	| 'TextField'
-	| 'TextFieldV2';
-//추가되면 여기에;

@@ -1,17 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { SelectedLayerIdState } from '../recoilState';
-import {
-	Button,
-	FloatingBox,
-	type FloatingBoxProps,
-	Panel,
-	DropList,
-	TextField,
-	TextFieldV2,
-} from '@midasit-dev/moaui';
+import Moaui, { type FloatingBoxProps, FloatingBox } from '@midasit-dev/moaui';
 import { type Layer } from '../../Common/types';
 import '../SelectedLayer.css';
+import { isAvailableComp } from './AvailableComponents';
 
 const ToFloatingBox = (props: { layer: Layer }) => {
 	const { layer } = props;
@@ -68,58 +61,24 @@ const ToFloatingBox = (props: { layer: Layer }) => {
 	);
 };
 
-const ToButton = (props: { layer: Layer }) => {
-	const { layer } = props;
-	return <Button {...JSON.parse(JSON.stringify(layer.props))} />;
-};
-
-const ToPanel = (props: { layer: Layer }) => {
-	const { layer } = props;
-	return (
-		<Panel {...JSON.parse(JSON.stringify(layer.props))}>
-			{/** children은 일단 skip */}
-			{/* {layer.children && layer.children.map((child: Layer, index: number) => {
-				return <ToComponent key={index} layer={child} />;
-			})} */}
-		</Panel>
-	);
-};
-
-const ToDropList = (props: { layer: Layer }) => {
-	const { layer } = props;
-	return <DropList {...JSON.parse(JSON.stringify(layer.props))} />;
-};
-
-const ToTextField = (props: { layer: Layer }) => {
-	const { layer } = props;
-	return <TextField {...JSON.parse(JSON.stringify(layer.props))} />;
-};
-
-const ToTextFieldV2 = (props: { layer: Layer }) => {
-	const { layer } = props;
-	return <TextFieldV2 {...JSON.parse(JSON.stringify(layer.props))} />;
+const ToComponentReal = <T extends React.ComponentType<any>>(props: {
+	layer: Layer;
+	component: T;
+}) => {
+	const { layer, component: Component } = props;
+	return <Component {...JSON.parse(JSON.stringify(layer.props))} />;
 };
 
 const ToComponent = (props: { layer: Layer }) => {
 	const { layer } = props;
 
-	switch (layer.type) {
-		case 'FloatingBox':
-			return <ToFloatingBox layer={layer} />;
-		case 'Button':
-			return <ToButton layer={layer} />;
-		case 'Panel':
-			return <ToPanel layer={layer} />;
-		case 'DropList':
-			return <ToDropList layer={layer} />;
-		case 'TextField':
-			return <ToTextField layer={layer} />;
-		case 'TextFieldV2':
-			return <ToTextFieldV2 layer={layer} />;
-		default: {
-			console.error('Unknown Layer Type:', layer.type);
-			return null;
-		}
+	if (layer.type === 'FloatingBox') {
+		return <ToFloatingBox layer={layer} />;
+	} else if (isAvailableComp(layer.type)) {
+		return <ToComponentReal layer={layer} component={Moaui[layer.type]} />;
+	} else {
+		console.error('Unknown Layer Type:', layer.type);
+		return null;
 	}
 };
 
