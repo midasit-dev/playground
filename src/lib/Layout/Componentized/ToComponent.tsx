@@ -4,6 +4,7 @@ import { SelectedLayerIdState } from '../recoilState';
 import Moaui, { type FloatingBoxProps, FloatingBox } from '@midasit-dev/moaui';
 import { type Layer } from '../../Common/types';
 import '../SelectedLayer.css';
+import { isAvailableComp } from './AvailableComponents';
 
 const ToFloatingBox = (props: { layer: Layer }) => {
 	const { layer } = props;
@@ -71,25 +72,13 @@ const ToComponentReal = <T extends React.ComponentType<any>>(props: {
 const ToComponent = (props: { layer: Layer }) => {
 	const { layer } = props;
 
-	//layer.type
-	//example
-	//'FloatingBox', 'Button', 'Panel', ...
-	//FloatingBox만 우선 예외적으로 처리한다.
-	switch (layer.type) {
-		case 'FloatingBox':
-			return <ToFloatingBox layer={layer} />;
-		case 'Button':
-		case 'Panel':
-		case 'DropList':
-		case 'TextField':
-		case 'TextFieldV2':
-		case 'Alert':
-		case 'ChartLine':
-			return <ToComponentReal layer={layer} component={Moaui[layer.type]} />;
-		default: {
-			console.error('Unknown Layer Type:', layer.type);
-			return null;
-		}
+	if (layer.type === 'FloatingBox') {
+		return <ToFloatingBox layer={layer} />;
+	} else if (isAvailableComp(layer.type)) {
+		return <ToComponentReal layer={layer} component={Moaui[layer.type]} />;
+	} else {
+		console.error('Unknown Layer Type:', layer.type);
+		return null;
 	}
 };
 

@@ -134,13 +134,7 @@ export const useController = () => {
 				</div>
 			</Rnd>
 		);
-	}, [
-		controllerState.height,
-		controllerState.width,
-		controllerState.x,
-		controllerState.y,
-		showVirtualLayer,
-	]);
+	}, [controllerState.height, controllerState.width, controllerState.x, controllerState.y, setControllerState, showVirtualLayer]);
 
 	return {
 		initialize,

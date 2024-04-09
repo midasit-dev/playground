@@ -5,6 +5,7 @@ import { Typography, GuideBox } from '@midasit-dev/moaui';
 import { PropComponentProps, usePropComponent } from './ToPropComponents';
 
 import 'jsoneditor/dist/jsoneditor.min.css';
+import ShowHideButton from 'src/lib/Shared/ShowHideButton';
 
 const JsonEditor = (props: { name: string; arr: any[]; updateGlobalValue: (prev: any) => any }) => {
 	const { name, arr, updateGlobalValue } = props;
@@ -74,10 +75,18 @@ const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => 
 	const { type, name, value, hookType } = props;
 	const { localValue, updateGlobalValue } = usePropComponent(type, name, value, hookType);
 
+	const [open, setOpen] = useState(false);
+
 	return (
 		<GuideBox width='100%' horSpaceBetween verCenter spacing={1}>
-			<Typography variant='body1'>{name}</Typography>
-			<JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
+			<GuideBox row horSpaceBetween verCenter>
+				<Typography variant='body1'>{name}</Typography>
+				<ShowHideButton state={[open, setOpen]} />
+			</GuideBox>
+			{open && (
+				<JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
+			)}
+			
 		</GuideBox>
 	);
 };

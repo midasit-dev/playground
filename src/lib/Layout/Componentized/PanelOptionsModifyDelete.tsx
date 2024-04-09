@@ -118,7 +118,7 @@ const PanelModify = () => {
 	);
 
 	return (
-		<FloatingBox {...{ x: -400 - 32, y: 0, width: 400, height: 300, border: '1px solid #d1d1d1' }}>
+		<FloatingBox {...{ x: -400 - 32, y: 0, width: 400 }}>
 			<div onKeyDown={onKeyDownHandler} style={{ width: '100%', height: 'auto' }}>
 				<Panel
 					width='100%'
