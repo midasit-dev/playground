@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Moaui, { GuideBox, Typography, DropList, Button, Dialog } from '@midasit-dev/moaui';
-import ToPropComponents, { type EnableSamplePropComponent } from './ToPropComponents';
+import ToPropComponents from './ToPropComponents';
 import {
 	LayersState,
 	OpacityBySelectedLayerIdState,
@@ -12,27 +12,27 @@ import {
 import { Layer, Layers } from '../../Common/types';
 import { v4 as uuid4 } from 'uuid';
 import ShowHideButton from '../../Shared/ShowHideButton';
+import { isAvailableComp } from './AvailableComponents';
 
 const App = () => {
 	//itemList를 만들기 위한 useState
 	const [items, setItems] = useState(new Map<string, number>());
 	const [reverseItems, setReverseItems] = useState(new Map<number, string>());
 	useEffect(() => {
-		setItems(
-			new Map<string, number>(
-				Object.keys(Moaui)
-					.filter((key) => !excludeComponentList.includes(key))
-					.map((key: string, index: number) => [key, index + 1]),
-			),
-		);
-	}, []);
-	useEffect(() => {
+		//item 구성
+		const keys = Object.keys(Moaui);
+		const filteredKeys = keys.filter((key) => isAvailableComp(key));
+		const items = new Map<string, number>(
+			filteredKeys.map((key: string, index: number) => [key, index + 1]));
+		setItems(items);
+
+		//reverseItems 구성
 		if (items.size !== 0) {
 			const reverse = new Map<number, string>();
 			items.forEach((value, key) => reverse.set(value, key));
 			setReverseItems(reverse);
 		}
-	}, [items]);
+	}, []);
 
 	//for Drop List
 	const [value, setValue] = useState(1);
@@ -46,7 +46,7 @@ const App = () => {
 	);
 	const selectedLayer = useRecoilValue(SelectedLayerState);
 	useEffect(() => {
-		const curComponentType = reverseItems.get(value) as EnableSamplePropComponent;
+		const curComponentType = reverseItems.get(value);
 		if (!curComponentType) return;
 		setPropCompLayerAddValue((prev: Layer) => {
 			const isEqualType = curComponentType === prev.type;
@@ -60,7 +60,7 @@ const App = () => {
 			//ToPropComponents.tsx 참고 (Function하고 Map type은 우선 제외한다.)
 			let newProps: { [key: string]: any } = {};
 			if (!isEqualType) {
-				const sampleProps = Moaui[curComponentType].sampleProps as { [key: string]: any };
+				const sampleProps = Moaui[(curComponentType + 'Sample') as keyof typeof Moaui] as { [key: string]: any };
 				for (const key of Object.keys(sampleProps)) {
 					if (sampleProps[key] instanceof Map) continue;
 					if (typeof sampleProps[key] === 'function') continue;
@@ -175,54 +175,3 @@ const App = () => {
 
 export default App;
 
-const excludeComponentList = [
-	'Color',
-	'Font',
-	// 'Button',
-	'Check',
-	'CheckGroup',
-	'DataGrid',
-	'DataGridToolbar',
-	'DataGridToolbarContainer',
-	'DataGridToolbarExport',
-	// 'DropList',
-	'Grid',
-	'IconButton',
-	// 'Panel',
-	'Radio',
-	'RadioGroup',
-	'Separator',
-	'Stack',
-	'Switch',
-	'SwitchGroup',
-	'Tab',
-	'TabGroup',
-	'Table',
-	'TableBody',
-	'TableCell',
-	'TableHead',
-	'TableRow',
-	// 'TextField',
-	// 'TextFieldV2',
-	'Typography',
-	'TypographyGroup',
-	'Icon',
-	'CodeBlock',
-	'Scrollbars',
-	'List',
-	'ListItem',
-	'ListItemButton',
-	'MidasController',
-	'Dialog',
-	'ChartLine',
-	'GuideBox',
-	'Alert',
-	'Chip',
-	'Tooltip',
-	'FloatingBox',
-	'VerifyDialog',
-	'VerifyUtil',
-	// 'AutoDropList',
-	'ScatterPlot',
-	'Signature',
-];
