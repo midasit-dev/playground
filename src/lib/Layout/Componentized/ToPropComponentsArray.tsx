@@ -83,10 +83,7 @@ const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => 
 				<Typography variant='body1'>{name}</Typography>
 				<ShowHideButton state={[open, setOpen]} />
 			</GuideBox>
-			{open && (
-				<JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
-			)}
-			
+			{open && <JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />}
 		</GuideBox>
 	);
 };

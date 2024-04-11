@@ -287,10 +287,7 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 			}
 
 			const sortedKeys = Object.keys(SampleProps);
-			const modSortedCustomPropsArray = sortedKeys.map((key: string) => [
-				key,
-				modCustomProps[key],
-			]);
+			const modSortedCustomPropsArray = sortedKeys.map((key: string) => [key, modCustomProps[key]]);
 			setOptions(modSortedCustomPropsArray);
 		} else {
 			//Add 대화상자 오픈 시 사용

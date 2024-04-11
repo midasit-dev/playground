@@ -25,6 +25,4 @@ function isAvailableComp(comp: string): comp is AvailableComps {
 	return Object.values(AvailableComps).includes(comp as AvailableComps);
 }
 
-export {
-	isAvailableComp
-}
+export { isAvailableComp };

@@ -23,7 +23,8 @@ const App = () => {
 		const keys = Object.keys(Moaui);
 		const filteredKeys = keys.filter((key) => isAvailableComp(key));
 		const items = new Map<string, number>(
-			filteredKeys.map((key: string, index: number) => [key, index + 1]));
+			filteredKeys.map((key: string, index: number) => [key, index + 1]),
+		);
 		setItems(items);
 
 		//reverseItems 구성
@@ -60,7 +61,9 @@ const App = () => {
 			//ToPropComponents.tsx 참고 (Function하고 Map type은 우선 제외한다.)
 			let newProps: { [key: string]: any } = {};
 			if (!isEqualType) {
-				const sampleProps = Moaui[(curComponentType + 'Sample') as keyof typeof Moaui] as { [key: string]: any };
+				const sampleProps = Moaui[(curComponentType + 'Sample') as keyof typeof Moaui] as {
+					[key: string]: any;
+				};
 				for (const key of Object.keys(sampleProps)) {
 					if (sampleProps[key] instanceof Map) continue;
 					if (typeof sampleProps[key] === 'function') continue;
@@ -174,4 +177,3 @@ const App = () => {
 };
 
 export default App;
-
