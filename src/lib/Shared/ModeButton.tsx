@@ -1,6 +1,6 @@
 import { Icon, IconButton, Tooltip, GuideBox } from '@midasit-dev/moaui';
 
-const SideBarButton = (props: {
+const ModeButton = (props: {
 	currentMenuState: [string, React.Dispatch<React.SetStateAction<string | any>>];
 	iconName: string;
 	menuName: string;
@@ -28,4 +28,4 @@ const SideBarButton = (props: {
 	);
 };
 
-export default SideBarButton;
+export default ModeButton;

@@ -1,6 +1,6 @@
-import Load from './Load';
+import Import from './Import';
 import View from './View';
-import Save from './Save';
+import Export from './Export';
 import { GuideBox, Separator, Typography } from '@midasit-dev/moaui';
 
 const App = () => {
@@ -19,8 +19,8 @@ const App = () => {
 			<Typography variant='h1'>JSON</Typography>
 			<GuideBox>
 				<GuideBox row verCenter spacing={1}>
-					<Save />
-					<Load />
+					<Export />
+					<Import />
 				</GuideBox>
 			</GuideBox>
 			<Separator direction='vertical' />

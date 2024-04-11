@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
 import styled from 'styled-components';
+import { Typography, Button } from '@midasit-dev/moaui';
+
+const duration = 0.2; // 애니메이션 전환 지속 시간을 0.5초로 설정합니다.
 
 const commonStyle = {
 	marginLeft: '15px',
@@ -18,7 +21,7 @@ const commonStyle = {
 const commonAnimation = {
 	initial: { opacity: 0, x: -100 }, // 초기 상태
 	animate: { opacity: 1, x: 0 }, // 최종 상태
-	transition: { delay: 0.7, duration: 0.5 }, // 딜레이 0.8초, 애니메이션 전환 지속 시간 0.5초
+	transition: { delay: duration, duration: duration }, // 딜레이 0.8초, 애니메이션 전환 지속 시간 0.5초
 };
 
 const StyledMotionDiv = styled(motion.div)`
@@ -31,14 +34,24 @@ const StyledMotionDiv = styled(motion.div)`
 
 export default function Menu(props: {
 	openSideMenu: boolean;
-	setOpenJsonMenu: any;
+	setOpenJsonImportMenu: any;
+	setOpenJsonExportMenu: any;
 	setOpenCodeMenu: any;
 }) {
-	const { openSideMenu, setOpenJsonMenu, setOpenCodeMenu } = props;
+	const { openSideMenu, setOpenJsonImportMenu, setOpenJsonExportMenu, setOpenCodeMenu } = props;
+	const [openJsonMenu, setOpenJsonMenu] = React.useState(false);
 
 	const onClickJson = React.useCallback(() => {
-		setOpenJsonMenu(true);
+		setOpenJsonMenu((prev) => !prev);
 	}, [setOpenJsonMenu]);
+
+	const onClickImportJson = React.useCallback(() => {
+		setOpenJsonImportMenu(true);
+	}, [setOpenJsonImportMenu]);
+
+	const onClickExportJson = React.useCallback(() => {
+		setOpenJsonExportMenu(true);
+	}, [setOpenJsonExportMenu]);
 
 	const onClickCode = React.useCallback(() => {
 		setOpenCodeMenu(true);
@@ -52,7 +65,7 @@ export default function Menu(props: {
 						initial={{ opacity: 0, x: -300 }} // 초기 상태
 						animate={{ opacity: 1, x: 0 }} // 최종 상태
 						exit={{ x: -200, opacity: 0 }} // 제거될 때의 상태. 왼쪽으로 슬라이드하며 투명해집니다.
-						transition={{ duration: 0.7 }} // 애니메이션 전환 지속 시간
+						transition={{ duration: duration }} // 애니메이션 전환 지속 시간
 						style={{
 							width: '300px',
 							backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -64,13 +77,31 @@ export default function Menu(props: {
 							padding: '20px',
 						}}
 					>
-						Playground
+						<div style={{ padding: '10px 10px' }}>
+							<Typography variant='h1' size='medium'>Playground</Typography>
+						</div>
 						<StyledMotionDiv {...commonAnimation} onClick={onClickJson}>
-							JSON
+							<Typography variant='body1' size='medium'>
+								JSON
+							</Typography>
 						</StyledMotionDiv>
+						{openJsonMenu && (
+							<>
+								<StyledMotionDiv {...commonAnimation} onClick={onClickImportJson} style={{marginLeft:"30px", height:"20px"}}>
+									<Typography variant='body2' size='medium'>
+										Import
+									</Typography>
+								</StyledMotionDiv>
+								<StyledMotionDiv {...commonAnimation} onClick={onClickExportJson} style={{marginLeft:"30px", height:"20px"}} >
+									<Typography variant='body2' size='medium'>
+										Export
+									</Typography>
+								</StyledMotionDiv>
+							</>
+						)}
 						<StyledMotionDiv
 							{...commonAnimation}
-							transition={{ delay: 1, duration: 0.5 }}
+							transition={{ delay: duration + 0.2, duration: duration }}
 							onClick={onClickCode}
 						>
 							CODE
