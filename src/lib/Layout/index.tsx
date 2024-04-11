@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { GuideBox, Typography } from '@midasit-dev/moaui';
-import SideBarButton from '../Shared/SideBarButton';
+import ModeButton from '../Shared/ModeButton';
 import JsonOptions from './JsonOptions';
 import Layers from './Layers';
 import Componentized from './Componentized';
@@ -31,38 +31,40 @@ const App = () => {
 
 	return (
 		<>
-			<Navbar setOpenSideMenu={setOpenSideMenu} />
-			<div onClick={() => setOpenSideMenu(false)} style={{ width: '100%', height: '1200px' }}>
+			<Navbar setOpenSideMenu={setOpenSideMenu} setMode={setMode} mode={mode} />
+			<div onClick={() => setOpenSideMenu(false)} style={{ width: '100%', height: '2000px' }}>
 				<Menu
 					openSideMenu={openSideMenu}
 					setOpenJsonMenu={setOpenJsonMenu}
 					setOpenCodeMenu={setOpenCodeMenu}
 				/>
-				<GuideBox width='100%' height='inherit' spacing={2}>
-					<GuideBox row width='100%' verCenter horSpaceBetween>
+				<GuideBox width='100%' height='inherit' marginTop={0}>
+					{/* <GuideBox row width='100%' verCenter > */}
+					<div style={{ position: 'fixed', marginLeft: '10px' }}>
 						<GuideBox row verCenter spacing={2} marginTop={7}>
 							{openJsonMenu && <JsonOptions />}
 							{openCodeMenu && <GenerateCode />}
 						</GuideBox>
-						{/** Sidebar Buttons */}
-						<GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
+					</div>
+					{/** Sidebar Buttons */}
+					{/* <GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
 							<Typography color='#a5a5a7'>Ctrl + ]</Typography>
 							<GuideBox row verCenter>
-								<SideBarButton
+								<ModeButton
 									currentMenuState={[mode, setMode]}
 									iconName='Dashboard'
 									menuName='Layers'
 								/>
-								<SideBarButton
+								<ModeButton
 									currentMenuState={[mode, setMode]}
 									iconName='Adjust'
 									menuName='Componentized'
 								/>
 							</GuideBox>
-						</GuideBox>
-					</GuideBox>
+						</GuideBox> */}
+					{/* </GuideBox> */}
 
-					<GuideBox width='100%' row height='inherit' spacing={3}>
+					<GuideBox width='100%' row height='inherit' spacing={3} marginTop={7}>
 						{mode === 'Layers' && <Layers />}
 						{mode === 'Componentized' && <Componentized />}
 					</GuideBox>
