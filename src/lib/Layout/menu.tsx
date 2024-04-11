@@ -78,7 +78,9 @@ export default function Menu(props: {
 						}}
 					>
 						<div style={{ padding: '10px 10px' }}>
-							<Typography variant='h1' size='medium'>Playground</Typography>
+							<Typography variant='h1' size='medium'>
+								Playground
+							</Typography>
 						</div>
 						<StyledMotionDiv {...commonAnimation} onClick={onClickJson}>
 							<Typography variant='body1' size='medium'>
@@ -87,12 +89,20 @@ export default function Menu(props: {
 						</StyledMotionDiv>
 						{openJsonMenu && (
 							<>
-								<StyledMotionDiv {...commonAnimation} onClick={onClickImportJson} style={{marginLeft:"30px", height:"20px"}}>
+								<StyledMotionDiv
+									{...commonAnimation}
+									onClick={onClickImportJson}
+									style={{ marginLeft: '30px', height: '20px' }}
+								>
 									<Typography variant='body2' size='medium'>
 										Import
 									</Typography>
 								</StyledMotionDiv>
-								<StyledMotionDiv {...commonAnimation} onClick={onClickExportJson} style={{marginLeft:"30px", height:"20px"}} >
+								<StyledMotionDiv
+									{...commonAnimation}
+									onClick={onClickExportJson}
+									style={{ marginLeft: '30px', height: '20px' }}
+								>
 									<Typography variant='body2' size='medium'>
 										Export
 									</Typography>

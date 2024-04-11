@@ -28,7 +28,7 @@ function replaceIds(layers: Layers, saveUUID: string): Layers {
 	return layers.map((layer) => findAndReplaceId(layer));
 }
 
-const App = (props: {openJsonExportMenu : boolean}) => {
+const App = (props: { openJsonExportMenu: boolean }) => {
 	const { openJsonExportMenu } = props;
 	const [value, setValue] = React.useState<string>('');
 	const [open, setOpen] = React.useState(false);
@@ -49,55 +49,55 @@ const App = (props: {openJsonExportMenu : boolean}) => {
 				onClose={() => setOpen(false)}
 				headerTitle='Select Layer Export JSON'
 			>
-			<GuideBox spacing={2} row>
-			<GuideBox flexGrow={1}>
-				<TextField
-					width='200px'
-					placeholder={getCurrentTime().sample('.json')}
-					value={value}
-					onChange={(e) => setValue(e.target.value)}
-				/>
-			</GuideBox>
-			<Tooltip title='Save Layer JSON'>
-				<IconButton
-					color='negative'
-					onClick={async () => {
-						//동일한 id, key일 경우 리렌더링이 되지 않는 문제 해결을 위해
-						//id값에 uuid를 붙여준다.
-						//저장 시점 UUID 기록
-						const saveUUID = uuidv4().slice(0, 8);
+				<GuideBox spacing={2} row>
+					<GuideBox flexGrow={1}>
+						<TextField
+							width='200px'
+							placeholder={getCurrentTime().sample('.json')}
+							value={value}
+							onChange={(e) => setValue(e.target.value)}
+						/>
+					</GuideBox>
+					<Tooltip title='Save Layer JSON'>
+						<IconButton
+							color='negative'
+							onClick={async () => {
+								//동일한 id, key일 경우 리렌더링이 되지 않는 문제 해결을 위해
+								//id값에 uuid를 붙여준다.
+								//저장 시점 UUID 기록
+								const saveUUID = uuidv4().slice(0, 8);
 
-						let prevValue = value;
-						if (prevValue === '') {
-							prevValue = getCurrentTime().fullWithExtension('json');
-						}
-						if (!prevValue.includes('.json')) prevValue += '.json';
-						const exportLayers: ExportLayers = {
-							canvas: {
-								width: canvas.width,
-								height: canvas.height,
-							},
-							layers: replaceIds(layers, saveUUID),
-						};
+								let prevValue = value;
+								if (prevValue === '') {
+									prevValue = getCurrentTime().fullWithExtension('json');
+								}
+								if (!prevValue.includes('.json')) prevValue += '.json';
+								const exportLayers: ExportLayers = {
+									canvas: {
+										width: canvas.width,
+										height: canvas.height,
+									},
+									layers: replaceIds(layers, saveUUID),
+								};
 
-						const data = await onClickHandler({
-							path: '/exports/layers',
-							body: {
-								fileName: prevValue,
-								content: JSON.stringify(exportLayers, null, 2),
-							},
-							method: 'post',
-						});
+								const data = await onClickHandler({
+									path: '/exports/layers',
+									body: {
+										fileName: prevValue,
+										content: JSON.stringify(exportLayers, null, 2),
+									},
+									method: 'post',
+								});
 
-						if (data.message) {
-							enqueueSnackbar(data.message, { variant: 'success' });
-						}
-					}}
-				>
-					<Icon iconName='Save' />
-				</IconButton>
-			</Tooltip>
-			</GuideBox>
+								if (data.message) {
+									enqueueSnackbar(data.message, { variant: 'success' });
+								}
+							}}
+						>
+							<Icon iconName='Save' />
+						</IconButton>
+					</Tooltip>
+				</GuideBox>
 			</Dialog>
 		</GuideBox>
 	);

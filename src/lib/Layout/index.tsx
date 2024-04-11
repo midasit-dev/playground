@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { GuideBox, Typography } from '@midasit-dev/moaui';
 import ModeButton from '../Shared/ModeButton';
 import JsonOptions from './JsonOptions';
-import ExportJson from './JsonOptions/Export'
-import ImportJson from './JsonOptions/Import'
+import ExportJson from './JsonOptions/Export';
+import ImportJson from './JsonOptions/Import';
 import Layers from './Layers';
 import Componentized from './Componentized';
 import GenerateCode from './GenerateCode';
@@ -52,10 +52,15 @@ const App = () => {
 			<div onClick={onClickOutside} style={{ width: '100%', height: '2000px' }}>
 				<GuideBox width='100%' height='inherit' marginTop={0}>
 					{/* <GuideBox row width='100%' verCenter > */}
-					<div style={{ position: 'fixed', marginLeft: '10px' }} onClick={(e)=>{e.stopPropagation();}}>
+					<div
+						style={{ position: 'fixed', marginLeft: '10px' }}
+						onClick={(e) => {
+							e.stopPropagation();
+						}}
+					>
 						<GuideBox row verCenter spacing={2} marginTop={7}>
-							{openJsonImportMenu && <ImportJson openJsonImportMenu={openJsonImportMenu}/>}
-							{openJsonExportMenu && <ExportJson openJsonExportMenu={openJsonExportMenu}/>}
+							{openJsonImportMenu && <ImportJson openJsonImportMenu={openJsonImportMenu} />}
+							{openJsonExportMenu && <ExportJson openJsonExportMenu={openJsonExportMenu} />}
 							{openCodeMenu && <GenerateCode />}
 						</GuideBox>
 					</div>

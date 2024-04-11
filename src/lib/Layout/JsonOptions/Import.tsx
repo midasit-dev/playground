@@ -14,13 +14,13 @@ import { useSetRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
 import { Canvas, ExportLayers, Layers } from '../../Common/types';
 
-const App = (props: {openJsonImportMenu : boolean}) => {
+const App = (props: { openJsonImportMenu: boolean }) => {
 	const { openJsonImportMenu } = props;
 	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		setOpen(openJsonImportMenu);
-	}, [openJsonImportMenu])
+	}, [openJsonImportMenu]);
 
 	return (
 		<GuideBox width='100%' row horSpaceBetween verCenter>
