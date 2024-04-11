@@ -52,7 +52,7 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run prettier && react-scripts start",
     "move": "rmdir /s /q docs && rename build docs",
     "build": "react-scripts build && npm run move",
     "publish-npm": " && npm run reset && npm run copy && npm run prepare-npm && npm publish --access public",
