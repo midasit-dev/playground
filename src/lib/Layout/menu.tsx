@@ -34,14 +34,24 @@ const StyledMotionDiv = styled(motion.div)`
 
 export default function Menu(props: {
 	openSideMenu: boolean;
-	setOpenJsonMenu: any;
+	setOpenJsonImportMenu: any;
+	setOpenJsonExportMenu: any;
 	setOpenCodeMenu: any;
 }) {
-	const { openSideMenu, setOpenJsonMenu, setOpenCodeMenu } = props;
+	const { openSideMenu, setOpenJsonImportMenu, setOpenJsonExportMenu, setOpenCodeMenu } = props;
+	const [openJsonMenu, setOpenJsonMenu] = React.useState(false);
 
 	const onClickJson = React.useCallback(() => {
-		setOpenJsonMenu(true);
+		setOpenJsonMenu((prev) => !prev);
 	}, [setOpenJsonMenu]);
+
+	const onClickImportJson = React.useCallback(() => {
+		setOpenJsonImportMenu(true);
+	}, [setOpenJsonImportMenu]);
+
+	const onClickExportJson = React.useCallback(() => {
+		setOpenJsonExportMenu(true);
+	}, [setOpenJsonExportMenu]);
 
 	const onClickCode = React.useCallback(() => {
 		setOpenCodeMenu(true);
@@ -68,11 +78,27 @@ export default function Menu(props: {
 						}}
 					>
 						<div style={{ padding: '10px 10px' }}>
-							<Typography>Playground</Typography>
+							<Typography variant='h1' size='medium'>Playground</Typography>
 						</div>
 						<StyledMotionDiv {...commonAnimation} onClick={onClickJson}>
-							JSON
+							<Typography variant='body1' size='medium'>
+								JSON
+							</Typography>
 						</StyledMotionDiv>
+						{openJsonMenu && (
+							<>
+								<StyledMotionDiv {...commonAnimation} onClick={onClickImportJson} style={{marginLeft:"30px", height:"20px"}}>
+									<Typography variant='body2' size='medium'>
+										Import
+									</Typography>
+								</StyledMotionDiv>
+								<StyledMotionDiv {...commonAnimation} onClick={onClickExportJson} style={{marginLeft:"30px", height:"20px"}} >
+									<Typography variant='body2' size='medium'>
+										Export
+									</Typography>
+								</StyledMotionDiv>
+							</>
+						)}
 						<StyledMotionDiv
 							{...commonAnimation}
 							transition={{ delay: duration + 0.2, duration: duration }}

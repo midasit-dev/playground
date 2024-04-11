@@ -1,5 +1,5 @@
 import React from 'react';
-import { GuideBox, Icon, IconButton, TextField, Tooltip } from '@midasit-dev/moaui';
+import { GuideBox, Icon, IconButton, TextField, Tooltip, Dialog } from '@midasit-dev/moaui';
 import onClickHandler from '../../Shared/OnClickHandler';
 import { useRecoilValue } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
@@ -28,15 +28,28 @@ function replaceIds(layers: Layers, saveUUID: string): Layers {
 	return layers.map((layer) => findAndReplaceId(layer));
 }
 
-const App = () => {
+const App = (props: {openJsonExportMenu : boolean}) => {
+	const { openJsonExportMenu } = props;
 	const [value, setValue] = React.useState<string>('');
+	const [open, setOpen] = React.useState(false);
 	const canvas = useRecoilValue(CanvasState);
 	const layers = useRecoilValue(LayersState);
 
 	const { enqueueSnackbar } = useSnackbar();
 
+	React.useEffect(() => {
+		setOpen(openJsonExportMenu);
+	}, [openJsonExportMenu]);
+
 	return (
-		<GuideBox row horSpaceBetween spacing={1}>
+		<GuideBox width='100%' row horSpaceBetween spacing={1}>
+			<Dialog
+				open={open}
+				setOpen={setOpen}
+				onClose={() => setOpen(false)}
+				headerTitle='Select Layer Export JSON'
+			>
+			<GuideBox spacing={2} row>
 			<GuideBox flexGrow={1}>
 				<TextField
 					width='200px'
@@ -84,8 +97,14 @@ const App = () => {
 					<Icon iconName='Save' />
 				</IconButton>
 			</Tooltip>
+			</GuideBox>
+			</Dialog>
 		</GuideBox>
 	);
+};
+
+App.defaultProps = {
+	openJsonExportMenu: false,
 };
 
 export default App;

@@ -14,19 +14,28 @@ import { useSetRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
 import { Canvas, ExportLayers, Layers } from '../../Common/types';
 
-const App = () => {
+const App = (props: {openJsonImportMenu : boolean}) => {
+	const { openJsonImportMenu } = props;
 	const [open, setOpen] = useState(false);
+
+	useEffect(() => {
+		setOpen(openJsonImportMenu);
+	}, [openJsonImportMenu])
 
 	return (
 		<GuideBox width='100%' row horSpaceBetween verCenter>
-			<Tooltip title='Import Layer JSON'>
+			{/* <Tooltip title='Import Layer JSON'>
 				<IconButton onClick={() => setOpen(true)} color='negative'>
 					<Icon iconName='FolderOpen' />
 				</IconButton>
-			</Tooltip>
-			{open && <ImportDialog open={open} setOpen={setOpen} />}
+			</Tooltip> */}
+			{open && <ImportDialog open={open} setDialogOpen={setOpen} />}
 		</GuideBox>
 	);
+};
+
+App.defaultProps = {
+	openJsonImportMenu: false,
 };
 
 export default App;
@@ -45,7 +54,7 @@ const getKeyByValue = (map: Map<string, number>, value: number) => {
 	return '';
 };
 
-const ImportDialog = ({ open, setOpen }: any) => {
+const ImportDialog = ({ open, setDialogOpen }: any) => {
 	const [value, setValue] = useState(1);
 	const [items, setItems] = useState<Map<string, number>>(new Map([['NONE', 1]]));
 
@@ -96,7 +105,7 @@ const ImportDialog = ({ open, setOpen }: any) => {
 		};
 
 		init();
-	}, [items, setOpen, value]);
+	}, [items, setDialogOpen, value]);
 
 	//update layers value
 	const setCanvas = useSetRecoilState(CanvasState);
@@ -104,8 +113,8 @@ const ImportDialog = ({ open, setOpen }: any) => {
 	const onClickHandlerSelect = useCallback(() => {
 		setCanvas(tempCanvas);
 		setLayers(tempLayers);
-		setOpen(false);
-	}, [setCanvas, setLayers, setOpen, tempCanvas, tempLayers]);
+		setDialogOpen(false);
+	}, [setCanvas, setLayers, setDialogOpen, tempCanvas, tempLayers]);
 
 	function onChangeHandler(event: any) {
 		setValue(event.target.value);
@@ -116,12 +125,12 @@ const ImportDialog = ({ open, setOpen }: any) => {
 	return (
 		<Dialog
 			open={open}
-			setOpen={setOpen}
-			onClose={() => setOpen(false)}
+			setOpen={setDialogOpen}
+			onClose={() => setDialogOpen(false)}
 			headerTitle='Select Layer Import JSON'
 		>
-			<GuideBox spacing={2}>
-				<GuideBox width='100%' row verCenter spacing={2}>
+			<GuideBox spacing={2} row>
+				<GuideBox width='100%' row verCenter>
 					<GuideBox width='100%' row verCenter>
 						<IconButton onClick={refreshFileNames} transparent>
 							<Icon iconName='Refresh' />
@@ -135,7 +144,12 @@ const ImportDialog = ({ open, setOpen }: any) => {
 						/>
 					</GuideBox>
 				</GuideBox>
-				<GuideBox width='100%' spacing={2}>
+				<GuideBox width='100%'>
+					<Button onClick={onClickHandlerSelect} color='negative'>
+						Select
+					</Button>
+				</GuideBox>
+				{/* <GuideBox width='100%' spacing={2}>
 					<GuideBox width='100%' height='auto'>
 						<Panel
 							padding={0}
@@ -147,12 +161,7 @@ const ImportDialog = ({ open, setOpen }: any) => {
 							<JsonToSvg scale={scaleValue} data={tempLayers} />
 						</Panel>
 					</GuideBox>
-				</GuideBox>
-				<GuideBox width='100%' row horRight>
-					<Button onClick={onClickHandlerSelect} color='negative'>
-						Select
-					</Button>
-				</GuideBox>
+				</GuideBox> */}
 			</GuideBox>
 		</Dialog>
 	);
