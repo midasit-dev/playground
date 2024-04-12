@@ -9,7 +9,6 @@ import Componentized from './Componentized';
 import GenerateCode from './GenerateCode';
 import Navbar from './navbar';
 import Menu from './menu';
-import { omit } from 'lodash';
 
 function useStateApp() {
 	const [mode, setMode] = React.useState<'Layers' | 'Componentized'>('Layers');
@@ -59,9 +58,19 @@ const App = () => {
 						}}
 					>
 						<GuideBox row verCenter spacing={2} marginTop={7}>
-							{openJsonImportMenu && <ImportJson openJsonImportMenu={openJsonImportMenu} />}
-							{openJsonExportMenu && <ExportJson openJsonExportMenu={openJsonExportMenu} />}
-							{openCodeMenu && <GenerateCode />}
+							{openJsonImportMenu && (
+								<ImportJson
+									setOpenJsonImportMenu={setOpenJsonImportMenu}
+									openJsonImportMenu={openJsonImportMenu}
+								/>
+							)}
+							{openJsonExportMenu && (
+								<ExportJson
+									setOpenJsonExportMenu={setOpenJsonExportMenu}
+									openJsonExportMenu={openJsonExportMenu}
+								/>
+							)}
+							{openCodeMenu && <GenerateCode openCodeMenu={openCodeMenu} setOpenCodeMenu={setOpenCodeMenu}/>}
 						</GuideBox>
 					</div> */}
 					{/** Sidebar Buttons */}

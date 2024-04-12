@@ -28,8 +28,8 @@ function replaceIds(layers: Layers, saveUUID: string): Layers {
 	return layers.map((layer) => findAndReplaceId(layer));
 }
 
-const App = (props: { openJsonExportMenu: boolean }) => {
-	const { openJsonExportMenu } = props;
+const App = (props: { openJsonExportMenu: boolean; setOpenJsonExportMenu: any }) => {
+	const { openJsonExportMenu, setOpenJsonExportMenu } = props;
 	const [value, setValue] = React.useState<string>('');
 	const [open, setOpen] = React.useState(false);
 	const canvas = useRecoilValue(CanvasState);
@@ -39,14 +39,19 @@ const App = (props: { openJsonExportMenu: boolean }) => {
 
 	React.useEffect(() => {
 		setOpen(openJsonExportMenu);
-	}, [openJsonExportMenu]);
+	}, [openJsonExportMenu, setOpenJsonExportMenu]);
+
+	function onClose() {
+		setOpen(false);
+		setOpenJsonExportMenu(false);
+	}
 
 	return (
 		<GuideBox width='100%' row horSpaceBetween spacing={1}>
 			<Dialog
 				open={open}
 				setOpen={setOpen}
-				onClose={() => setOpen(false)}
+				onClose={onClose}
 				headerTitle='Select Layer Export JSON'
 			>
 				<GuideBox spacing={2} row>
@@ -105,6 +110,7 @@ const App = (props: { openJsonExportMenu: boolean }) => {
 
 App.defaultProps = {
 	openJsonExportMenu: false,
+	setOpenJsonExportMenu: () => {},
 };
 
 export default App;

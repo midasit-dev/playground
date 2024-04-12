@@ -22,7 +22,7 @@
   "version": "0.0.3",
   "private": false,
   "dependencies": {
-    "@midasit-dev/moaui": "^0.1.122",
+    "@midasit-dev/moaui": "^0.1.123",
     "framer-motion": "^11.0.25",
     "jsoneditor": "^10.0.1",
     "lodash": "^4.17.21",

@@ -34,7 +34,7 @@
 }
 
 input:checked + .slider {
-  background: linear-gradient(to left, #2196f3, #83f1cd);
+	background: linear-gradient(to left, #2196f3, #83f1cd);
 }
 
 input:focus + .slider {

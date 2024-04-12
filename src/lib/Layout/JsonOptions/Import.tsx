@@ -14,8 +14,8 @@ import { useSetRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
 import { Canvas, ExportLayers, Layers } from '../../Common/types';
 
-const App = (props: { openJsonImportMenu: boolean }) => {
-	const { openJsonImportMenu } = props;
+const App = (props: { openJsonImportMenu: boolean; setOpenJsonImportMenu: any }) => {
+	const { openJsonImportMenu, setOpenJsonImportMenu } = props;
 	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
@@ -29,13 +29,20 @@ const App = (props: { openJsonImportMenu: boolean }) => {
 					<Icon iconName='FolderOpen' />
 				</IconButton>
 			</Tooltip> */}
-			{open && <ImportDialog open={open} setDialogOpen={setOpen} />}
+			{open && (
+				<ImportDialog
+					open={open}
+					setDialogOpen={setOpen}
+					setOpenJsonImportMenu={setOpenJsonImportMenu}
+				/>
+			)}
 		</GuideBox>
 	);
 };
 
 App.defaultProps = {
 	openJsonImportMenu: false,
+	setOpenJsonImportMenu: () => {},
 };
 
 export default App;
@@ -54,7 +61,7 @@ const getKeyByValue = (map: Map<string, number>, value: number) => {
 	return '';
 };
 
-const ImportDialog = ({ open, setDialogOpen }: any) => {
+const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 	const [value, setValue] = useState(1);
 	const [items, setItems] = useState<Map<string, number>>(new Map([['NONE', 1]]));
 
@@ -103,8 +110,8 @@ const ImportDialog = ({ open, setDialogOpen }: any) => {
 				setTempLayers(data.layers);
 			}
 		};
-
-		init();
+		if(open === true)
+			init();
 	}, [items, setDialogOpen, value]);
 
 	//update layers value
@@ -122,11 +129,16 @@ const ImportDialog = ({ open, setDialogOpen }: any) => {
 
 	const [scaleValue] = useState(0.5);
 
+	function onClose(){
+		setDialogOpen(false);
+		setOpenJsonImportMenu(false);
+	}
+
 	return (
 		<Dialog
 			open={open}
 			setOpen={setDialogOpen}
-			onClose={() => setDialogOpen(false)}
+			onClose={onClose}
 			headerTitle='Select Layer Import JSON'
 		>
 			<GuideBox spacing={2} row>
