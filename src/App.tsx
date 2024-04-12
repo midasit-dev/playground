@@ -7,6 +7,6 @@ const App = () => (
 		<Playground />
 		<SideBar />
 	</>
-)
+);
 
 export default App;

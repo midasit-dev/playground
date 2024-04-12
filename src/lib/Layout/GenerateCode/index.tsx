@@ -15,7 +15,7 @@ const wrappedGuideBoxStyle = {
 	spacing: 2,
 };
 
-const GenerateCode = (props: { openCodeMenu: boolean, setOpenCodeMenu:any }) => {
+const GenerateCode = (props: { openCodeMenu: boolean; setOpenCodeMenu: any }) => {
 	const { openCodeMenu, setOpenCodeMenu } = props;
 	const [open, setOpen] = useState(false);
 	const [fileName, setFileName] = useState<string>('');
@@ -25,18 +25,13 @@ const GenerateCode = (props: { openCodeMenu: boolean, setOpenCodeMenu:any }) => 
 		setOpen(openCodeMenu);
 	}, [openCodeMenu]);
 
-	function onClose(){
+	function onClose() {
 		setOpen(false);
 		setOpenCodeMenu(false);
 	}
 
 	return (
-		<Dialog
-			open={open}
-			setOpen={setOpen}
-			onClose={onClose}
-			headerTitle='Select Layer Import JSON'
-		>
+		<Dialog open={open} setOpen={setOpen} onClose={onClose} headerTitle='Select Layer Import JSON'>
 			<GuideBox {...wrappedGuideBoxStyle}>
 				<Typography variant='h1'>CODE</Typography>
 				<GuideBox row verCenter spacing={1}>

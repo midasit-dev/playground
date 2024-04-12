@@ -110,8 +110,7 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 				setTempLayers(data.layers);
 			}
 		};
-		if(open === true)
-			init();
+		if (open === true) init();
 	}, [items, setDialogOpen, value]);
 
 	//update layers value
@@ -129,7 +128,7 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 
 	const [scaleValue] = useState(0.5);
 
-	function onClose(){
+	function onClose() {
 		setDialogOpen(false);
 		setOpenJsonImportMenu(false);
 	}
