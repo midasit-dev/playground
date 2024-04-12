@@ -1,0 +1,92 @@
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(to right, rgb(31, 240, 111), #83d6f0);
+}
+
+.slider:before {
+	position: absolute;
+	content: '';
+	height: 26px;
+	width: 25px;
+	left: 5px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background: linear-gradient(to left, #2196f3, #83f1cd);
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.slider {
+	border-radius: 4px;
+}
+
+.slider:before {
+	border-radius: 3px;
+}
+
+.slider:after {
+	border-radius: 3px;
+}
+
+.layer,
+.componentized,
+.checkedlayer,
+.uncheckedcomponentized {
+	position: absolute;
+	top: 53%;
+	transform: translateY(-50%);
+	opacity: 0.5;
+	width: 100%;
+	text-align: center;
+	cursor: pointer;
+	transition: opacity 0.4s ease-in-out;
+}
+
+.checkedlayer {
+	opacity: 1;
+	right: 12px;
+}
+
+.layer {
+	right: 12px;
+}
+
+.uncheckedcomponentized {
+	opacity: 1;
+	left: 14px;
+}
+
+.componentized {
+	left: 14px;
+}
