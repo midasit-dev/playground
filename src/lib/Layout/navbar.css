@@ -10,4 +10,5 @@
 	align-items: center; /* 세로 방향 가운데 정렬 */
 	padding: 0.5rem 1rem; /* 상하 패딩 */
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* 하단 경계선 */
+	height: 300
 }
