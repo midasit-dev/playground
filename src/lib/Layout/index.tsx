@@ -52,7 +52,7 @@ const App = () => {
 			<div onClick={onClickOutside} style={{ width: '100%', height: '2000px' }}>
 				<GuideBox width='100%' height='inherit' marginTop={0}>
 					{/* <GuideBox row width='100%' verCenter > */}
-					<div
+					{/* <div
 						style={{ position: 'fixed', marginLeft: '10px' }}
 						onClick={(e) => {
 							e.stopPropagation();
@@ -63,7 +63,7 @@ const App = () => {
 							{openJsonExportMenu && <ExportJson openJsonExportMenu={openJsonExportMenu} />}
 							{openCodeMenu && <GenerateCode />}
 						</GuideBox>
-					</div>
+					</div> */}
 					{/** Sidebar Buttons */}
 					{/* <GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
 							<Typography color='#a5a5a7'>Ctrl + ]</Typography>

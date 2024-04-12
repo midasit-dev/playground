@@ -10,9 +10,9 @@ function Navbar(props: { setOpenSideMenu: any; setMode: any; mode: string }) {
 	return (
 		<div className='navbar'>
 			<div style={{ width: '20%', display: 'flex', justifyContent: 'left', alignItems: 'center' }}>
-				<IconButton transparent onClick={() => setOpenSideMenu(true)}>
+				{/* <IconButton transparent onClick={() => setOpenSideMenu(true)}>
 					<Icon iconName='Menu' />
-				</IconButton>
+				</IconButton> */}
 			</div>
 			<div
 				style={{ width: '60%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
