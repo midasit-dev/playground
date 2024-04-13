@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import './styles.css';
 
 const App = () => {
 	const [clicked, setCliked] = useState(false);
 
 	return (
-		<div 
+		<div
 			style={{
 				width: 80,
 				height: 80,
 				position: 'fixed',
-				bottom: 100,
+				bottom: 50,
 				left: '50%',
 				marginLeft: -75,
 				background: 'hsla(0, 0%, 100%, 0.2)',
@@ -24,9 +24,9 @@ const App = () => {
 				className='layers-dockbar-item'
 				whileHover={{ scale: 1.2, rotate: 90 }}
 				whileTap={{
-					scale: 0.8,	
+					scale: 0.8,
 					rotate: -90,
-					borderRadius: '100%'
+					borderRadius: '100%',
 				}}
 				style={{
 					background: clicked ? 'red' : 'white',

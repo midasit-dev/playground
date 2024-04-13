@@ -15,10 +15,12 @@ const Switch = (props: { setMode: any }) => {
 			<input type='checkbox' checked={isChecked} onChange={toggleSwitch} />
 			<span className='slider'></span>
 			<span className={isChecked ? 'layer' : 'checkedlayer'}>
-				<Icon iconName={isChecked ? 'DashboardOutlined' : 'Dashboard'} /> {/* 'Dashboard' 아이콘은 오른쪽에 위치 */}
+				<Icon iconName={isChecked ? 'DashboardOutlined' : 'Dashboard'} />{' '}
+				{/* 'Dashboard' 아이콘은 오른쪽에 위치 */}
 			</span>
 			<span className={isChecked ? 'uncheckedcomponentized' : 'componentized'}>
-				<Icon iconName={isChecked ? 'Palette' : 'PaletteOutlined'} /> {/* 'Adjust' 아이콘은 왼쪽에 위치 */}
+				<Icon iconName={isChecked ? 'Palette' : 'PaletteOutlined'} />{' '}
+				{/* 'Adjust' 아이콘은 왼쪽에 위치 */}
 			</span>
 		</label>
 	);

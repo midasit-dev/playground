@@ -17,7 +17,7 @@ function Navbar(props: { setOpenSideMenu: any; setMode: any; mode: string }) {
 			<div
 				style={{ width: '60%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
 			>
-				<Typography size='medium'>{mode}</Typography>	
+				<Typography size='medium'>{mode}</Typography>
 			</div>
 			<div style={{ width: '20%', display: 'flex', justifyContent: 'right', alignItems: 'center' }}>
 				<GuideBox height='inherit' row verCenter spacing={1}>
