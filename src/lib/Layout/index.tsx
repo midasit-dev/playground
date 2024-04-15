@@ -9,9 +9,12 @@ import Componentized from './Componentized';
 import GenerateCode from './GenerateCode';
 import Navbar from './navbar';
 import Menu from './menu';
+import DesignShowcase from './DesignShowcase';
+
+export const modeName = ['DesignShowcase', 'Layers', 'Componentized'];
 
 function useStateApp() {
-	const [mode, setMode] = React.useState<'Layers' | 'Componentized'>('Layers');
+	const [mode, setMode] = React.useState<(typeof modeName)[number]>(modeName[0]);
 	return { mode, setMode };
 }
 
@@ -92,6 +95,7 @@ const App = () => {
 					{/* </GuideBox> */}
 
 					<GuideBox width='100%' row height='inherit' spacing={3} marginTop={7}>
+						{mode === 'DesignShowcase' && <DesignShowcase />}
 						{mode === 'Layers' && <Layers />}
 						{mode === 'Componentized' && <Componentized />}
 					</GuideBox>
