@@ -1,3 +1,6 @@
 import { default as Playground } from './playground';
+import { getCanvasValue } from './functions';
 
-export { Playground };
+export default Playground;
+
+export { getCanvasValue };

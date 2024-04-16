@@ -1,12 +1,17 @@
 import React from 'react';
-import Playground from './lib/playground';
+import Playground, { getCanvasValue } from './lib';
 import SideBar from './list';
 
-const App = () => (
-	<>
-		<Playground />
-		<SideBar />
-	</>
-);
+const App = () => {
+	const value = getCanvasValue();
+	console.log('app.tsx', value);
+
+	return (
+		<>
+			<SideBar />
+			<Playground />
+		</>
+	);
+};
 
 export default App;
