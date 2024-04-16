@@ -21,7 +21,7 @@ export default function ShowBox() {
 					display: 'flex',
 					flexWrap: 'wrap',
 					alignContent: 'flex-start',
-					backgroundColor: '#ffffff',
+					backgroundColor: 'rgba(255, 255, 255, 0.9)',
 					boxShadow:
 						'var(--elevation-200-canvas, 0px 0px .5px rgba(0, 0, 0, .18), 0px 3px 8px rgba(0, 0, 0, .1), 0px 1px 3px rgba(0, 0, 0, .1))',
 					borderRadius: '0.25rem',
