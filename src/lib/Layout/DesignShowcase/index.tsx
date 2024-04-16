@@ -1,9 +1,34 @@
 import React from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { CanvasState, ShowCaseBoxState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
 
 export default function DesignShowcase() {
+	const [startX, setStartX] = React.useState(0);
+
+	//Recoil
+	const canvasState = useRecoilValue(CanvasState);
+
+	React.useEffect(() => {
+		const handleResize = () => {
+			console.log('DesignShowcase mounted');
+			const calcX = window.innerWidth / 2 - canvasState.width / 2;
+			console.log('calcX', calcX);
+			setStartX(calcX);
+		};
+
+		handleResize();
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			console.log('DesignShowcase unmounted');
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
 	return (
 		<div
 			style={{
@@ -12,7 +37,7 @@ export default function DesignShowcase() {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				overflow: "hidden"
+				overflow: 'hidden',
 			}}
 		>
 			<motion.div
@@ -42,7 +67,19 @@ export default function DesignShowcase() {
 						<ColorfulBg key='chat-login-background' />
 					</motion.div>
 				</AnimatePresence>
-				<ShowBox />
+				<div
+					style={{
+						width: '100%',
+						height: '100%',
+						position: 'absolute',
+						top: '20%',
+						left: startX,
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
+					<ShowBox />
+				</div>
 			</motion.div>
 		</div>
 	);
