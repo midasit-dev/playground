@@ -4,6 +4,8 @@ import { SnackbarProvider, closeSnackbar } from 'notistack';
 import { RecoilRoot } from 'recoil';
 import { IconButton, Icon } from '@midasit-dev/moaui';
 
+import './output.css';
+
 export default function Playground() {
 	return (
 		<RecoilRoot>
