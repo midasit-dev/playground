@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import './styles.css';
 
 const App = () => {
 	const [clicked, setCliked] = useState(false);
@@ -21,15 +20,13 @@ const App = () => {
 			}}
 		>
 			<motion.div
-				className='layers-dockbar-item'
-				whileHover={{ scale: 1.2, rotate: 90 }}
-				whileTap={{
-					scale: 0.8,
-					rotate: -90,
-					borderRadius: '100%',
-				}}
+				whileHover={{ scale: 1.2 }}
+				whileTap={{ scale: 0.9 }}
 				style={{
 					background: clicked ? 'red' : 'white',
+					width: 80,
+					height: 80,
+					cursor: 'pointer',
 				}}
 				onClick={() => setCliked(!clicked)}
 			/>
