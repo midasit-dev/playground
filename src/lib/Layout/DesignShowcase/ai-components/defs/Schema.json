@@ -1,0 +1,18 @@
+{
+    "schema": {
+        "name": "circleAreabyHjang2",
+        "description": "Calculate the area of a circle",
+        "parameters": {
+            "type": "object",
+            "required": [
+                "radius"
+            ],
+            "properties": {
+                "radius": {
+                    "type": "number",
+                    "description": "The radius of the circle"
+                }
+            }
+        }
+    }
+}

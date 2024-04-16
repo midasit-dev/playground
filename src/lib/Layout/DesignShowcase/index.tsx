@@ -4,6 +4,11 @@ import { CanvasState, ShowCaseBoxState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
+import Layout from './ai-components/Abracadabra';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { IListItem } from "./ai-components/defs/Interface";
+
+const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
 	const [startX, setStartX] = React.useState(0);
@@ -81,6 +86,9 @@ export default function DesignShowcase() {
 					<ShowBox />
 				</div>
 			</motion.div>
+			<QueryClientProvider client={queryClient}>
+				<Layout onItemClick={(item: IListItem) => {}} />
+			</QueryClientProvider>
 		</div>
 	);
 }
