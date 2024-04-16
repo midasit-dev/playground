@@ -94,27 +94,38 @@ const App = () => {
 							alignItems: 'center',
 						}}
 					>
+						{/** 위치 고정을 위해 div Wrapping */}
 						<div
-							className='wrapper-box'
 							style={{
-								width: canvasState.width,
-								height: canvasState.height,
-								maxWidth: '100%',
-								maxHeight: 'calc(100vh - 32px)',
-								boxSizing: 'border-box',
-								display: 'flex',
-								flexWrap: 'wrap',
-								alignContent: 'flex-start',
-								backgroundColor: 'var(--color-bg, #ffffff)',
-								boxShadow:
-									'var(--elevation-200-canvas, 0px 0px .5px rgba(0, 0, 0, .18), 0px 3px 8px rgba(0, 0, 0, .1), 0px 1px 3px rgba(0, 0, 0, .1))',
-								borderRadius: '0.25rem',
+								position: 'relative',
+								width: 'auto',
+								height: 'auto',
 							}}
-							tabIndex={0}
-							onKeyDown={handleOnKeyDown}
 						>
-							<VirtualLayer />
-							{boxes.map((box) => box.element)}
+							<div className='absolute top-0 left-2'>absolute</div>
+							<div
+								className='wrapper-box'
+								style={{
+									width: canvasState.width,
+									height: canvasState.height,
+									maxWidth: '100%',
+									maxHeight: 'calc(100vh - 32px)',
+									boxSizing: 'border-box',
+									display: 'flex',
+									flexWrap: 'wrap',
+									alignContent: 'flex-start',
+									backgroundColor: 'var(--color-bg, #ffffff)',
+									border: '1px solid #e7e7e9',
+									// boxShadow:
+									// 	'var(--elevation-200-canvas, 0px 0px .5px rgba(0, 0, 0, .18), 0px 3px 8px rgba(0, 0, 0, .1), 0px 1px 3px rgba(0, 0, 0, .1))',
+									// borderRadius: '0.25rem',
+								}}
+								tabIndex={0}
+								onKeyDown={handleOnKeyDown}
+							>
+								<VirtualLayer />
+								{boxes.map((box) => box.element)}
+							</div>
 						</div>
 					</div>
 					<GuideBox show>

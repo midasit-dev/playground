@@ -20,7 +20,7 @@ const styleBackground = {
 	left: 0,
 	bottom: 0,
 	width: '300px',
-	background: '#fff',
+	background: '#272b2c',
 } as MotionStyle;
 
 const sidebar = {

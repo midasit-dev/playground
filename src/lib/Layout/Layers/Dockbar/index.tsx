@@ -5,29 +5,12 @@ const App = () => {
 	const [clicked, setCliked] = useState(false);
 
 	return (
-		<div
-			style={{
-				width: 80,
-				height: 80,
-				position: 'fixed',
-				bottom: 50,
-				left: '50%',
-				marginLeft: -75,
-				background: 'hsla(0, 0%, 100%, 0.2)',
-				padding: 20,
-				borderRadius: 20,
-				boxShadow: '0 2px 3px 0 hsla(0, 0%, 0%, 0.07),0 10px 15px 0 hsla(0, 0%, 0%, 0.05)',
-			}}
-		>
+		<div className='-ml-20 w-20 h-20 bottom-10 left-1/2 bg-white p-4 rounded-md shadow-md box-content fixed'>
 			<motion.div
+				className='w-20 h-20 rounded-md cursor-pointer'
 				whileHover={{ scale: 1.2 }}
 				whileTap={{ scale: 0.9 }}
-				style={{
-					background: clicked ? 'red' : 'white',
-					width: 80,
-					height: 80,
-					cursor: 'pointer',
-				}}
+				style={{ background: clicked ? 'red' : 'gray' }}
 				onClick={() => setCliked(!clicked)}
 			/>
 		</div>
