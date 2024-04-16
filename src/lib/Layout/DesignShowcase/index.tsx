@@ -6,7 +6,7 @@ import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
 import Layout from './ai-components/Abracadabra';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { IListItem } from "./ai-components/defs/Interface";
+import { IListItem } from './ai-components/defs/Interface';
 
 const queryClient = new QueryClient();
 
