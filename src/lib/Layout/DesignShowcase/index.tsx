@@ -1,9 +1,17 @@
 import React from 'react';
-
+import ShowBox from './showbox';
 export default function DesignShowcase() {
 	return (
-		<div>
-			<h1>Design Showcase</h1>
+		<div
+			style={{
+				width: '100%',
+				height: 'calc(100vh - 32px)',
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}
+		>
+			<ShowBox />
 		</div>
 	);
 }
