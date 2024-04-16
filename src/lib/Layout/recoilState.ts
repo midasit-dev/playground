@@ -124,3 +124,11 @@ export const SelectedModifyComponentPropsState = atom<Layer | null>({
 	key: 'SelectedModifyComponentPropsState',
 	default: null,
 });
+
+export const ShowCaseBoxState = atom<any>({
+	key: 'ShowCaseBoxState',
+	default: {
+		x: 0,
+		y: 0,
+	},
+});
