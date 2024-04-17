@@ -13,7 +13,7 @@ interface IFooterProps {
 }
 
 function Footer(props: IFooterProps) {
-	const [disabled, setDisabled] = React.useState(false);
+	const [isLoading, setLoading] = React.useState(false);
 	const queryClient = useQueryClient();
 
 	return (
@@ -30,9 +30,9 @@ function Footer(props: IFooterProps) {
 			>
 				<Selection onClick={props?.onItemClick} />
 				<InputField
-					disabled={disabled}
+					isLoading={isLoading}
 					onSend={(value: string) => {
-						setDisabled(true);
+						setLoading(true);
 
 						if (value !== '') {
 							// queryClient.refetchQueries([QueryKeys.SELECTION_KEY]);
@@ -45,11 +45,11 @@ function Footer(props: IFooterProps) {
 							);
 						}
 						setTimeout(() => {
-							setDisabled(false);
+							setLoading(false);
 						}, 3000);
 					}}
 					onStop={() => {
-						setDisabled(true);
+						setLoading(true);
 					}}
 				/>
 			</Stack>
