@@ -13,10 +13,11 @@ import { Stack } from '@mui/material';
 interface ISelectionProps {
 	enabled?: boolean;
 	onClick?: (item: IListItem) => void;
+	onDelete?: (item: IListItem) => void;
 }
 
 export const Selection = (props: ISelectionProps) => {
-	const { onClick = () => {} } = props;
+	const { onClick = () => {}, onDelete = () => {} } = props;
 	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		QueryKeys.SELECTION_KEY,
 		() => {
@@ -42,7 +43,12 @@ export const Selection = (props: ISelectionProps) => {
 		<Stack direction='row' spacing={2}>
 			<AnimatePresence mode='wait'>
 				{isSuccess && (
-					<SelectionList key='selection-success' list={data as Array<any>} onClick={onClick} />
+					<SelectionList
+						key='selection-success'
+						list={data as Array<any>}
+						onClick={onClick}
+						onDelete={onDelete}
+					/>
 				)}
 				{isFetching && <ContentLoadingSkeleton key='selection-fetching' />}
 				{isError && (

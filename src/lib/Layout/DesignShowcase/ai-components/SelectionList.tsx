@@ -1,14 +1,15 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { Button, Panel, Separator } from '@midasit-dev/moaui';
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, IconButton } from '@mui/material';
 import { IListItem } from './defs/Interface';
-import { max } from 'lodash';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ISelectionListProps {
 	list: Array<IListItem>;
 	onClick?: (item: IListItem) => void;
+	onDelete?: (item: IListItem) => void;
 }
 
 const noDragTextArea = {
@@ -19,17 +20,18 @@ const noDragTextArea = {
 const scoreColors: string[] = ['linear-gradient(to right, #642B73, #c6426e)', '#000'];
 
 export const SelectionList = (props: ISelectionListProps) => {
-	const { list, onClick } = props;
+	const { list, onClick, onDelete } = props;
+	const [topMenuAnchor, setTopMenuAnchor] = React.useState<string | number | null>(null);
 
 	return (
 		<React.Fragment>
 			{list &&
 				list.length > 0 &&
-				list.map((response: IListItem, index: number) => {
+				list.map((item: IListItem, index: number) => {
 					return (
 						<motion.div
 							layout
-							key={`AI-response-${response.functionId}`}
+							key={`AI-response-${item.functionId}`}
 							initial={{
 								y: 100,
 								opacity: 0,
@@ -48,8 +50,49 @@ export const SelectionList = (props: ISelectionListProps) => {
 								duration: 0.5,
 							}}
 						>
-							<Panel width='16rem' height='12rem' padding={2} key={response.functionId}>
-								<Stack justifyContent='space-between' direction='column' height='100%'>
+							<Panel width='16rem' height='12rem' padding={0} key={item.functionId}>
+								<Stack
+									position='absolute'
+									width='16rem'
+									height='1.5rem'
+									justifyContent='center'
+									alignItems='center'
+									sx={{
+										borderTopRightRadius: '4px',
+										borderTopLeftRadius: '4px',
+										overflow: 'hidden',
+									}}
+									onMouseEnter={() => setTopMenuAnchor(item.functionId)}
+									onMouseLeave={() => setTopMenuAnchor(null)}
+								>
+									<AnimatePresence mode='popLayout'>
+										{topMenuAnchor === item.functionId && (
+											<motion.div
+												style={{
+													height: '100%',
+													width: '100%',
+													justifyContent: 'flex-end',
+													display: 'flex',
+													background:
+														'linear-gradient(225deg, #f2709c 5%, #ff9472 15%, transparent 0%)',
+												}}
+												initial={{ opacity: 0, x: 50 }}
+												animate={{ opacity: 1, x: 0 }}
+												exit={{ opacity: 0, x: 50 }}
+												transition={{
+													type: 'spring',
+													stiffness: 100,
+													damping: 20,
+												}}
+											>
+												<IconButton onClick={() => onDelete?.(item)}>
+													<DeleteIcon fontSize='small' />
+												</IconButton>
+											</motion.div>
+										)}
+									</AnimatePresence>
+								</Stack>
+								<Stack justifyContent='space-between' direction='column' height='100%' padding={2}>
 									<Stack direction='row' justifyContent='space-between'>
 										<Stack>
 											<Typography sx={noDragTextArea}>{`Suggestion`}</Typography>
@@ -77,7 +120,7 @@ export const SelectionList = (props: ISelectionListProps) => {
 													WebkitTextFillColor: 'transparent',
 												}}
 											>
-												{`${String(response.score * 100)}%`}
+												{`${String(item.score * 100)}%`}
 											</Typography>
 										</Stack>
 									</Stack>
@@ -94,11 +137,17 @@ export const SelectionList = (props: ISelectionListProps) => {
 											...noDragTextArea,
 										}}
 									>
-										{response.functionName}
+										{item.functionName}
 									</Typography>
 									<Separator />
-									<Stack justifyContent='right' direction='row' width='100%'>
-										<Button variant='text' onClick={() => onClick?.(response)}>
+									<Stack
+										justifyContent='space-between'
+										direction='row'
+										alignItems='center'
+										width='100%'
+									>
+										<div />
+										<Button variant='text' onClick={() => onClick?.(item)}>
 											Show
 										</Button>
 									</Stack>

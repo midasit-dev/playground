@@ -28,7 +28,18 @@ function Footer(props: IFooterProps) {
 				width='100%'
 				spacing={2}
 			>
-				<Selection onClick={props?.onItemClick} />
+				<Selection
+					onClick={props?.onItemClick}
+					onDelete={(item) => {
+						queryClient.setQueryData(
+							QueryKeys.SELECTION_KEY,
+							(prev: Array<IListItem> | undefined) => {
+								if (!prev) return [];
+								return prev.filter((i) => i.functionId !== item.functionId);
+							},
+						);
+					}}
+				/>
 				<InputField
 					isLoading={isLoading}
 					onSend={(value: string) => {
@@ -39,8 +50,8 @@ function Footer(props: IFooterProps) {
 							queryClient.setQueryData(
 								QueryKeys.SELECTION_KEY,
 								(prev: Array<IListItem> | undefined) => {
-									if (!prev) return [{ functionId: uniqueId(), functionName: value, score: 0.9 }];
-									return [...prev, { functionId: uniqueId(), functionName: value, score: 0.9 }];
+									if (!prev) return [{ functionId: uniqueId(), functionName: value, score: 0.6 }];
+									return [...prev, { functionId: uniqueId(), functionName: value, score: 0.6 }];
 								},
 							);
 						}
