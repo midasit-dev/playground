@@ -20,7 +20,6 @@ const styleBackground = {
 	left: 0,
 	bottom: 0,
 	width: '300px',
-	background: '#272b2c',
 } as MotionStyle;
 
 const sidebar = {
@@ -33,7 +32,7 @@ const sidebar = {
 		},
 	}),
 	closed: {
-		clipPath: 'circle(30px at 40px 40px)',
+		clipPath: 'circle(20px at 30px 30px)',
 		transition: {
 			delay: 0.5,
 			type: 'spring',
@@ -56,7 +55,11 @@ const SideBar = () => {
 			ref={containerRef}
 			style={styleNav}
 		>
-			<motion.div variants={sidebar} style={styleBackground} />
+			<motion.div 
+				variants={sidebar} 
+				style={styleBackground}
+				className='bg-pg-blue-medium'
+			/>
 			<Navigation />
 			<MenuToggle toggle={() => toggleOpen()} />
 		</motion.nav>

@@ -77,6 +77,7 @@ const App = () => {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				style={{ width: '100%', height: '100%' }}
+				className='bg-gray-100'
 			>
 				<GuideBox
 					row
@@ -104,7 +105,7 @@ const App = () => {
 						>
 							<div className='absolute top-0 left-2'>absolute</div>
 							<div
-								className='wrapper-box'
+								className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium'
 								style={{
 									width: canvasState.width,
 									height: canvasState.height,
@@ -116,9 +117,6 @@ const App = () => {
 									alignContent: 'flex-start',
 									backgroundColor: 'var(--color-bg, #ffffff)',
 									border: '1px solid #e7e7e9',
-									// boxShadow:
-									// 	'var(--elevation-200-canvas, 0px 0px .5px rgba(0, 0, 0, .18), 0px 3px 8px rgba(0, 0, 0, .1), 0px 1px 3px rgba(0, 0, 0, .1))',
-									// borderRadius: '0.25rem',
 								}}
 								tabIndex={0}
 								onKeyDown={handleOnKeyDown}

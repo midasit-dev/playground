@@ -16,7 +16,7 @@ const styleUl = {
 	padding: '25px',
 	position: 'absolute',
 	top: '100px',
-	width: '230px',
+	width: '300px',
 } as MotionStyle;
 
 export const Navigation = () => (

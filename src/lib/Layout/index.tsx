@@ -1,105 +1,65 @@
-import React, { useEffect } from 'react';
-import { GuideBox, Typography } from '@midasit-dev/moaui';
-import ModeButton from '../Shared/ModeButton';
-import JsonOptions from './JsonOptions';
-import ExportJson from './JsonOptions/Export';
-import ImportJson from './JsonOptions/Import';
+import React, { useState } from 'react';
 import Layers from './Layers';
 import Componentized from './Componentized';
-import GenerateCode from './GenerateCode';
-import Navbar from './navbar';
-import Menu from './menu';
+import { motion } from 'framer-motion';
 import DesignShowcase from './DesignShowcase';
 
-export const modeName = ['Design Showcase', 'Layers', 'Componentized'];
+export const modeName = ['Layers', 'Componentized'];
 
-function useStateApp() {
-	const [mode, setMode] = React.useState<(typeof modeName)[number]>(modeName[0]);
-	return { mode, setMode };
-}
+let tabs = [
+	{ id: 'showcase', label: 'Showcase' },
+	{ id: 'layers', label: 'Layers' },
+	{ id: 'components', label: 'Components' },
+];
+
+const Navbar = (props: any) => {
+	const { activeTab, setActiveTab } = props;
+
+	return (
+		<div className='flex space-x-6 w-full h-14 justify-center content-center border-b border-b-pg-gray-line backdrop-filter backdrop-blur-3xl bg-white bg-opacity-50'>
+			{tabs.map((tab) => (
+				<motion.div
+					key={tab.id}
+					onClick={() => setActiveTab(tab.id)}
+					className='relative pb-3 pt-4 transition cursor-pointer'
+				>
+					{activeTab === tab.id && (
+						<motion.span
+							layoutId='bubble'
+							className='absolute inset-0 z-10 bg-transparent py-5 border-b border-b-pg-blue-medium'
+							transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+						/>
+					)}
+
+					<motion.p
+						className='text-md'
+						whileHover={{ color: '#62baf3' }}
+						style={{
+							color: activeTab === tab.id ? '#62baf3' : '#0f172a',
+						}}
+					>
+						{tab.label}
+					</motion.p>
+				</motion.div>
+			))}
+		</div>
+	);
+};
 
 const App = () => {
-	const { mode, setMode } = useStateApp();
-	const [openSideMenu, setOpenSideMenu] = React.useState(false);
-	const [openCodeMenu, setOpenCodeMenu] = React.useState(false);
-	const [openJsonImportMenu, setOpenJsonImportMenu] = React.useState(false);
-	const [openJsonExportMenu, setOpenJsonExportMenu] = React.useState(false);
-
-	//Toogle Menu Event 등록/삭제
-	useEffect(() => {
-		window.addEventListener('keydown', (e) => {
-			if (e.ctrlKey && e.key === ']')
-				setMode((prev: any) => (prev === 'Layers' ? 'Componentized' : 'Layers'));
-		});
-
-		return () => window.removeEventListener('keydown', () => {});
-	}, [setMode]);
-
-	const onClickOutside = React.useCallback(() => {
-		setOpenSideMenu(false);
-		setOpenJsonImportMenu(false);
-		setOpenJsonExportMenu(false);
-		setOpenCodeMenu(false);
-	}, [setOpenSideMenu, setOpenJsonImportMenu, setOpenJsonExportMenu, setOpenCodeMenu]);
+	const [activeTab, setActiveTab] = useState(tabs[0].id);
 
 	return (
 		<>
-			<Navbar setOpenSideMenu={setOpenSideMenu} setMode={setMode} mode={mode} />
-			<Menu
-				openSideMenu={openSideMenu}
-				setOpenJsonImportMenu={setOpenJsonImportMenu}
-				setOpenJsonExportMenu={setOpenJsonExportMenu}
-				setOpenCodeMenu={setOpenCodeMenu}
-			/>
-			<div onClick={onClickOutside} style={{ width: '100%', height: '2000px' }}>
-				<GuideBox width='100%' height='inherit' marginTop={0}>
-					{/* <GuideBox row width='100%' verCenter > */}
-					{/* <div
-						style={{ position: 'fixed', marginLeft: '10px' }}
-						onClick={(e) => {
-							e.stopPropagation();
-						}}
-					>
-						<GuideBox row verCenter spacing={2} marginTop={7}>
-							{openJsonImportMenu && (
-								<ImportJson
-									setOpenJsonImportMenu={setOpenJsonImportMenu}
-									openJsonImportMenu={openJsonImportMenu}
-								/>
-							)}
-							{openJsonExportMenu && (
-								<ExportJson
-									setOpenJsonExportMenu={setOpenJsonExportMenu}
-									openJsonExportMenu={openJsonExportMenu}
-								/>
-							)}
-							{openCodeMenu && <GenerateCode openCodeMenu={openCodeMenu} setOpenCodeMenu={setOpenCodeMenu}/>}
-						</GuideBox>
-					</div> */}
-					{/** Sidebar Buttons */}
-					{/* <GuideBox height='inherit' row verCenter spacing={1} marginTop={7}>
-							<Typography color='#a5a5a7'>Ctrl + ]</Typography>
-							<GuideBox row verCenter>
-								<ModeButton
-									currentMenuState={[mode, setMode]}
-									iconName='Dashboard'
-									menuName='Layers'
-								/>
-								<ModeButton
-									currentMenuState={[mode, setMode]}
-									iconName='Adjust'
-									menuName='Componentized'
-								/>
-							</GuideBox>
-						</GuideBox> */}
-					{/* </GuideBox> */}
-
-					<GuideBox width='100%' row height='inherit' spacing={3} marginTop={7}>
-						{mode === 'Design Showcase' && <DesignShowcase />}
-						{mode === 'Layers' && <Layers />}
-						{mode === 'Componentized' && <Componentized />}
-					</GuideBox>
-				</GuideBox>
+			<Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+			<div style={{ width: '100%' }}>
+				<div className='w-full h-inherit'>
+					<div className='w-full h-inherit'>
+						{activeTab === 'showcase' && <DesignShowcase />}
+						{activeTab === 'layers' && <Layers />}
+						{activeTab === 'components' && <Componentized />}
+					</div>
+				</div>
 			</div>
 		</>
 	);
