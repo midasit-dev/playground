@@ -1,14 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import { Button } from '@midasit-dev/moaui';
-import { Card, CardContent, CardActions, Typography } from '@mui/material';
+import { Button, Panel, Separator } from '@midasit-dev/moaui';
+import { Typography, Stack } from '@mui/material';
 import { IListItem } from './defs/Interface';
+import { max } from 'lodash';
 
 interface ISelectionListProps {
 	list: Array<IListItem>;
 	onClick?: (item: IListItem) => void;
 }
+
+const noDragTextArea = {
+	cursor: 'default',
+	userSelect: 'none',
+};
+
+const scoreColors: string[] = ['linear-gradient(to right, #642B73, #c6426e)', '#000'];
 
 export const SelectionList = (props: ISelectionListProps) => {
 	const { list, onClick } = props;
@@ -40,32 +48,62 @@ export const SelectionList = (props: ISelectionListProps) => {
 								duration: 0.5,
 							}}
 						>
-							<Card key={response.functionId} sx={{ width: '10rem', height: '7.5rem' }}>
-								<CardContent>
+							<Panel width='16rem' height='12rem' padding={2} key={response.functionId}>
+								<Stack justifyContent='space-between' direction='column' height='100%'>
+									<Stack direction='row' justifyContent='space-between'>
+										<Stack>
+											<Typography sx={noDragTextArea}>{`Suggestion`}</Typography>
+											<Typography
+												variant='subtitle2'
+												sx={{
+													...noDragTextArea,
+													fontWeight: 'bold',
+													lineHeight: '0.875',
+												}}
+											>
+												{`No. ${index + 1}`}
+											</Typography>
+										</Stack>
+										<Stack direction='column'>
+											<Typography sx={noDragTextArea}>{`Score`}</Typography>
+											<Typography
+												variant='subtitle2'
+												sx={{
+													...noDragTextArea,
+													fontWeight: 'bold',
+													lineHeight: '0.875',
+													background: scoreColors[Math.min(index, scoreColors.length - 1)],
+													WebkitBackgroundClip: 'text',
+													WebkitTextFillColor: 'transparent',
+												}}
+											>
+												{`${String(response.score * 100)}%`}
+											</Typography>
+										</Stack>
+									</Stack>
 									<Typography
-										variant='body1'
+										variant='subtitle1'
 										sx={{
-											lineClamp: 2,
+											WebkitLineClamp: 2,
 											wordBreak: 'break-all',
 											overflow: 'hidden',
 											textOverflow: 'ellipsis',
-											whiteSpace: 'nowrap',
-											cursor: 'default',
-											userSelect: 'none',
+											'-webkit-box-orient': 'vertical',
+											display: '-webkit-box',
+											WebkitUserSelect: 'none',
+											...noDragTextArea,
 										}}
 									>
 										{response.functionName}
 									</Typography>
-									<Typography variant='overline' sx={{ cursor: 'default', userSelect: 'none' }}>
-										{String(response.score)}
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<Button variant='text' onClick={() => onClick?.(response)}>
-										Show
-									</Button>
-								</CardActions>
-							</Card>
+									<Separator />
+									<Stack justifyContent='right' direction='row' width='100%'>
+										<Button variant='text' onClick={() => onClick?.(response)}>
+											Show
+										</Button>
+									</Stack>
+								</Stack>
+							</Panel>
 						</motion.div>
 					);
 				})}
