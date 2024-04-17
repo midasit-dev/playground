@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { Button } from '@midasit-dev/moaui';
 import { Card, CardContent, CardActions, Typography } from '@mui/material';
@@ -14,12 +14,13 @@ export const SelectionList = (props: ISelectionListProps) => {
 	const { list, onClick } = props;
 
 	return (
-		<AnimatePresence mode='popLayout'>
+		<React.Fragment>
 			{list &&
 				list.length > 0 &&
 				list.map((response: IListItem, index: number) => {
 					return (
 						<motion.div
+							layout
 							key={`AI-response-${response.functionId}`}
 							initial={{
 								y: 100,
@@ -36,6 +37,7 @@ export const SelectionList = (props: ISelectionListProps) => {
 							transition={{
 								delay: index * 0.1,
 								type: 'spring',
+								duration: 0.5,
 							}}
 						>
 							<Card key={response.functionId} sx={{ width: '10rem', height: '7.5rem' }}>
@@ -67,7 +69,7 @@ export const SelectionList = (props: ISelectionListProps) => {
 						</motion.div>
 					);
 				})}
-		</AnimatePresence>
+		</React.Fragment>
 	);
 };
 

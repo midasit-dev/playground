@@ -1,12 +1,9 @@
 import React from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 
 import { Stack } from '@midasit-dev/moaui';
 import InputField from './InputField';
 import Selection from './Selection';
 import { IListItem } from './defs/Interface';
-import { ContentLoadingSkeleton } from './Skeletons';
-import { AnimatePresence } from 'framer-motion';
 import { useQueryClient } from 'react-query';
 import { QueryKeys } from './defs/QueryKeys';
 import { uniqueId } from 'lodash';
@@ -31,18 +28,7 @@ function Footer(props: IFooterProps) {
 				width='100%'
 				spacing={2}
 			>
-				<Stack direction='row' spacing={2}>
-					<ErrorBoundary fallback={<div />}>
-						<AnimatePresence mode='popLayout'>
-							<React.Suspense
-								key='keys-for-suspense-root'
-								fallback={<ContentLoadingSkeleton key='key-for-suspense-selection' items={3} />}
-							>
-								<Selection key='key-for-selection' onClick={props?.onItemClick} />
-							</React.Suspense>
-						</AnimatePresence>
-					</ErrorBoundary>
-				</Stack>
+				<Selection onClick={props?.onItemClick} />
 				<InputField
 					disabled={disabled}
 					onSend={(value: string) => {

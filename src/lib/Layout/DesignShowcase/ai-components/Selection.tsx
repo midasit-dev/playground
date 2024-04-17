@@ -3,8 +3,12 @@ import { useQuery } from 'react-query';
 import SelectionList from './SelectionList';
 import { QueryKeys } from './defs/QueryKeys';
 import { IListItem } from './defs/Interface';
+import { AnimatePresence } from 'framer-motion';
 
 import { v4 as uuidv4 } from 'uuid';
+import { ContentLoadingSkeleton } from './Skeletons';
+import FallbackCard from './FallbackCard';
+import { Stack } from '@mui/material';
 
 interface ISelectionProps {
 	enabled?: boolean;
@@ -13,10 +17,10 @@ interface ISelectionProps {
 
 export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {} } = props;
-	const { data } = useQuery(
+	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		QueryKeys.SELECTION_KEY,
 		() => {
-			return new Promise((resolve) => {
+			return new Promise((resolve, reject) => {
 				setTimeout(() => {
 					resolve([
 						{ functionId: uuidv4(), functionName: uuidv4(), score: 0.87 },
@@ -31,12 +35,22 @@ export const Selection = (props: ISelectionProps) => {
 			refetchOnMount: false,
 			refetchOnReconnect: false,
 			refetchInterval: false,
-			useErrorBoundary: true,
-			suspense: true,
 		},
 	);
 
-	return <SelectionList list={data as Array<any>} onClick={onClick} />;
+	return (
+		<Stack direction='row' spacing={2}>
+			<AnimatePresence mode='wait'>
+				{isSuccess && (
+					<SelectionList key='selection-success' list={data as Array<any>} onClick={onClick} />
+				)}
+				{isFetching && <ContentLoadingSkeleton key='selection-fetching' />}
+				{isError && (
+					<FallbackCard key='selection-error' error={error} resetErrorBoundary={refetch} />
+				)}
+			</AnimatePresence>
+		</Stack>
+	);
 };
 
 export default Selection;
