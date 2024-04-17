@@ -718,9 +718,9 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
-.bg-pg-gray-light-1 {
+.bg-pg-blue-medium {
   --tw-bg-opacity: 1;
-  background-color: rgb(231 231 233 / var(--tw-bg-opacity));
+  background-color: rgb(98 186 243 / var(--tw-bg-opacity));
 }
 
 .bg-transparent {
@@ -732,32 +732,12 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-pg-blue-dark {
-  --tw-bg-opacity: 1;
-  background-color: rgb(7 134 200 / var(--tw-bg-opacity));
-}
-
-.bg-pg-blue-medium {
-  --tw-bg-opacity: 1;
-  background-color: rgb(98 186 243 / var(--tw-bg-opacity));
-}
-
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
 
 .p-4 {
   padding: 1rem;
-}
-
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .py-5 {
@@ -771,10 +751,6 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.overline {
-  text-decoration-line: overline;
 }
 
 .shadow-md {
@@ -794,16 +770,6 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.shadow-black {
-  --tw-shadow-color: #000;
-  --tw-shadow: var(--tw-shadow-colored);
-}
-
-.shadow-black\/15 {
-  --tw-shadow-color: rgb(0 0 0 / 0.15);
-  --tw-shadow: var(--tw-shadow-colored);
-}
-
 .outline {
   outline-style: solid;
 }
@@ -815,12 +781,6 @@ video {
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.backdrop-blur-md {
-  --tw-backdrop-blur: blur(12px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-          backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 
 .backdrop-blur-3xl {

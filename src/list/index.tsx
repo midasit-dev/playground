@@ -55,11 +55,7 @@ const SideBar = () => {
 			ref={containerRef}
 			style={styleNav}
 		>
-			<motion.div 
-				variants={sidebar} 
-				style={styleBackground}
-				className='bg-pg-blue-medium'
-			/>
+			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-blue-medium' />
 			<Navigation />
 			<MenuToggle toggle={() => toggleOpen()} />
 		</motion.nav>
