@@ -120,7 +120,7 @@ export const SelectionList = (props: ISelectionListProps) => {
 													WebkitTextFillColor: 'transparent',
 												}}
 											>
-												{`${String(item.score * 100)}%`}
+												{`${String(item.similarityScore * 100)}%`}
 											</Typography>
 										</Stack>
 									</Stack>
@@ -131,7 +131,7 @@ export const SelectionList = (props: ISelectionListProps) => {
 											wordBreak: 'break-all',
 											overflow: 'hidden',
 											textOverflow: 'ellipsis',
-											'-webkit-box-orient': 'vertical',
+											WebkitBoxOrient: 'vertical',
 											display: '-webkit-box',
 											WebkitUserSelect: 'none',
 											...noDragTextArea,

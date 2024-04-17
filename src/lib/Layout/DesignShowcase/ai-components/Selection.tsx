@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ContentLoadingSkeleton } from './Skeletons';
 import FallbackCard from './FallbackCard';
 import { Stack } from '@mui/material';
+import { functionListAdapter } from './adapter';
 
 interface ISelectionProps {
 	enabled?: boolean;
@@ -20,17 +21,7 @@ export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {}, onDelete = () => {} } = props;
 	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		QueryKeys.SELECTION_KEY,
-		() => {
-			return new Promise((resolve, reject) => {
-				setTimeout(() => {
-					resolve([
-						{ functionId: uuidv4(), functionName: uuidv4(), score: 0.87 },
-						{ functionId: uuidv4(), functionName: uuidv4(), score: 0.85 },
-						{ functionId: uuidv4(), functionName: uuidv4(), score: 0.8 },
-					]);
-				}, 3000);
-			});
-		},
+		functionListAdapter,
 		{
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
@@ -45,7 +36,7 @@ export const Selection = (props: ISelectionProps) => {
 				{isSuccess && (
 					<SelectionList
 						key='selection-success'
-						list={data as Array<any>}
+						list={data?.functionList || []}
 						onClick={onClick}
 						onDelete={onDelete}
 					/>

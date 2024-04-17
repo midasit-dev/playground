@@ -50,8 +50,14 @@ function Footer(props: IFooterProps) {
 							queryClient.setQueryData(
 								QueryKeys.SELECTION_KEY,
 								(prev: Array<IListItem> | undefined) => {
-									if (!prev) return [{ functionId: uniqueId(), functionName: value, score: 0.6 }];
-									return [...prev, { functionId: uniqueId(), functionName: value, score: 0.6 }];
+									const insertValue = {
+										functionId: uniqueId(),
+										functionName: value,
+										similarityScore: 0.6,
+									};
+
+									if (!prev) return [insertValue];
+									return [...prev, insertValue];
 								},
 							);
 						}

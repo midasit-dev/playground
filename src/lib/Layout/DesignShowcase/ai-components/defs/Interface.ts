@@ -1,5 +1,9 @@
 export interface IListItem {
 	functionId: string | number;
 	functionName: string;
-	score: number;
+	similarityScore: number;
+}
+
+export interface ISelectionData {
+	functionList?: Array<IListItem>;
 }
