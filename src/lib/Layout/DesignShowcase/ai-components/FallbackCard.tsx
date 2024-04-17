@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FallbackProps } from 'react-error-boundary';
 
-interface IFallbackCardProps {
+export interface IFallbackCardProps {
 	key?: string | number;
 	error?: Error;
 	resetErrorBoundary?: () => void;

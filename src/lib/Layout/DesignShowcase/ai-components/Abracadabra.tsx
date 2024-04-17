@@ -3,18 +3,32 @@ import React from 'react';
 import { Stack } from '@midasit-dev/moaui';
 import InputField from './InputField';
 import Selection from './Selection';
-import { IListItem } from './defs/Interface';
+import { ISelectionData, IListItem, IQueryKey, IFooterProps } from './defs/Interface';
 import { useQueryClient } from 'react-query';
 import { QueryKeys } from './defs/QueryKeys';
-import { uniqueId } from 'lodash';
-
-interface IFooterProps {
-	onItemClick?: (item: IListItem) => void;
-}
+import { fetchingStateAtom } from './defs/atom';
+import { useRecoilValue } from 'recoil';
 
 function Footer(props: IFooterProps) {
-	const [isLoading, setLoading] = React.useState(false);
+	const [query, setQuery] = React.useState<IQueryKey>(undefined);
 	const queryClient = useQueryClient();
+	const isLoading = useRecoilValue(fetchingStateAtom);
+
+	const onDelete = React.useCallback(
+		(item: IListItem) => {
+			queryClient.setQueryData(
+				[QueryKeys.SELECTION_KEY, query],
+				(prev: ISelectionData | undefined) => {
+					return {
+						functionList: prev?.functionList?.filter?.(
+							(i: IListItem) => i.functionId !== item.functionId,
+						),
+					};
+				},
+			);
+		},
+		[queryClient, query],
+	);
 
 	return (
 		<React.Fragment>
@@ -28,45 +42,13 @@ function Footer(props: IFooterProps) {
 				width='100%'
 				spacing={2}
 			>
-				<Selection
-					onClick={props?.onItemClick}
-					onDelete={(item) => {
-						queryClient.setQueryData(
-							QueryKeys.SELECTION_KEY,
-							(prev: Array<IListItem> | undefined) => {
-								if (!prev) return [];
-								return prev.filter((i) => i.functionId !== item.functionId);
-							},
-						);
-					}}
-				/>
+				<Selection query={query} onClick={props?.onItemClick} onDelete={onDelete} />
 				<InputField
 					isLoading={isLoading}
 					onSend={(value: string) => {
-						setLoading(true);
-
 						if (value !== '') {
-							// queryClient.refetchQueries([QueryKeys.SELECTION_KEY]);
-							queryClient.setQueryData(
-								QueryKeys.SELECTION_KEY,
-								(prev: Array<IListItem> | undefined) => {
-									const insertValue = {
-										functionId: uniqueId(),
-										functionName: value,
-										similarityScore: 0.6,
-									};
-
-									if (!prev) return [insertValue];
-									return [...prev, insertValue];
-								},
-							);
+							setQuery(value);
 						}
-						setTimeout(() => {
-							setLoading(false);
-						}, 3000);
-					}}
-					onStop={() => {
-						setLoading(true);
 					}}
 				/>
 			</Stack>

@@ -6,7 +6,7 @@ import { Typography, Stack, IconButton } from '@mui/material';
 import { IListItem } from './defs/Interface';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-interface ISelectionListProps {
+export interface ISelectionListProps {
 	list: Array<IListItem>;
 	onClick?: (item: IListItem) => void;
 	onDelete?: (item: IListItem) => void;
@@ -19,12 +19,12 @@ const noDragTextArea = {
 
 const scoreColors: string[] = ['linear-gradient(to right, #642B73, #c6426e)', '#000'];
 
-export const SelectionList = (props: ISelectionListProps) => {
+export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: any) => {
 	const { list, onClick, onDelete } = props;
 	const [topMenuAnchor, setTopMenuAnchor] = React.useState<string | number | null>(null);
 
 	return (
-		<React.Fragment>
+		<Stack direction='row' spacing={2} ref={ref}>
 			{list &&
 				list.length > 0 &&
 				list.map((item: IListItem, index: number) => {
@@ -156,9 +156,9 @@ export const SelectionList = (props: ISelectionListProps) => {
 						</motion.div>
 					);
 				})}
-		</React.Fragment>
+		</Stack>
 	);
-};
+});
 
 SelectionList.defaultProps = {
 	list: [],

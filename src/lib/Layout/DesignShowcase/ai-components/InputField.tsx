@@ -9,6 +9,9 @@ import Tooltip from '@mui/material/Tooltip';
 import debounce from 'lodash/debounce';
 import useTheme from '@mui/material/styles/useTheme';
 
+import { useSetRecoilState } from 'recoil';
+import { fetchingStateAtom } from './defs/atom';
+
 const debouncedFunc = debounce((callback, value, setter) => {
 	if (value.trim() === '') return;
 	callback(value, setter);
@@ -24,13 +27,12 @@ interface IChatInputProps {
 const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 	const [userInput, setUserInput] = React.useState('');
 	const { onSend, isLoading } = props;
-	const [localDisabled, setLocalDisabled] = React.useState(isLoading);
 	const [sendTooltipMessage, setSendTooltipMessage] = React.useState<null | string>(null);
 	const theme = useTheme();
+	const setLoading = useSetRecoilState(fetchingStateAtom);
 
 	React.useEffect(() => {
 		if (isLoading) {
-			setLocalDisabled(false);
 			setUserInput('');
 		}
 	}, [isLoading]);
@@ -48,12 +50,13 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 			if (event.code === 'Enter') {
 				if (!event.shiftKey && !event.altKey) {
 					event.preventDefault();
-					setLocalDisabled(true);
+					if (userInput === '') return;
+					setLoading?.(true);
 					debouncedFunc(onSend, userInput, setUserInput);
 				}
 			}
 		},
-		[isLoading, onSend, userInput],
+		[isLoading, onSend, userInput, setLoading],
 	);
 
 	return (
@@ -84,12 +87,13 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 					onChange={(e) => handleChange(e.target.value)}
 					onKeyDown={handleKeyDown}
 					maxRows={20}
-					disabled={isLoading || localDisabled}
+					disabled={isLoading}
 					placeholder='type here'
 					size='small'
 					sx={(theme) => ({
 						width: '100%',
 						maxWidth: props.maxWidth,
+						background: theme.palette.background.default,
 					})}
 					InputProps={{
 						endAdornment: (
@@ -101,12 +105,11 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 										onClick={() => {
 											if (!isLoading) {
 												debouncedFunc(onSend, userInput, setUserInput);
-												setLocalDisabled(true);
 											}
 											if (isLoading) {
 												props?.onStop?.();
 												setSendTooltipMessage('작업이 중단되었습니다.');
-												setLocalDisabled(false);
+												setLoading?.(false);
 												setTimeout(() => {
 													setSendTooltipMessage(null);
 												}, 3000);
@@ -118,8 +121,8 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 											width: '36px',
 										})}
 									>
-										{!(isLoading || localDisabled) && <SendIcon />}
-										{(isLoading || localDisabled) && <CircularProgress size='18px' />}
+										{!isLoading && <SendIcon />}
+										{isLoading && <CircularProgress size='18px' />}
 									</Button>
 								</Tooltip>
 							</React.Fragment>
