@@ -44,7 +44,7 @@ export default function ShowBox() {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className='wrapper-box'
+					className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
 					style={{
 						zIndex: 1,
 						width: canvasState.width,
@@ -55,12 +55,7 @@ export default function ShowBox() {
 						display: 'flex',
 						flexWrap: 'wrap',
 						alignContent: 'flex-start',
-						backgroundColor: 'rgba(255, 255, 255, 0.9)',
-						boxShadow:
-							'var(--elevation-200-canvas, 0px 0px .5px rgba(0, 0, 0, .18), 0px 3px 8px rgba(0, 0, 0, .1), 0px 1px 3px rgba(0, 0, 0, .1))',
-						borderRadius: '0.25rem',
 						marginBottom: '3rem',
-						border: '1px solid #d1d1d1',
 					}}
 				>
 					<p>Design Showcase is a component that shows the design of the component.</p>
