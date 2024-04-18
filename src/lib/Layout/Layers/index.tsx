@@ -87,44 +87,19 @@ const App = () => {
 						if (e.ctrlKey && e.key === '[') console.log('ctrl + [');
 					}}
 				>
-					<div
-						style={{
-							width: '100%',
-							height: 'calc(100vh - 32px)',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-					>
-						{/** 위치 고정을 위해 div Wrapping */}
+					<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>
+						{/** Canvas 객체 */}
 						<div
+							className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white'
 							style={{
-								position: 'relative',
-								width: 'auto',
-								height: 'auto',
+								width: canvasState.width,
+								height: canvasState.height,
 							}}
+							tabIndex={0}
+							onKeyDown={handleOnKeyDown}
 						>
-							<div className='absolute top-0 left-2'>absolute</div>
-							<div
-								className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium'
-								style={{
-									width: canvasState.width,
-									height: canvasState.height,
-									maxWidth: '100%',
-									maxHeight: 'calc(100vh - 32px)',
-									boxSizing: 'border-box',
-									display: 'flex',
-									flexWrap: 'wrap',
-									alignContent: 'flex-start',
-									backgroundColor: 'var(--color-bg, #ffffff)',
-									border: '1px solid #e7e7e9',
-								}}
-								tabIndex={0}
-								onKeyDown={handleOnKeyDown}
-							>
-								<VirtualLayer />
-								{boxes.map((box) => box.element)}
-							</div>
+							<VirtualLayer />
+							{boxes.map((box) => box.element)}
 						</div>
 					</div>
 					<GuideBox show>

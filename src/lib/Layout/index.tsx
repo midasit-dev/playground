@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layers from './Layers';
 import Componentized from './Componentized';
 import { motion } from 'framer-motion';
@@ -14,14 +14,19 @@ let tabs = [
 
 const Navbar = (props: any) => {
 	const { activeTab, setActiveTab } = props;
+	const [ bottomline, setBottomLine ] = useState('');
+
+	useEffect(() => {
+		setBottomLine(activeTab !== 'showcase' ? 'border-b border-b-pg-gray-line' : '');
+	}, [activeTab]);
 
 	return (
-		<div className='flex space-x-6 w-full h-14 justify-center content-center border-b border-b-pg-gray-line backdrop-filter backdrop-blur-3xl bg-white bg-opacity-50'>
+		<div className={`flex space-x-6 w-full h-14 justify-center content-center backdrop-filter backdrop-blur-3xl bg-white bg-opacity-50 ${bottomline}`}>
 			{tabs.map((tab) => (
 				<motion.div
 					key={tab.id}
 					onClick={() => setActiveTab(tab.id)}
-					className='relative pb-3 pt-4 transition cursor-pointer'
+					className='relative pb-3 pt-[0.85rem] transition cursor-pointer'
 				>
 					{activeTab === tab.id && (
 						<motion.span

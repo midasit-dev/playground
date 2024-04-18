@@ -14,8 +14,6 @@ const App = () => {
 	const [canvas] = useRecoilState(CanvasState);
 	const [layers] = useRecoilState(LayersState);
 
-	const canvasStyle = { relative: true, width: canvas.width, height: canvas.height };
-
 	return (
 		<AnimatePresence>
 			<motion.div
@@ -23,15 +21,24 @@ const App = () => {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				style={{ width: '100%', height: '100%' }}
+				className='bg-gray-100'
 			>
 				<GuideBox row width='100%'>
-					<GuideBox width='100%' height='calc(100vh - 32px)' center horCenter>
-						<Panel {...canvasStyle} variant='shadow2'>
+					
+					{/** Canvas 객체 */}
+					<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>
+						<div 
+							className='shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white relative'
+							style={{
+								width: canvas.width,
+								height: canvas.height,
+							}}
+						>
 							{layers.map((layer: Layer, index: number) => {
 								return <ToComponent key={index} layer={layer} />;
 							})}
-						</Panel>
-					</GuideBox>
+						</div>
+					</div>
 
 					<GuideBox>
 						<div style={{ position: 'relative', width: 'auto', height: 'auto' }}>
