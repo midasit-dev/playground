@@ -4,8 +4,7 @@ import { useController } from './useController';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
-import DockbarTop from './Dockbar/Top';
-import DockbarBottm from './Dockbar/Bottom';
+import DockbarBottm from './Dockbar';
 import Canvas from './Canvas';
 
 const App = () => {
@@ -43,7 +42,6 @@ const App = () => {
 				style={{ width: '100%', height: '100%' }}
 				className='bg-gray-100'
 			>
-				<DockbarTop />
 				<Canvas addLayerHandler={handleClickAddBox} />
 				<DockbarBottm
 					preDeleteLayerHandler={handleClickPrevDelete}

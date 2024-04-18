@@ -10,7 +10,7 @@ import PanelControllerJoystick from './PanelControllerJoystick';
 import { type DraggableData, Rnd } from 'react-rnd';
 import { type DraggableEvent } from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
-import Dockbar from './Dockbar/Bottom';
+import Dockbar from './Dockbar';
 import Canvas from './Canvas';
 
 const App = () => {

@@ -130,3 +130,8 @@ export const ShowCaseBoxState = atom<any>({
 		y: 0,
 	},
 });
+
+export const GuideLayerVisibleState = atom<boolean>({
+	key: 'GuideLayerVisibleState',
+	default: false,
+});

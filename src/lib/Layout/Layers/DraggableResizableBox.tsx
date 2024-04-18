@@ -36,13 +36,8 @@ export const DraggableResizableBox = (props: RndBoxProps) => {
 
 	const [layers, setLayers] = useRecoilState(LayersState);
 
-	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		e.stopPropagation();
-	};
-
-	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		e.stopPropagation();
-	};
+	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
+	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);

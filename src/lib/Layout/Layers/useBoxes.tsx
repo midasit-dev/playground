@@ -1,5 +1,5 @@
 import React from 'react';
-import { DraggableResizableBox } from './DraggableResizableBox';
+import InnerLayer from './Canvas/InnerLayer';
 import { ControllerInputs } from '../../Common/types';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
@@ -44,7 +44,7 @@ export const useBoxes = (props: useBoxesProps) => {
 			return {
 				id: id,
 				element: (
-					<DraggableResizableBox
+					<InnerLayer
 						key={id}
 						id={id}
 						defaultX={inputs.x}

@@ -12,6 +12,7 @@ module.exports = {
 				'pg-gray-light-1': '#e7e7e9',
 				'pg-gray-light-2': '#eaedf1',
 				'pg-gray-medium': '#eaeced',
+				'pg-green-medium': '#85ff00',
       },
 		},
   },
