@@ -24,7 +24,7 @@ const styleBackground = {
 
 const sidebar = {
 	open: (height = 1000) => ({
-		clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+		clipPath: `circle(${height * 2 + 200}px at 30px 30px)`,
 		transition: {
 			type: 'spring',
 			stiffness: 20,
@@ -32,7 +32,7 @@ const sidebar = {
 		},
 	}),
 	closed: {
-		clipPath: 'circle(20px at 30px 30px)',
+		clipPath: 'circle(0px at 30px 30px)',
 		transition: {
 			delay: 0.5,
 			type: 'spring',
@@ -55,9 +55,9 @@ const SideBar = () => {
 			ref={containerRef}
 			style={styleNav}
 		>
-			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-blue-medium' />
+			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-black-medium' />
 			<Navigation />
-			<MenuToggle toggle={() => toggleOpen()} />
+			<MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
 		</motion.nav>
 	);
 };
