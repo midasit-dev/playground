@@ -3,12 +3,7 @@ import { GuideBox, Icon, IconButton, Panel, Typography } from '@midasit-dev/moau
 import { useBoxes } from './useBoxes';
 import { useController } from './useController';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {
-	CanvasState,
-	LayerRenderingBoxesState,
-	LayersMenuState,
-	LayersState,
-} from '../recoilState';
+import { LayerRenderingBoxesState, LayersMenuState, LayersState } from '../recoilState';
 import PanelCanvas from './PanelCanvas';
 import PanelControllerVirtualLayerValues from './PanelControllerVirtualLayerValues';
 import PanelControllerJoystick from './PanelControllerJoystick';
@@ -16,20 +11,19 @@ import { type DraggableData, Rnd } from 'react-rnd';
 import { type DraggableEvent } from 'react-draggable';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
 import Dockbar from './Dockbar';
+import Canvas from './Canvas';
 
 const App = () => {
-	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
+	const [, setBoxes] = useRecoilState(LayerRenderingBoxesState);
 	const layers = useRecoilValue(LayersState);
 
 	const [layersMenuState, setLayersMenuState] = useRecoilState(LayersMenuState);
-	const canvasState = useRecoilValue(CanvasState);
 
 	const {
 		initialize: initializeInputs,
 		getCurrentControllerInputs,
 		showVirtualLayer,
 		setShowVirtualLayer,
-		VirtualLayer,
 	} = useController();
 
 	const { handleClickPrevDelete, handleClickDelAllBoxes, handleClickAddBox, createNewBox } =
@@ -80,28 +74,9 @@ const App = () => {
 				style={{ width: '100%', height: '100%' }}
 				className='bg-gray-100'
 			>
-				<GuideBox
-					row
-					width='100%'
-					onKeyDown={(e) => {
-						if (e.ctrlKey && e.key === '[') console.log('ctrl + [');
-					}}
-				>
-					<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>
-						{/** Canvas 객체 */}
-						<div
-							className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white'
-							style={{
-								width: canvasState.width,
-								height: canvasState.height,
-							}}
-							tabIndex={0}
-							onKeyDown={handleOnKeyDown}
-						>
-							<VirtualLayer />
-							{boxes.map((box) => box.element)}
-						</div>
-					</div>
+				<GuideBox row width='100%'>
+					{/** Canvas 컴포넌트 */}
+					<Canvas handleClickAddBox={handleClickAddBox} />
 					<GuideBox show>
 						<div
 							style={{

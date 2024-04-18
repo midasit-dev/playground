@@ -32,7 +32,6 @@
     "@midasit-dev/moaui": "^0.1.123",
     "framer-motion": "^11.0.25",
     "jsoneditor": "^10.0.1",
-    "lodash": "^4.17.21",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -58,6 +57,7 @@
     "@types/react-rnd": "^8.0.0",
     "@types/styled-components": "^5.1.34",
     "@types/uuid": "^9.0.8",
+    "lodash": "^4.17.21",
     "tailwindcss": "^3.4.3",
     "typescript": "^4.9.5"
   },
@@ -72,7 +72,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write --config ./.prettierrc src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-		"css": "npx tailwindcss -i ./src/lib/input.css -o ./src/lib/output.css --watch"
+    "css": "npx tailwindcss -i ./src/lib/input.css -o ./src/lib/output.css --watch"
   },
   "eslintConfig": {
     "extends": [
