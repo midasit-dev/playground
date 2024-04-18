@@ -24,10 +24,9 @@ const App = () => {
 				className='bg-gray-100'
 			>
 				<GuideBox row width='100%'>
-					
 					{/** Canvas 객체 */}
 					<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>
-						<div 
+						<div
 							className='shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white relative'
 							style={{
 								width: canvas.width,

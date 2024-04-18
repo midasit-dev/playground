@@ -14,14 +14,16 @@ let tabs = [
 
 const Navbar = (props: any) => {
 	const { activeTab, setActiveTab } = props;
-	const [ bottomline, setBottomLine ] = useState('');
+	const [bottomline, setBottomLine] = useState('');
 
 	useEffect(() => {
 		setBottomLine(activeTab !== 'showcase' ? 'border-b border-b-pg-gray-line' : '');
 	}, [activeTab]);
 
 	return (
-		<div className={`flex space-x-6 w-full h-14 justify-center content-center backdrop-filter backdrop-blur-3xl bg-white bg-opacity-50 ${bottomline}`}>
+		<div
+			className={`flex space-x-6 w-full h-14 justify-center content-center backdrop-filter backdrop-blur-3xl bg-white bg-opacity-50 ${bottomline}`}
+		>
 			{tabs.map((tab) => (
 				<motion.div
 					key={tab.id}

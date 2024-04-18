@@ -12,8 +12,8 @@ const Path = (props) => (
 );
 
 export const MenuToggle = ({ isOpen, toggle }) => (
-	<button 
-		onClick={toggle} 
+	<button
+		onClick={toggle}
 		// style={styleButton}
 		className=' outline-none border-none cusor-pointer absolute top-[4px] left-[20px] w-[50px] h-[50px] rounded-[50%] bg-transparent'
 	>
