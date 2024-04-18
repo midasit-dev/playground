@@ -1,39 +1,6 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
-import { LayersState } from '../../recoilState';
 
-const App = (props: any) => {
-	const { preDeleteLayerHandler, allDeleteLayersHandler } = props;
-
-	const layers = useRecoilValue(LayersState);
-
-	return (
-		<div className='w-48 h-10 bottom-20 left-1/2 -ml-[152px] bg-pg-blue-dark py-7 px-14 rounded-md shadow-lg box-content fixed space-x-10 flex flex-row'>
-			<div className='w-auto space-x-10 flex flex-row'>
-				<Icon SVG={<PreDeleteIcon />} onClickHandler={preDeleteLayerHandler} />
-				<Icon SVG={<AllDeleteIcon />} onClickHandler={allDeleteLayersHandler} />
-			</div>
-			<motion.p
-				className='text-3xl text-white cursor-default'
-				whileHover={{ color: '#62baf3', scale: 1.2 }}
-			>
-				{toFormatting(layers.length)}
-			</motion.p>
-		</div>
-	);
-};
-
-export default App;
-
-//formatting counts of layers (ex. 01, 02, 03, ...)
-//if 00 -> '-'
-const toFormatting = (count: number) => {
-	if (count === 0) return '--';
-	return String(count).padStart(2, '0');
-};
-
-const Icon = (props: any) => {
+export const Icon = (props: any) => {
 	const { SVG, onClickHandler } = props;
 
 	return (
@@ -49,7 +16,7 @@ const Icon = (props: any) => {
 };
 
 //icons! https://www.untitledui.com/free-icons
-const PreDeleteIcon = () => (
+export const SvgPreDelete = () => (
 	<svg
 		width='100%'
 		height='100%'
@@ -67,7 +34,7 @@ const PreDeleteIcon = () => (
 	</svg>
 );
 
-const AllDeleteIcon = () => (
+export const SvgAllDelete = () => (
 	<svg
 		width='100%'
 		height='100%'
@@ -84,3 +51,25 @@ const AllDeleteIcon = () => (
 		/>
 	</svg>
 );
+
+export const SvgResizeCanvas = (props: any) => {
+	const { color } = props;
+
+	return (
+		<svg
+			width='100%'
+			height='100%'
+			viewBox='0 0 24 24'
+			fill='none'
+			xmlns='http://www.w3.org/2000/svg'
+		>
+			<path
+				d='M3 8L15 8M15 8C15 9.65686 16.3431 11 18 11C19.6569 11 21 9.65685 21 8C21 6.34315 19.6569 5 18 5C16.3431 5 15 6.34315 15 8ZM9 16L21 16M9 16C9 17.6569 7.65685 19 6 19C4.34315 19 3 17.6569 3 16C3 14.3431 4.34315 13 6 13C7.65685 13 9 14.3431 9 16Z'
+				stroke={`${color}` || '#fff'}
+				stroke-width='2'
+				stroke-linecap='round'
+				stroke-linejoin='round'
+			/>
+		</svg>
+	);
+};

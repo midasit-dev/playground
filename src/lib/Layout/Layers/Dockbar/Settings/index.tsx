@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
-import { CanvasState } from '../../recoilState';
+import { CanvasState } from '../../../recoilState';
 
 const App = () => {
 	const [canvas, setCanvas] = useRecoilState(CanvasState);
@@ -9,7 +9,7 @@ const App = () => {
 
 	return (
 		<motion.div
-			className='w-48 h-10 top-36 left-1/2 -ml-[152px] bg-white py-7 px-14 rounded-md shadow-lg box-content fixed justify-center'
+			className='w-48 h-10 absolute top-0 left-0 py-6 px-14 rounded-md shadow-lg box-content justify-center'
 			animate={{
 				backgroundColor: isEdit ? '#0786c8' : '#fff',
 			}}
