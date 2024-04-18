@@ -11,7 +11,7 @@ const guideLayerSize = {
 };
 
 const LayersCanvas = (props: any) => {
-	const { handleClickAddBox } = props;
+	const { addLayerHandler } = props;
 
 	const boxes = useRecoilValue(LayerRenderingBoxesState);
 	const canvasState = useRecoilValue(CanvasState);
@@ -56,7 +56,7 @@ const LayersCanvas = (props: any) => {
 						height: guideLayerSize.height,
 						spacing: 0,
 					};
-					handleClickAddBox('default', currentGuideLayerInput);
+					addLayerHandler('default', currentGuideLayerInput);
 				}}
 			>
 				<GuideLayer isVisible={isVisible} position={guideLayerPosition} size={guideLayerSize} />

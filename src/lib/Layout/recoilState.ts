@@ -30,13 +30,11 @@ export const CanvasState = atom<Canvas>({
 	default: { width: 640, height: 640 },
 	effects: [
 		({ setSelf, onSet }) => {
-			console.log('canvas 변경시 callback');
 			//setSelf는 초기값 지정.
 			setSelf({ width: 640, height: 640 });
 
 			//onSet은 값이 변경될 때마다 실행.
 			onSet((newValue, oldValue, isReset) => {
-				console.log('CanvasState', newValue);
 				window.playground.canvas = newValue;
 			});
 		},
