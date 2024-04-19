@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilState } from 'recoil';
-import { GuideLayerVisibleState } from 'src/lib/Layout/recoilState';
+import { GuideLayerVisibleState } from '../../../recoilState';
 
 const Toggle = () => {
 	const [isOn, setIsOn] = useRecoilState(GuideLayerVisibleState);
