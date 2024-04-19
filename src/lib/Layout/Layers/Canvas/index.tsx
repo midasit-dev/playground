@@ -2,7 +2,12 @@ import React from 'react';
 import GuideLayer from './GuideLayer';
 import _ from 'lodash';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CanvasState, GuideLayerVisibleState, LayerRenderingBoxesState } from '../../recoilState';
+import {
+	CanvasState,
+	GuideLayerVisibleState,
+	LayerRenderingBoxesState,
+	LayersCanvasMarginState,
+} from '../../recoilState';
 import { ControllerInputs } from '../../../Common/types';
 import { zindex_layers_canvas } from '../../../Common/zindex';
 
@@ -16,6 +21,7 @@ const LayersCanvas = (props: any) => {
 
 	const boxes = useRecoilValue(LayerRenderingBoxesState);
 	const canvasState = useRecoilValue(CanvasState);
+	const canvasMargin = useRecoilValue(LayersCanvasMarginState);
 
 	const [isVisible] = useRecoilState(GuideLayerVisibleState);
 	const [guideLayerPosition, setGuideLayerPosition] = React.useState({ x: 0, y: 0 });
@@ -42,6 +48,7 @@ const LayersCanvas = (props: any) => {
 				style={{
 					width: canvasState.width,
 					height: canvasState.height,
+					marginTop: canvasMargin.marginTop,
 				}}
 				tabIndex={0}
 				// onMouseEnter={() => setisVisible(true)}

@@ -34,8 +34,8 @@ const App = (props: RndBoxProps) => {
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);
-	const [x, setX] = useState(props.defaultX);
-	const [y, setY] = useState(props.defaultY);
+	const [, setX] = useState(props.defaultX);
+	const [, setY] = useState(props.defaultY);
 
 	const handleResizeStop = (e: any, direction: any, ref: any, delta: any, position: any) => {
 		const _x = parseInt(position.x);

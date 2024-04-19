@@ -135,3 +135,10 @@ export const GuideLayerVisibleState = atom<boolean>({
 	key: 'GuideLayerVisibleState',
 	default: false,
 });
+
+export const LayersCanvasMarginState = atom<any>({
+	key: 'LayersCanvasMarginState',
+	default: {
+		marginTop: 0,
+	},
+});

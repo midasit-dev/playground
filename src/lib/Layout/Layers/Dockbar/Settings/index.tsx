@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import CanvasResizeInput from './CanvasResizeInput';
-import CanvasMoveBtn from './CanvasMoveBtn';
+import CanvasMoveBtn from './CanvasMoveBtns';
 
 const App = (props: any) => {
 	const { isOn } = props;
