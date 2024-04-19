@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useCycle, type MotionStyle } from 'framer-motion';
 import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
+import { zindex_navbar_closed, zindex_navbar_opend } from '../lib/Common/zindex';
 
 const styleNav = {
 	position: 'absolute',
@@ -11,7 +12,6 @@ const styleNav = {
 	left: 0,
 	bottom: 0,
 	width: '300px',
-	zIndex: 1001,
 } as MotionStyle;
 
 const styleBackground = {
@@ -44,8 +44,25 @@ const sidebar = {
 
 const SideBar = () => {
 	const [isOpen, toggleOpen] = useCycle(false, true);
-	const containerRef = useRef(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 	const { height } = useDimensions(containerRef);
+
+	useEffect(() => {
+		if (!isOpen && containerRef.current) {
+			// list 닫혔을 대
+			// delay를 0.5초 줘서 zIndex를 100으로 변경한다.
+			setTimeout(() => {
+				if (containerRef.current) {
+					containerRef.current.style.zIndex = zindex_navbar_closed.toString();
+				}
+			}, 800);
+		} else {
+			// list 열렸을 때
+			if (containerRef.current) {
+				containerRef.current.style.zIndex = zindex_navbar_opend.toString();
+			}
+		}
+	}, [isOpen]);
 
 	return (
 		<motion.nav
@@ -53,7 +70,9 @@ const SideBar = () => {
 			animate={isOpen ? 'open' : 'closed'}
 			custom={height}
 			ref={containerRef}
-			style={styleNav}
+			style={{
+				...styleNav,
+			}}
 		>
 			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-black-medium' />
 			<Navigation />

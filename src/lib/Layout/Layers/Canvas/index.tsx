@@ -3,7 +3,8 @@ import GuideLayer from './GuideLayer';
 import _ from 'lodash';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { CanvasState, GuideLayerVisibleState, LayerRenderingBoxesState } from '../../recoilState';
-import { ControllerInputs } from 'src/lib/Common/types';
+import { ControllerInputs } from '../../../Common/types';
+import { zindex_layers_canvas } from '../../../Common/zindex';
 
 const guideLayerSize = {
 	width: 160,
@@ -16,7 +17,7 @@ const LayersCanvas = (props: any) => {
 	const boxes = useRecoilValue(LayerRenderingBoxesState);
 	const canvasState = useRecoilValue(CanvasState);
 
-	const [isVisible, setisVisible] = useRecoilState(GuideLayerVisibleState);
+	const [isVisible] = useRecoilState(GuideLayerVisibleState);
 	const [guideLayerPosition, setGuideLayerPosition] = React.useState({ x: 0, y: 0 });
 	const deboundedUpdatePosition = _.debounce((newTop: number, newLeft: number) => {
 		if (isVisible) {
@@ -31,7 +32,10 @@ const LayersCanvas = (props: any) => {
 	}, 0);
 
 	return (
-		<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>
+		<div
+			className='w-full h-[calc(100vh-32px)] flex justify-center items-center'
+			style={{ position: 'relative', zIndex: zindex_layers_canvas }}
+		>
 			{/** Canvas 객체 */}
 			<div
 				className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white relative focus:outline-none'
