@@ -45,13 +45,13 @@ export const functionListAdapter = async (value: IQueryKey) => {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(userIdentifier),
+			body: userIdentifier,
 		});
 
 		if (!authFetcher.ok) return {};
 		const authData: any = await authFetcher.json();
 
-		const aiResult = await fetch(`${aiApiEndpoint}/${threadId}/function-knowledge/similar-functions`, {
+		const aiResult = await fetch(aiApiEndpoint, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
