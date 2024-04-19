@@ -41,19 +41,24 @@ export const useBoxes = (props: useBoxesProps) => {
 
 	const createNewBox = React.useCallback(
 		(id: string, inputs: ControllerInputs) => {
+			//현재 Snap에서 기준으로 잡고 있는 값으로 x, y를 조절한다.
+			const snapCriteria = 8;
+			const adjustX = inputs.x - (inputs.x % snapCriteria);
+			const adjustY = inputs.y - (inputs.y % snapCriteria);
+
 			return {
 				id: id,
 				element: (
 					<InnerLayer
 						key={id}
 						id={id}
-						defaultX={inputs.x}
-						defaultY={inputs.y}
+						defaultX={adjustX}
+						defaultY={adjustY}
 						defaultWidth={inputs.width}
 						defaultHeight={inputs.height}
 						bounds='.wrapper-box'
-						dragGrid={[8, 8]}
-						resizeGrid={[8, 8]}
+						dragGrid={[snapCriteria, snapCriteria]}
+						resizeGrid={[snapCriteria, snapCriteria]}
 						spacing={0}
 						onDelete={handleClickDelete}
 						onSendStyleToController={initializeInputs}
