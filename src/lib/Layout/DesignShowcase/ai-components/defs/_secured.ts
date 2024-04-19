@@ -1,5 +1,5 @@
-const authApiEndpoint = "";
-const userIdentifier = "";
-const getAiResponse = (value: string) => "";
+const authApiEndpoint: string = "";
+const userIdentifier: string = "";
+const getAiResponse = (value: string) => ``;
 
 export { authApiEndpoint, userIdentifier, getAiResponse }; 
