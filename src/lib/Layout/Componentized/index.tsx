@@ -9,6 +9,7 @@ import PanelOptionsModifyDelete from './PanelOptionsModifyDelete';
 import ToComponent from './ToComponent';
 import '../SelectedLayer.css';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
+import JSONView from '../JsonOptions/View';
 
 const App = () => {
 	const [canvas] = useRecoilState(CanvasState);
@@ -23,6 +24,8 @@ const App = () => {
 				style={{ width: '100%', height: '100%' }}
 				className='bg-gray-100'
 			>
+				<JSONView />
+
 				<GuideBox row width='100%'>
 					{/** Canvas 객체 */}
 					<div className='w-full h-[calc(100vh-32px)] flex justify-center items-center'>

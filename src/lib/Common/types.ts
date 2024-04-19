@@ -28,7 +28,15 @@
  */
 interface Layer {
 	id: string;
-	type: string | 'FloatingBox' | 'Button' | 'TextField' | 'TextFieldV2' | 'Panel' | 'DropList';
+	type:
+		| string
+		| 'FloatingBox'
+		| 'Button'
+		| 'TextField'
+		| 'TextFieldV2'
+		| 'Panel'
+		| 'DropList'
+		| 'ColorPicker';
 	props: Record<string, any>;
 	children?: Array<Layer>;
 }
