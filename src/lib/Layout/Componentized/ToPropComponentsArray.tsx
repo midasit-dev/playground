@@ -5,7 +5,7 @@ import { Typography, GuideBox } from '@midasit-dev/moaui';
 import { PropComponentProps, usePropComponent } from './ToPropComponents';
 
 import 'jsoneditor/dist/jsoneditor.min.css';
-import ShowHideButton from 'src/lib/Shared/ShowHideButton';
+import ShowHideButton from '../../Shared/ShowHideButton';
 
 const JsonEditor = (props: { name: string; arr: any[]; updateGlobalValue: (prev: any) => any }) => {
 	const { name, arr, updateGlobalValue } = props;

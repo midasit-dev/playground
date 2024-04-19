@@ -44,7 +44,6 @@ export default function DesignShowcase() {
 				alignItems: 'center',
 				overflow: 'hidden',
 			}}
-			className='bg-gray-100 bg-opacity-10'
 		>
 			<motion.div
 				initial={{ opacity: 0 }}

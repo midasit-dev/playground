@@ -9,6 +9,7 @@ import PanelOptionsModifyDelete from './PanelOptionsModifyDelete';
 import ToComponent from './ToComponent';
 import '../SelectedLayer.css';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
+import JSONView from '../JsonOptions/View';
 
 const App = () => {
 	const [canvas] = useRecoilState(CanvasState);
@@ -24,6 +25,8 @@ const App = () => {
 				exit={{ opacity: 0 }}
 				style={{ width: '100%', height: '100%' }}
 			>
+				<JSONView />
+
 				<GuideBox row width='100%'>
 					<GuideBox width='100%' height='calc(100vh - 32px)' center horCenter>
 						<Panel {...canvasStyle} variant='shadow2'>

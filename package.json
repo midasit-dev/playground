@@ -26,10 +26,11 @@
       "name": "kh1012"
     }
   ],
-  "version": "0.0.2",
+  "version": "0.0.6",
   "private": false,
+  "main": "index.js",
   "dependencies": {
-    "@midasit-dev/moaui": "^0.1.123",
+    "@midasit-dev/moaui": "^0.1.126",
     "framer-motion": "^11.0.25",
     "jsoneditor": "^10.0.1",
     "lodash": "^4.17.21",
@@ -58,6 +59,7 @@
     "@types/react-rnd": "^8.0.0",
     "@types/styled-components": "^5.1.34",
     "@types/uuid": "^9.0.8",
+    "copyfiles": "^2.4.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^4.9.5"
   },
@@ -65,14 +67,14 @@
     "start": "npm run prettier && react-scripts start",
     "move": "rmdir /s /q docs && rename build docs",
     "build": "react-scripts build && npm run move",
-    "publish-npm": " npm run reset && npm run copy && npm run prepare-npm && npm publish --access public",
-    "prepare-npm": "node prepare.js ",
+    "publish-npm": "npm run prepare-npm && cd ./dist && npm publish --access public",
+    "prepare-npm": "node prepare.js && tsc && copyfiles -u 2 src/lib/**/*.css dist/",
     "reset": "rmdir /s /q dist && mkdir dist",
     "copy": "xcopy /E /Y docs dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --write --config ./.prettierrc src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-		"css": "npx tailwindcss -i ./src/lib/input.css -o ./src/lib/output.css --watch"
+    "css": "npx tailwindcss -i ./src/lib/input.css -o ./src/lib/output.css --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -94,11 +96,6 @@
   },
   "bugs": {
     "url": "https://github.com/midasit-dev/playground/issues"
-  },
-  "main": "index.js",
-  "types": "index.d.ts",
-  "directories": {
-    "doc": "docs"
   },
   "license": "MIT"
 }
