@@ -5,7 +5,9 @@ import * as _secured from './_secured';
 export const functionListAdapter = async (value: IQueryKey) => {
 	const _body = await require('./Schema.json');
 
-	const isMock = Boolean(_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === "");
+	const isMock = Boolean(
+		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
+	);
 
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
 	const threadId: string = '01HVTCTVKFPNEJS5Q0DYTREAXB';
