@@ -1,16 +1,21 @@
 {
 	"schema": {
-		"name": "circleAreabyHjang2",
-		"description": "Calculate the area of a circle",
+		"name": "SampleFunction",
+		"description": "This is a sample function to test the schema format.",
 		"parameters": {
 			"type": "object",
-			"required": ["radius"],
 			"properties": {
-				"radius": {
-					"type": "number",
-					"description": "The radius of the circle"
+				"inputList": {
+					"type": "array",
+					"description": "A list of input values for processing."
+				},
+				"parameter2": {
+					"type": "boolean",
+					"description": "A boolean parameter for additional options."
 				}
-			}
+			},
+			"required": ["inputList"]
 		}
-	}
+	},
+	"topK": 3
 }

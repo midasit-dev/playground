@@ -9,9 +9,6 @@ import Tooltip from '@mui/material/Tooltip';
 import debounce from 'lodash/debounce';
 import useTheme from '@mui/material/styles/useTheme';
 
-import { useSetRecoilState } from 'recoil';
-import { fetchingStateAtom } from './defs/atom';
-
 const debouncedFunc = debounce((callback, value, setter) => {
 	if (value.trim() === '') return;
 	callback(value, setter);
@@ -29,7 +26,6 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 	const { onSend, isLoading } = props;
 	const [sendTooltipMessage, setSendTooltipMessage] = React.useState<null | string>(null);
 	const theme = useTheme();
-	const setLoading = useSetRecoilState(fetchingStateAtom);
 
 	React.useEffect(() => {
 		if (isLoading) {
@@ -51,12 +47,11 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 				if (!event.shiftKey && !event.altKey) {
 					event.preventDefault();
 					if (userInput === '') return;
-					setLoading?.(true);
 					debouncedFunc(onSend, userInput, setUserInput);
 				}
 			}
 		},
-		[isLoading, onSend, userInput, setLoading],
+		[isLoading, onSend, userInput],
 	);
 
 	return (
@@ -109,7 +104,6 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 											if (isLoading) {
 												props?.onStop?.();
 												setSendTooltipMessage('작업이 중단되었습니다.');
-												setLoading?.(false);
 												setTimeout(() => {
 													setSendTooltipMessage(null);
 												}, 3000);
