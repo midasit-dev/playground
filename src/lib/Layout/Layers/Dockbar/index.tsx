@@ -22,13 +22,16 @@ const App = (props: any) => {
 			<motion.p
 				className='text-[2rem] text-white cursor-default items-center'
 				whileHover={{ color: '#62baf3', scale: 1.2 }}
-				style={{ opacity: layers.length === 0 ? .4 : 1, }}
+				style={{ opacity: layers.length === 0 ? 0.4 : 1 }}
 			>
 				{toFormatting(layers.length)}
 			</motion.p>
 			<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
 			<div className='relative w-auto flex flex-row items-center'>
-				<Icon SVG={<SvgResizeCanvas color={isOn ? '#62baf3' : '#fff'} />} onClickHandler={() => setIsOn(!isOn)} />
+				<Icon
+					SVG={<SvgResizeCanvas color={isOn ? '#62baf3' : '#fff'} />}
+					onClickHandler={() => setIsOn(!isOn)}
+				/>
 				<motion.div
 					className='w-[304px] h-[88px] py-6 px-14 absolute -top-[130px] right-0 bg-transparent'
 					animate={{

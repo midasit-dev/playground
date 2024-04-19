@@ -29,7 +29,8 @@ const App = (props: RndBoxProps) => {
 	const [layers, setLayers] = useRecoilState(LayersState);
 
 	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
-	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
+	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+		e.stopPropagation();
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);
@@ -128,12 +129,7 @@ const App = (props: RndBoxProps) => {
 	}, []);
 
 	return (
-		<div 
-			key={id} 
-			id={id} 
-			onClick={onClickHandler} 
-			onMouseDown={onMouseDownHandler}
-		>
+		<div key={id} id={id} onClick={onClickHandler} onMouseDown={onMouseDownHandler}>
 			<Rnd
 				className='flex items-center justify-center bg-pg-blue-medium bg-opacity-40 border border-pg-blue-medium'
 				default={{
