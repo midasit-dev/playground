@@ -4,6 +4,7 @@ import { ControllerInputs } from '../../Common/types';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
 import { v4 as uuid4 } from 'uuid';
+import { canvas_snap_criteria } from '../../Common/const';
 
 interface useBoxesProps {
 	initializeInputs: any;
@@ -41,10 +42,8 @@ export const useBoxes = (props: useBoxesProps) => {
 
 	const createNewBox = React.useCallback(
 		(id: string, inputs: ControllerInputs) => {
-			//현재 Snap에서 기준으로 잡고 있는 값으로 x, y를 조절한다.
-			const snapCriteria = 8;
-			const adjustX = inputs.x - (inputs.x % snapCriteria);
-			const adjustY = inputs.y - (inputs.y % snapCriteria);
+			//내부 스냅값을 설정한다.
+			const snapCriteria = canvas_snap_criteria;
 
 			return {
 				id: id,
@@ -52,8 +51,8 @@ export const useBoxes = (props: useBoxesProps) => {
 					<InnerLayer
 						key={id}
 						id={id}
-						defaultX={adjustX}
-						defaultY={adjustY}
+						defaultX={inputs.x }
+						defaultY={inputs.y}
 						defaultWidth={inputs.width}
 						defaultHeight={inputs.height}
 						bounds='.wrapper-box'

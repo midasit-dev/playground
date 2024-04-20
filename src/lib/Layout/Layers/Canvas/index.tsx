@@ -10,6 +10,7 @@ import {
 } from '../../recoilState';
 import { ControllerInputs } from '../../../Common/types';
 import { zindex_layers_canvas } from '../../../Common/zindex';
+import { canvas_snap_criteria, nearestMultipleOfCanvasSnapCriteria } from '../../../Common/const';
 
 const guideLayerSize = {
 	width: 160,
@@ -61,9 +62,12 @@ const LayersCanvas = (props: any) => {
 				}}
 				onClick={(event: any) => {
 					if (!isVisible) return;
+					//가이드 레이어의 위치가 임의의 값이고, 캔버스는 Snap을 (8)로 가지고 있으므로 실제 x, y값을 변경한다.
+					const adjustX = nearestMultipleOfCanvasSnapCriteria(guideLayerPosition.x);
+					const adjustY = nearestMultipleOfCanvasSnapCriteria(guideLayerPosition.y);
 					const currentGuideLayerInput: ControllerInputs = {
-						x: guideLayerPosition.x,
-						y: guideLayerPosition.y,
+						x: adjustX,
+						y: adjustY,
 						width: guideLayerSize.width,
 						height: guideLayerSize.height,
 						spacing: 0,

@@ -27,6 +27,7 @@ const App = (props: any) => {
 				className='text-[2rem] text-white cursor-default items-center'
 				whileHover={{ color: '#62baf3', scale: 1.2 }}
 				style={{ opacity: layers.length === 0 ? 0.4 : 1 }}
+				onClick={() => {console.log(layers)}}
 			>
 				{toFormatting(layers.length)}
 			</motion.p>

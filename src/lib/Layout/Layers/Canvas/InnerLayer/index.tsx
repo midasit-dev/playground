@@ -4,6 +4,7 @@ import { type Layer, type Layers } from '../../../../Common/types';
 import { useRecoilState } from 'recoil';
 import { LayersState } from '../../../recoilState';
 import { Icon, SvgClose } from './Svg';
+import { nearestMultipleOfCanvasSnapCriteria } from '../../../../Common/const';
 
 export interface RndBoxProps {
 	key: string;
@@ -34,12 +35,12 @@ const App = (props: RndBoxProps) => {
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);
-	const [, setX] = useState(props.defaultX);
-	const [, setY] = useState(props.defaultY);
+	const [x, setX] = useState(props.defaultX);
+	const [y, setY] = useState(props.defaultY);
 
 	const handleResizeStop = (e: any, direction: any, ref: any, delta: any, position: any) => {
-		const _x = parseInt(position.x);
-		const _y = parseInt(position.y);
+		const _x = nearestMultipleOfCanvasSnapCriteria(position.x);
+		const _y = nearestMultipleOfCanvasSnapCriteria(position.y);
 		setX(_x);
 		setY(_y);
 
@@ -52,8 +53,9 @@ const App = (props: RndBoxProps) => {
 	};
 
 	const handleDragStop = (e: any, d: any) => {
-		const _x = parseInt(d.x);
-		const _y = parseInt(d.y);
+		console.log('handleDragStop', d.x)
+		const _x = nearestMultipleOfCanvasSnapCriteria(d.x);
+		const _y = nearestMultipleOfCanvasSnapCriteria(d.y);
 		setX(_x);
 		setY(_y);
 
@@ -137,6 +139,10 @@ const App = (props: RndBoxProps) => {
 					y: props.defaultY,
 					width: props.defaultWidth,
 					height: props.defaultHeight,
+				}}
+				position={{
+					x: x,
+					y: y,
 				}}
 				bounds={props.bounds}
 				dragGrid={props.dragGrid}
