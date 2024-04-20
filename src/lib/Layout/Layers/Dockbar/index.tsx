@@ -5,7 +5,7 @@ import { LayersState } from '../../recoilState';
 import { Icon, SvgPreDelete, SvgAllDelete, SvgSettingCanvas } from './Svg';
 import Toggle from './Toggle';
 import Settings from './Settings';
-import { zindex_layers_dockbar } from '../../../Common/zindex';
+import { zindex_dockbar } from '../../../Common/zindex';
 
 const App = (props: any) => {
 	const { preDeleteLayerHandler, allDeleteLayersHandler } = props;
@@ -14,9 +14,11 @@ const App = (props: any) => {
 	const [isOn, setIsOn] = React.useState(false);
 
 	return (
-		<div
+		<motion.div
 			className='w-[550px] h-24 bottom-20 left-1/2 -ml-[275px] bg-pg-blue-dark py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
-			style={{ zIndex: zindex_layers_dockbar }}
+			style={{ zIndex: zindex_dockbar }}
+			initial={{ y: 100, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
 		>
 			<div className='w-auto space-x-10 flex flex-row items-center'>
 				<Toggle />
@@ -27,7 +29,9 @@ const App = (props: any) => {
 				className='text-[2rem] text-white cursor-default items-center'
 				whileHover={{ color: '#62baf3', scale: 1.2 }}
 				style={{ opacity: layers.length === 0 ? 0.4 : 1 }}
-				onClick={() => {console.log(layers)}}
+				onClick={() => {
+					console.log(layers);
+				}}
 			>
 				{toFormatting(layers.length)}
 			</motion.p>
@@ -39,7 +43,7 @@ const App = (props: any) => {
 				/>
 				<Settings isOn={isOn} />
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 

@@ -6,10 +6,10 @@ import {
 	CanvasState,
 	GuideLayerVisibleState,
 	LayerRenderingBoxesState,
-	LayersCanvasMarginState,
+	CanvasMarginState,
 } from '../../recoilState';
 import { ControllerInputs } from '../../../Common/types';
-import { zindex_layers_canvas } from '../../../Common/zindex';
+import { zindex_canvas } from '../../../Common/zindex';
 import { canvas_snap_criteria, nearestMultipleOfCanvasSnapCriteria } from '../../../Common/const';
 
 const guideLayerSize = {
@@ -22,7 +22,7 @@ const LayersCanvas = (props: any) => {
 
 	const boxes = useRecoilValue(LayerRenderingBoxesState);
 	const canvasState = useRecoilValue(CanvasState);
-	const canvasMargin = useRecoilValue(LayersCanvasMarginState);
+	const canvasMargin = useRecoilValue(CanvasMarginState);
 
 	const [isVisible] = useRecoilState(GuideLayerVisibleState);
 	const [guideLayerPosition, setGuideLayerPosition] = React.useState({ x: 0, y: 0 });
@@ -40,10 +40,9 @@ const LayersCanvas = (props: any) => {
 
 	return (
 		<div
-			className='w-full h-[calc(100vh-32px)] flex justify-center items-center'
-			style={{ position: 'relative', zIndex: zindex_layers_canvas }}
+			className='w-full h-[calc(100vh-56px)] flex justify-center items-center'
+			style={{ position: 'relative', zIndex: zindex_canvas }}
 		>
-			{/** Canvas 객체 */}
 			<div
 				className='wrapper-box shadow-xl shadow-black/5 rounded-md border border-pg-gray-medium max-w-full max-h-[calc(100vh-32px)] box-border flex flex-wrap content-start bg-white relative focus:outline-none'
 				style={{
@@ -52,8 +51,6 @@ const LayersCanvas = (props: any) => {
 					marginTop: canvasMargin.marginTop,
 				}}
 				tabIndex={0}
-				// onMouseEnter={() => setisVisible(true)}
-				// onMouseLeave={() => setisVisible(false)}
 				onMouseMove={(event: any) => {
 					const { x, y } = event.currentTarget.getBoundingClientRect();
 					const newTop = event.clientY - y;

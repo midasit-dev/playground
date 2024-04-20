@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layers from './Layers';
 import Componentized from './Componentized';
+import Components from './Components';
 import { motion } from 'framer-motion';
 import DesignShowcase from './DesignShowcase';
 
@@ -64,7 +65,8 @@ const App = () => {
 					<div className='w-full h-inherit'>
 						{activeTab === 'showcase' && <DesignShowcase />}
 						{activeTab === 'layers' && <Layers />}
-						{activeTab === 'components' && <Componentized />}
+						{/* {activeTab === 'components' && <Componentized />} */}
+						{activeTab === 'components' && <Components />}
 					</div>
 				</div>
 			</div>

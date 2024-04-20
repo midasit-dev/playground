@@ -104,8 +104,8 @@ export const SvgSettingCanvasMoveUp = () => {
 			xmlns='http://www.w3.org/2000/svg'
 		>
 			<path
-				d='M16 12L12 8M12 8L8 12M12 8V17.2C12 18.5907 12 19.2861 12.5505 20.0646C12.9163 20.5819 13.9694 21.2203 14.5972 21.3054C15.5421 21.4334 15.9009 21.2462 16.6186 20.8719C19.8167 19.2036 22 15.8568 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 15.7014 4.01099 18.9331 7 20.6622'
-				stroke='currentColor'
+				d='M12 19V5M12 5L5 12M12 5L19 12'
+				stroke='#0786c8'
 				stroke-width='2'
 				stroke-linecap='round'
 				stroke-linejoin='round'
@@ -124,8 +124,8 @@ export const SvgSettingCanvasMoveDown = () => {
 			xmlns='http://www.w3.org/2000/svg'
 		>
 			<path
-				d='M8 12L12 16M12 16L16 12M12 16V6.8C12 5.40929 12 4.71394 11.4495 3.9354C11.0837 3.41812 10.0306 2.77968 9.40278 2.69462C8.45789 2.5666 8.09907 2.75378 7.38143 3.12814C4.18333 4.79643 2 8.14324 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 8.29859 19.989 5.06687 17 3.33782'
-				stroke='currentColor'
+				d='M12 5V19M12 19L19 12M12 19L5 12'
+				stroke='#0786c8'
 				stroke-width='2'
 				stroke-linecap='round'
 				stroke-linejoin='round'

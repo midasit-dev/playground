@@ -51,7 +51,7 @@ export const useBoxes = (props: useBoxesProps) => {
 					<InnerLayer
 						key={id}
 						id={id}
-						defaultX={inputs.x }
+						defaultX={inputs.x}
 						defaultY={inputs.y}
 						defaultWidth={inputs.width}
 						defaultHeight={inputs.height}
@@ -115,6 +115,10 @@ export const useBoxes = (props: useBoxesProps) => {
 						y: modifiedY,
 						width: inputs.width,
 						height: inputs.height,
+						guideBoxProps: {
+							width: 'inherit',
+							height: 'inherit',
+						},
 					},
 					children: [],
 				},

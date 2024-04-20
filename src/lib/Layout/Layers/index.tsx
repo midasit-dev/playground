@@ -39,8 +39,7 @@ const App = () => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
-				style={{ width: '100%', height: '100%' }}
-				className='bg-gray-100'
+				className='bg-gray-100 w-full h-[calc(100vh-56px)]'
 			>
 				<Canvas addLayerHandler={handleClickAddBox} />
 				<DockbarBottm

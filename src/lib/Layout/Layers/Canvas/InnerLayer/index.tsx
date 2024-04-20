@@ -53,7 +53,7 @@ const App = (props: RndBoxProps) => {
 	};
 
 	const handleDragStop = (e: any, d: any) => {
-		console.log('handleDragStop', d.x)
+		console.log('handleDragStop', d.x);
 		const _x = nearestMultipleOfCanvasSnapCriteria(d.x);
 		const _y = nearestMultipleOfCanvasSnapCriteria(d.y);
 		setX(_x);
