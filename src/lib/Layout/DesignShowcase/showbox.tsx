@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CanvasState, LayersState, ShowCaseBoxState } from '../recoilState';
+import { CanvasState, LayersState, ShowCaseBoxState, ShowcaseCanvasLockState } from '../recoilState';
 import { type Layer } from '../../Common/types';
 import ToComponent from '../Componentized/ToComponent';
 import { PageString } from '../../Common/string';
@@ -12,7 +12,7 @@ export default function ShowBox() {
 	const canvasState = useRecoilValue(CanvasState);
 	const [layers] = useRecoilState(LayersState);
 	const [showCaseBoxState, setShowCaseBoxState] = useRecoilState(ShowCaseBoxState);
-	const [lockDraggingCanvas, setLockDraggingCanvas] = React.useState(false);
+	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
 
 	return (
 		<AnimatePresence mode='popLayout'>
