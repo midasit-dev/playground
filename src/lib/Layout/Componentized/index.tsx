@@ -31,23 +31,55 @@ const App = () => {
 				style={{ width: '100%', height: '100%' }}
 				className='bg-gray-100'
 			>
-				{openJsonImportMenu && <JSONImport openJsonImportMenu={openJsonImportMenu} setOpenJsonImportMenu={setOpenJsonImportMenu}/>}
-				{openJsonExportMenu && <JSONExport openJsonExportMenu={openJsonExportMenu} setOpenJsonExportMenu={setOpenJsonExportMenu}/>}
+				{openJsonImportMenu && (
+					<JSONImport
+						openJsonImportMenu={openJsonImportMenu}
+						setOpenJsonImportMenu={setOpenJsonImportMenu}
+					/>
+				)}
+				{openJsonExportMenu && (
+					<JSONExport
+						openJsonExportMenu={openJsonExportMenu}
+						setOpenJsonExportMenu={setOpenJsonExportMenu}
+					/>
+				)}
 				{openJsonViewMenu && <JSONView />}
-				{openCodeOption && <CODEOption openCodeMenu={openCodeOption} setOpenCodeMenu={setOpenCodeOption}/>}
-				<div style={{display:'flex', flexDirection:"row", justifyContent:"end",}}>
-				<div style={{cursor:"pointer", marginRight:"10px"}} onClick={() => {setOpenJsonExportMenu(true)}}>
-					Import
-				</div>
-				<div style={{marginRight:"10px", cursor:"pointer"}} onClick={() => {setOpenJsonImportMenu(true)}}>
-					Export
-				</div>
-				<div style={{marginRight:"10px", cursor:"pointer"}} onClick={() => {setOpenJsonViewMenu(true)}}>
-					View
-				</div>
-				<div style={{marginRight:"10px", cursor:"pointer"}} onClick={() => {setOpenCodeOption(true)}}>
-					Code
-				</div>
+				{openCodeOption && (
+					<CODEOption openCodeMenu={openCodeOption} setOpenCodeMenu={setOpenCodeOption} />
+				)}
+				<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
+					<div
+						style={{ cursor: 'pointer', marginRight: '10px' }}
+						onClick={() => {
+							setOpenJsonExportMenu(true);
+						}}
+					>
+						Import
+					</div>
+					<div
+						style={{ marginRight: '10px', cursor: 'pointer' }}
+						onClick={() => {
+							setOpenJsonImportMenu(true);
+						}}
+					>
+						Export
+					</div>
+					<div
+						style={{ marginRight: '10px', cursor: 'pointer' }}
+						onClick={() => {
+							setOpenJsonViewMenu(true);
+						}}
+					>
+						View
+					</div>
+					<div
+						style={{ marginRight: '10px', cursor: 'pointer' }}
+						onClick={() => {
+							setOpenCodeOption(true);
+						}}
+					>
+						Code
+					</div>
 				</div>
 				<GuideBox row width='100%'>
 					{/** Canvas 객체 */}
