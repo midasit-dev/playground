@@ -15,7 +15,7 @@ const itemVariants = {
 };
 
 const SvgArrowDown = () => (
-	<div className='w-5 h-5 rounded-md cursor-pointer'>
+	<div className='w-4 h-4 rounded-md cursor-pointer'>
 		<svg
 			width='100%'
 			height='100%'
@@ -50,12 +50,12 @@ const App = (props: PropComponentProps<CustomUnionType>): JSX.Element => {
 			className='w-full justify-between items-center flex flex-row'
 			style={{ zIndex: zindex_components_panel_add_comp_properties }}
 		>
-			<p className='text-gray-500 text-sm'>{name}</p>
+			<p className='text-gray-600 text-xs'>{name}</p>
 			<motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className='relative w-44'>
 				<motion.button
 					whileTap={{ scale: 0.97 }}
 					onClick={() => setOpen(!isOpen)}
-					className='w-full h-auto py-3 px-4 rounded-md shadow-lg box-border space-x-10 flex flex-row items-center bg-gray-700 text-white text-sm justify-between'
+					className='w-full h-auto py-[6px] px-4 rounded-md shadow-lg box-border space-x-10 flex flex-row items-center bg-gray-700 text-white text-xs justify-between'
 				>
 					{localValue}
 					<motion.div
@@ -91,7 +91,7 @@ const App = (props: PropComponentProps<CustomUnionType>): JSX.Element => {
 						},
 					}}
 					style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-					className='bg-pg-black-medium bg-opacity-90 text-gray-400 text-sm px-4 py-3  overflow-hidden box-border space-y-3 w-full shadow-lg absolute top-0 left-[188px]'
+					className='bg-pg-black-medium bg-opacity-90 text-gray-400 text-xs px-4 py-3  overflow-hidden box-border space-y-3 w-full shadow-lg absolute top-0 left-[188px]'
 				>
 					{value.values.map((option: string, index: number) => (
 						<motion.li

@@ -34,7 +34,7 @@ const App = (props: PropComponentProps<boolean>): JSX.Element => {
 
 	return (
 		<div className='w-full justify-between items-center flex flex-row relative'>
-			<p className='text-gray-500 text-sm'>{name}</p>
+			<p className='text-gray-600 text-xs'>{name}</p>
 			<div
 				className='absolute top-[14px] right-[6px] w-6 h-0 z-0'
 				style={{

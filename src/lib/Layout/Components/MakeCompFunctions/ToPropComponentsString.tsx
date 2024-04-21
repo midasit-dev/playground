@@ -13,7 +13,7 @@ const itemVariants = {
 
 const SvgExapnd = () => {
 	return (
-		<div className='w-5 h-5'>
+		<div className='w-4 h-4'>
 			<svg
 				width='100%'
 				height='100%'
@@ -61,18 +61,29 @@ const App = (props: PropComponentProps<string>) => {
 		[name, setLocalValue, updateGlobalValue],
 	);
 
+	const [bgColor, setBgColor] = React.useState('rgb(55, 65, 81)');
+	const whenInputFocusIn = useCallback(() => setBgColor('#0786c8'), []);
+	const whenInputFocusOut = useCallback(() => setBgColor('rgb(55, 65, 81)'), []);
+
 	return (
 		<div className='w-full flex flex-row justify-between items-center'>
-			<p className='text-gray-500 text-sm'>{name}</p>
+			<p className='text-gray-600 text-xs'>{name}</p>
 			<motion.nav initial={false} animate={isOpen ? 'open' : 'closed'} className='relative w-44'>
-				<motion.div className='w-full h-auto py-3 px-4 rounded-md shadow-lg box-border space-x-10 flex flex-row items-center bg-gray-700 text-white text-sm'>
+				<motion.div
+					className='w-full h-auto py-[6px] px-4 rounded-md box-border space-x-10 flex flex-row items-center text-white text-xs'
+					animate={{ backgroundColor: bgColor }}
+				>
 					<input
-						className='p-0 w-full rounded-md focus:outline-none bg-transparent text-white text-sm placeholder-gray-100 caret-pg-blue-medium'
+						className='p-0 w-full rounded-md focus:outline-none bg-transparent text-white text-xs placeholder-gray-100 caret-pg-blue-medium'
 						placeholder={localValue}
 						value={localValue}
 						onChange={(e: any) => setLocalValue(e.target.value)}
 						type='text'
-						onBlur={updateInputValue}
+						onFocus={whenInputFocusIn}
+						onBlur={(e: any) => {
+							whenInputFocusOut();
+							updateInputValue(e);
+						}}
 					/>
 					<motion.div
 						whileTap={{ scale: 0.97 }}
@@ -110,7 +121,7 @@ const App = (props: PropComponentProps<string>) => {
 						},
 					}}
 					style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-					className='bg-pg-black-medium bg-opacity-90 px-4 py-3  overflow-hidden box-border space-y-3 w-[300px] h-[84px] shadow-lg absolute top-0 left-[188px] text-white text-sm'
+					className='bg-pg-black-medium bg-opacity-90 px-4 py-3  overflow-hidden box-border space-y-3 w-[300px] h-[84px] absolute top-0 left-[188px] text-white text-xs'
 				>
 					<motion.textarea
 						rows={3}
@@ -121,6 +132,10 @@ const App = (props: PropComponentProps<string>) => {
 						onChange={(e: any) => setLocalValue(e.target.value)}
 						onBlur={updateInputValue}
 						onKeyDown={(e: any) => {
+							if (e.key === 'Escape') {
+								setOpen(false);
+							}
+
 							if (e.key === 'Enter') {
 								setOpen(false);
 								updateInputValue(e);

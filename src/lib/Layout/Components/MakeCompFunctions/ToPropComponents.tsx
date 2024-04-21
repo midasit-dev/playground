@@ -115,34 +115,6 @@ const ToPropComponentNumber = (props: PropComponentProps<number>): JSX.Element =
 	);
 };
 
-// const ToPropComponentBoolean = (props: PropComponentProps<boolean>): JSX.Element => {
-// 	const { type, name, value, hookType } = props;
-// 	const { localValue, setLocalValue, updateGlobalValue } = usePropComponent(
-// 		type,
-// 		name,
-// 		value,
-// 		hookType,
-// 	);
-// 	return (
-// 		<GuideBox width='100%' row horSpaceBetween verCenter>
-// 			<Typography variant='body1'>{name}</Typography>
-// 			<Switch
-// 				checked={localValue}
-// 				onChange={(event) => {
-// 					setLocalValue(event.target.checked);
-// 					updateGlobalValue((prev: any) => ({
-// 						...prev,
-// 						props: {
-// 							...prev.props,
-// 							[name]: event.target.checked,
-// 						},
-// 					}));
-// 				}}
-// 			/>
-// 		</GuideBox>
-// 	);
-// };
-
 const ToPropComponentObject = (props: PropComponentProps<object>): JSX.Element => {
 	const { name, value } = props;
 	// const { localValue, } = usePropComponent(type, name, value, hookType);
@@ -238,7 +210,7 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 	}, [customProps, componentType]);
 
 	return (
-		<div className='w-full justify-between items-center space-y-3'>
+		<div className='w-full justify-between items-center space-y-2'>
 			{options.map(([name, value], index: number) => {
 				return (
 					<ToPropComponent
