@@ -67,7 +67,7 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 
 	const refreshFileNames = useCallback(async () => {
 		const data = await onClickHandler({
-			path: '/exports/layers',
+			path: './exports/layers',
 			method: 'get',
 		});
 
@@ -102,7 +102,7 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 			if (!items.has('NONE')) {
 				const fileName = getKeyByValue(items, value);
 				const data: ExportLayers = await onClickHandler({
-					path: `/exports/layers/${fileName}`,
+					path: `./exports/layers/${fileName}`,
 					method: 'get',
 				});
 

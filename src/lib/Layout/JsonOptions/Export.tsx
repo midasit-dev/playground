@@ -86,7 +86,7 @@ const App = (props: { openJsonExportMenu: boolean; setOpenJsonExportMenu: any })
 								};
 
 								const data = await onClickHandler({
-									path: '/exports/layers',
+									path: './exports/layers',
 									body: {
 										fileName: prevValue,
 										content: JSON.stringify(exportLayers, null, 2),
