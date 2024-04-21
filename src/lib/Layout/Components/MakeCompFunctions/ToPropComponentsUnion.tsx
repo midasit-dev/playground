@@ -90,8 +90,13 @@ const App = (props: PropComponentProps<CustomUnionType>): JSX.Element => {
 							},
 						},
 					}}
-					style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-					className='bg-pg-black-medium bg-opacity-90 text-gray-400 text-xs px-4 py-3  overflow-hidden box-border space-y-3 w-full shadow-lg absolute top-0 left-[188px]'
+					style={{
+						pointerEvents: isOpen ? 'auto' : 'none',
+						position: 'absolute',
+						top: 0,
+						left: hookType === 'Add' ? 188 : hookType === 'Modify' ? -188 : 0,
+					}}
+					className='bg-pg-black-medium bg-opacity-90 text-gray-400 text-xs px-4 py-3  overflow-hidden box-border space-y-3 w-full shadow-lg'
 				>
 					{value.values.map((option: string, index: number) => (
 						<motion.li

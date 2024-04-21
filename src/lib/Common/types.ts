@@ -28,15 +28,7 @@
  */
 interface Layer {
 	id: string;
-	type:
-		| string
-		| 'FloatingBox'
-		| 'Button'
-		| 'TextField'
-		| 'TextFieldV2'
-		| 'Panel'
-		| 'DropList'
-		| 'ColorPicker';
+	type: string; //AvailableComponents.ts 참고
 	props: Record<string, any>;
 	children?: Array<Layer>;
 }

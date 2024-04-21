@@ -120,8 +120,13 @@ const App = (props: PropComponentProps<string>) => {
 							},
 						},
 					}}
-					style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
-					className='bg-pg-black-medium bg-opacity-90 px-4 py-3  overflow-hidden box-border space-y-3 w-[300px] h-[84px] absolute top-0 left-[188px] text-white text-xs'
+					style={{
+						pointerEvents: isOpen ? 'auto' : 'none',
+						position: 'absolute',
+						top: 0,
+						left: hookType === 'Add' ? 188 : hookType === 'Modify' ? -312 : 0,
+					}}
+					className='bg-pg-black-medium bg-opacity-90 px-4 py-3  overflow-hidden box-border space-y-3 w-[300px] h-[84px] text-white text-xs'
 				>
 					<motion.textarea
 						rows={3}

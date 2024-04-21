@@ -70,7 +70,7 @@ const App = () => {
 				}}
 				className='w-[302px] h-auto py-3 px-4 rounded-md shadow-lg box-border space-x-10 flex flex-row items-center bg-pg-blue-dark text-white text-sm justify-between'
 			>
-				추가하기
+				Create
 				<motion.div
 					variants={{
 						click: { rotate: 180 },

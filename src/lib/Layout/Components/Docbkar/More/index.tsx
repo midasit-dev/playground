@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Icon, SvgMore } from '../Svg';
 import { motion } from 'framer-motion';
 import Toggle from './ToggleSwitch';
+import { zindex_dockbar_more } from '../../../../Common/zindex';
 
 const guideBoxPositionPropKeys = [
 	'center',
@@ -27,10 +28,10 @@ const App = () => {
 					opacity: isOn ? 1 : 0,
 					display: isOn ? 'flex' : 'none',
 					position: 'absolute',
-					bottom: isOn ? 0 : -50,
-					right: -270,
+					bottom: isOn ? 80 : 50,
+					right: 0,
 					pointerEvents: isOn ? 'auto' : 'none',
-					zIndex: isOn ? 100 : -1,
+					zIndex: isOn ? zindex_dockbar_more : -1,
 				}}
 			>
 				{guideBoxPositionPropKeys.map((key: string, index: number) => (
