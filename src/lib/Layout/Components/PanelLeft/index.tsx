@@ -4,10 +4,12 @@ import { zindex_components_panel } from '../../../Common/zindex';
 import { Icon, SvgExpand, SvgMinimize } from './Svg';
 import ComboBox from './ComboBox';
 import Properties from './Properties';
+import AddButton from './AddButton';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	PropComponentLayerAddValueState,
 	SelectedAddComponentKey,
+	SelectedLayerIdState,
 	SelectedLayerState,
 } from '../../recoilState';
 import { Layer } from '../../../Common/types';
@@ -17,6 +19,9 @@ import Moaui from '@midasit-dev/moaui';
 const App = () => {
 	const [showPanel, setShowPanel] = React.useState(true);
 
+	//선택한 Layer Id (Selected Layer Id)
+	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
+
 	//선택한 Layer의 상태 (Selected Layer)
 	const selectedLayer = useRecoilValue(SelectedLayerState);
 
@@ -24,9 +29,7 @@ const App = () => {
 	const selectedaddCompnentKey = useRecoilValue(SelectedAddComponentKey);
 
 	//Component Type이 변경되면 propCompLayerAddValue를 초기화 (Data for add)
-	const [propCompLayerAddValue, setPropCompLayerAddValue] = useRecoilState(
-		PropComponentLayerAddValueState,
-	);
+	const [, setPropCompLayerAddValue] = useRecoilState(PropComponentLayerAddValueState);
 
 	useEffect(() => {
 		if (!selectedaddCompnentKey) return;
@@ -72,7 +75,7 @@ const App = () => {
 				x: showPanel ? 0 : -350 + (24 + 20 + 24),
 				opacity: showPanel ? 1 : 0.6,
 			}}
-			className='fixed w-[350px] h-[calc(100vh-56px)] left-0 top-[56px] bg-gray-200 bg-opacity-90 p-6 box-border'
+			className='fixed w-[350px] h-[calc(100vh-56px)] left-0 top-[56px] bg-gray-200 bg-opacity-90 p-6 box-border flex flex-col'
 			style={{ zIndex: zindex_components_panel }}
 		>
 			<motion.div className='w-full h-auto flex flex-row items-center justify-between text-gray-600 text-sm font-semibold'>
@@ -84,10 +87,17 @@ const App = () => {
 				)}
 			</motion.div>
 
-			<div className='w-full pt-6' />
-			<ComboBox />
-			<div className='w-full pt-6' />
-			<Properties />
+			<div className='w-full h-[1px] my-3'></div>
+
+			<motion.div
+				className='w-auto h-auto space-y-6'
+				style={{ pointerEvents: selectedLayerId ? 'auto' : 'none' }}
+				animate={{ opacity: selectedLayerId ? 1 : 0.6 }}
+			>
+				<ComboBox />
+				<Properties />
+				<AddButton />
+			</motion.div>
 		</motion.div>
 	);
 };

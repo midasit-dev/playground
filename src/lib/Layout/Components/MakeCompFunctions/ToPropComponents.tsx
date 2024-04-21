@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Layer } from '../../../Common/types';
-import Moaui, {
-	type CustomUnionType,
-	TextFieldV2,
-	TextField,
-	Typography,
-	GuideBox,
-} from '@midasit-dev/moaui';
+import Moaui, { type CustomUnionType } from '@midasit-dev/moaui';
 import {
 	PropComponentLayerAddValueState,
 	PropComponentLayerModifyValueState,
@@ -16,6 +10,7 @@ import ToPropComponentsArray from './ToPropComponentsArray';
 import ToPropComponentsUnion from './ToPropComponentsUnion';
 import ToPropComponentsString from './ToPropComponentsString';
 import ToPropComponentsBoolean from './ToPropComponentsBoolean';
+import ToPropComponentsNumber from './ToPropComponentsNumber';
 
 export interface PropComponentProps<T> {
 	type: string;
@@ -54,88 +49,6 @@ export const usePropComponent = (type: string, name: string, value: any, hookTyp
 	};
 };
 
-const ToPropComponentMap = (props: PropComponentProps<Map<any, any>>): JSX.Element => {
-	//추가하는 것 부터 조금 고민이 필요해보인다 =_=
-	const { name, value } = props;
-	// const callbackValue = useCallback(() => value, [value]);
-	// const { localValue, } = usePropComponent(type, name, callbackValue);
-	return (
-		<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
-			<Typography variant='body1'>*Map {name}</Typography>
-			<TextField width='100px' value={value.toString()} disabled />
-		</GuideBox>
-	);
-};
-
-const ToPropComponentFunction = (props: PropComponentProps<Function>): JSX.Element => {
-	//추가하는 것 부터 조금 고민이 필요해보인다 =_=
-	const { name, value } = props;
-	// const { localValue, } = usePropComponent(type, name, value, hookType);
-	return (
-		<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
-			<Typography variant='body1'>{name}</Typography>
-			<TextField width='100px' value={value.toString()} disabled />
-		</GuideBox>
-	);
-};
-
-const ToPropComponentNumber = (props: PropComponentProps<number>): JSX.Element => {
-	const { type, name, value, hookType } = props;
-	const { localValue, setLocalValue, updateGlobalValue } = usePropComponent(
-		type,
-		name,
-		value,
-		hookType,
-	);
-	return (
-		<GuideBox width='100%' row horSpaceBetween verCenter>
-			<Typography variant='body1'>{name}</Typography>
-			<TextFieldV2
-				type='number'
-				numberOptions={{
-					onlyInteger: true,
-					min: 0,
-					step: 1,
-				}}
-				width='100px'
-				value={localValue.toString()}
-				titlePosition='left'
-				onChange={(event) => {
-					setLocalValue(Number(event.target.value));
-					updateGlobalValue((prev: any) => ({
-						...prev,
-						props: {
-							...prev.props,
-							[name]: Number(event.target.value),
-						},
-					}));
-				}}
-			/>
-		</GuideBox>
-	);
-};
-
-const ToPropComponentObject = (props: PropComponentProps<object>): JSX.Element => {
-	const { name, value } = props;
-	// const { localValue, } = usePropComponent(type, name, value, hookType);
-	return (
-		<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
-			<Typography variant='body1'>*object {name}</Typography>
-			<TextField width='100px' value={JSON.stringify(value)} disabled />
-		</GuideBox>
-	);
-};
-
-const ToPropComponentDefault = (props: PropComponentProps<any>): JSX.Element => {
-	const { name, value } = props;
-	return (
-		<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
-			<Typography variant='body1'>*default {name}</Typography>
-			<TextField width='100px' value={JSON.stringify(value)} disabled />
-		</GuideBox>
-	);
-};
-
 const ToPropComponent = (props: PropComponentProps<any>): JSX.Element => {
 	const { type, name, value, hookType } = props;
 
@@ -162,7 +75,7 @@ const ToPropComponent = (props: PropComponentProps<any>): JSX.Element => {
 					<ToPropComponentsBoolean type={type} name={name} value={value} hookType={hookType} />
 				);
 			case 'number':
-				return <ToPropComponentNumber type={type} name={name} value={value} hookType={hookType} />;
+				return <ToPropComponentsNumber type={type} name={name} value={value} hookType={hookType} />;
 			case 'object':
 				return <ToPropComponentObject type={type} name={name} value={value} hookType={hookType} />;
 			default:
@@ -227,3 +140,58 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 };
 
 export default ToPropComponents;
+
+//이 아래는 변경이 필요합니다.
+const ToPropComponentMap = (props: PropComponentProps<Map<any, any>>): JSX.Element => {
+	return <></>;
+
+	// //추가하는 것 부터 조금 고민이 필요해보인다 =_=
+	// const { name, value } = props;
+	// // const callbackValue = useCallback(() => value, [value]);
+	// // const { localValue, } = usePropComponent(type, name, callbackValue);
+	// return (
+	// 	<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
+	// 		<Typography variant='body1'>*Map {name}</Typography>
+	// 		<TextField width='100px' value={value.toString()} disabled />
+	// 	</GuideBox>
+	// );
+};
+
+const ToPropComponentFunction = (props: PropComponentProps<Function>): JSX.Element => {
+	return <></>;
+
+	// //추가하는 것 부터 조금 고민이 필요해보인다 =_=
+	// const { name, value } = props;
+	// // const { localValue, } = usePropComponent(type, name, value, hookType);
+	// return (
+	// 	<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
+	// 		<Typography variant='body1'>{name}</Typography>
+	// 		<TextField width='100px' value={value.toString()} disabled />
+	// 	</GuideBox>
+	// );
+};
+
+const ToPropComponentObject = (props: PropComponentProps<object>): JSX.Element => {
+	return <></>;
+
+	// const { name, value } = props;
+	// // const { localValue, } = usePropComponent(type, name, value, hookType);
+	// return (
+	// 	<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
+	// 		<Typography variant='body1'>*object {name}</Typography>
+	// 		<TextField width='100px' value={JSON.stringify(value)} disabled />
+	// 	</GuideBox>
+	// );
+};
+
+const ToPropComponentDefault = (props: PropComponentProps<any>): JSX.Element => {
+	return <>Default</>;
+
+	// const { name, value } = props;
+	// return (
+	// 	<GuideBox width='100%' row horSpaceBetween verCenter opacity={0.5}>
+	// 		<Typography variant='body1'>*default {name}</Typography>
+	// 		<TextField width='100px' value={JSON.stringify(value)} disabled />
+	// 	</GuideBox>
+	// );
+};
