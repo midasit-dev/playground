@@ -24,9 +24,11 @@ const App = (props: any) => {
 
 	//현재 상태에 따라 토글 스위치 위치 변경
 	useEffect(() => {
-		//@ts-ignore
-		if (guideboxProps[name]) setIsOn(true);
-		else setIsOn(false);
+		if (guideboxProps && name) {
+			//@ts-ignore
+			if (name in guideboxProps && guideboxProps[name]) setIsOn(true);
+			else setIsOn(false);
+		}
 	}, [guideboxProps, name]);
 
 	return (
