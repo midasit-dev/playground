@@ -29,12 +29,12 @@ const App = () => {
 	const selectedaddCompnentKey = useRecoilValue(SelectedAddComponentKey);
 
 	//Component Type이 변경되면 propCompLayerAddValue를 초기화 (Data for add)
-	const [, setPropCompLayerAddValue] = useRecoilState(PropComponentLayerAddValueState);
+	const [, setValueToCreate] = useRecoilState(PropComponentLayerAddValueState);
 
 	useEffect(() => {
 		if (!selectedaddCompnentKey) return;
 
-		setPropCompLayerAddValue((prev: Layer) => {
+		setValueToCreate((prev: Layer) => {
 			const isEqualType = selectedaddCompnentKey === prev.type;
 			// console.log(isEqualType, prev.type, selectedaddCompnentKey);
 
@@ -66,7 +66,7 @@ const App = () => {
 				children: isEqualType ? prev.children : [],
 			};
 		});
-	}, [setPropCompLayerAddValue, selectedLayer?.children, selectedaddCompnentKey]);
+	}, [setValueToCreate, selectedLayer?.children, selectedaddCompnentKey]);
 
 	return (
 		<motion.div
