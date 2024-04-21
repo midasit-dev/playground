@@ -42,7 +42,12 @@ function Footer(props: IFooterProps) {
 				width='100%'
 				spacing={2}
 			>
-				<Selection query={query} onClick={props?.onItemClick} onDelete={onDelete} />
+				<Selection
+					key='selection-component'
+					query={query}
+					onClick={props?.onItemClick}
+					onDelete={onDelete}
+				/>
 				<InputField
 					isLoading={isLoading}
 					onSend={(value: string) => {

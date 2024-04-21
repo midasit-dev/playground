@@ -120,7 +120,7 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 													WebkitTextFillColor: 'transparent',
 												}}
 											>
-												{`${String(item.similarityScore * 100)}%`}
+												{`${String(Math.floor(item.similarityScore * 100))}%`}
 											</Typography>
 										</Stack>
 									</Stack>
