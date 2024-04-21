@@ -3,15 +3,14 @@ declare global {
 	interface Window {
 		playground: {
 			canvas: any;
+			layers: any;
 		};
 	}
 }
 
 window.playground = {
 	canvas: 'not yet',
+	layers: 'not yet',
 };
 
-//다른 컴포넌트에서 사용할 custom hook
-export const getCanvasValue = () => {
-	return window.playground.canvas;
-};
+export const getGlobalValues = () => {};

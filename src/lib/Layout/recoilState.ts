@@ -62,6 +62,15 @@ export const LayerRenderingBoxesState = atom<Box[]>({
 export const LayersState = atom<Layers>({
 	key: 'LayersState',
 	default: [],
+	effects: [
+		({ setSelf, onSet }) => {
+			console.log('LayersState effects');
+			setSelf([]);
+			onSet((newValue, oldValue) => {
+				window.playground.layers = newValue;
+			});
+		},
+	],
 });
 
 export const ComponentizedRenderingBoxesState = atom<Box[]>({
