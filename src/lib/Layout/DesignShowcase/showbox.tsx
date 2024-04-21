@@ -1,13 +1,18 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CanvasState, ShowCaseBoxState } from '../recoilState';
-
+import { CanvasState, LayersState, ShowCaseBoxState } from '../recoilState';
+import { type Layer } from '../../Common/types';
+import ToComponent from '../Componentized/ToComponent';
+import { PageString } from '../../Common/string';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Rnd } from 'react-rnd';
+import { Icon } from '@midasit-dev/moaui';
 
 export default function ShowBox() {
 	const canvasState = useRecoilValue(CanvasState);
+	const [layers] = useRecoilState(LayersState);
 	const [showCaseBoxState, setShowCaseBoxState] = useRecoilState(ShowCaseBoxState);
+	const [lockDraggingCanvas, setLockDraggingCanvas] = React.useState(false);
 
 	return (
 		<AnimatePresence mode='popLayout'>
@@ -20,7 +25,7 @@ export default function ShowBox() {
 					height: canvasState.height,
 				}}
 				enableResizing={false}
-				disableDragging={false}
+				disableDragging={lockDraggingCanvas}
 				onDragStop={(e, d) => {
 					setShowCaseBoxState((prev: any) => ({
 						...prev,
@@ -37,8 +42,9 @@ export default function ShowBox() {
 						justifyContent: 'end',
 						alignItems: 'center',
 					}}
+					onClick={() => {setLockDraggingCanvas(!lockDraggingCanvas)}}
 				>
-					Design Showcase
+					<Icon iconName={lockDraggingCanvas ? 'Lock' : 'LockOpenOutlined'} opacity={1} toButton={true} />
 				</div>
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -58,7 +64,15 @@ export default function ShowBox() {
 						marginBottom: '3rem',
 					}}
 				>
-					<p>Design Showcase is a component that shows the design of the component.</p>
+					<div
+						onClick={(event) => {
+							event.stopPropagation();
+						}}
+					>
+						{layers.map((layer: Layer, index: number) => {
+							return <ToComponent key={index} layer={layer} parentPage={PageString.Showcase} />;
+						})}
+					</div>
 				</motion.div>
 			</Rnd>
 		</AnimatePresence>
