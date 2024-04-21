@@ -1,18 +1,28 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CanvasState, LayersState, ShowCaseBoxState, ShowcaseCanvasLockState } from '../recoilState';
+import {
+	CanvasState,
+	LayersState,
+	ShowCaseBoxState,
+	ShowcaseCanvasLockState,
+} from '../recoilState';
 import { type Layer } from '../../Common/types';
 import ToComponent from '../Componentized/ToComponent';
 import { PageString } from '../../Common/string';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Rnd } from 'react-rnd';
 import { Icon } from '@midasit-dev/moaui';
+import Converter from './ai-components/defs/Converter';
 
 export default function ShowBox() {
 	const canvasState = useRecoilValue(CanvasState);
 	const [layers] = useRecoilState(LayersState);
 	const [showCaseBoxState, setShowCaseBoxState] = useRecoilState(ShowCaseBoxState);
 	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
+
+	async function onClickTest() {
+		const test = await Converter();
+	}
 
 	return (
 		<AnimatePresence mode='popLayout'>
@@ -42,9 +52,16 @@ export default function ShowBox() {
 						justifyContent: 'end',
 						alignItems: 'center',
 					}}
-					onClick={() => {setLockDraggingCanvas(!lockDraggingCanvas)}}
+					onClick={() => {
+						setLockDraggingCanvas(!lockDraggingCanvas);
+					}}
 				>
-					<Icon iconName={lockDraggingCanvas ? 'Lock' : 'LockOpenOutlined'} opacity={1} toButton={true} />
+					<Icon
+						iconName={lockDraggingCanvas ? 'Lock' : 'LockOpenOutlined'}
+						opacity={1}
+						toButton={true}
+					/>
+					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickTest} />
 				</div>
 				<motion.div
 					initial={{ opacity: 0 }}

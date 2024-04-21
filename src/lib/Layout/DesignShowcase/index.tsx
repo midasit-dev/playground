@@ -7,7 +7,6 @@ import ColorfulBg from './colorfulBg';
 import Layout from './ai-components/Abracadabra';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { IListItem } from './ai-components/defs/Interface';
-
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
@@ -83,7 +82,7 @@ export default function DesignShowcase() {
 						flexDirection: 'column',
 					}}
 				>
-					{(startX !== 0 && startY !== 0) && <ShowBox key='ShowBox' />}
+					{startX !== 0 && startY !== 0 && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
 			<QueryClientProvider client={queryClient}>

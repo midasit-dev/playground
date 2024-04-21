@@ -1,5 +1,5 @@
 export const PageString = {
-	"Showcase" : "Showcase",
-	"Layers" : "Layers",
-	"Components" : "Components",
-}
+	Showcase: 'Showcase',
+	Layers: 'Layers',
+	Components: 'Components',
+};
