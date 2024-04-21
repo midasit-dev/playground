@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as _secured from './_secured';
 
 export const functionListAdapter = async (value: IQueryKey) => {
-	const _body = await require('./Schema.json');
+	const _body = await require('./pySchema.json');
 
 	const isMock = Boolean(
 		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
