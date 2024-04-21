@@ -64,7 +64,6 @@ export const LayersState = atom<Layers>({
 	default: [],
 	effects: [
 		({ setSelf, onSet }) => {
-			console.log('LayersState effects');
 			setSelf([]);
 			onSet((newValue, oldValue) => {
 				window.playground.layers = newValue;
