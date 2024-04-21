@@ -18,9 +18,7 @@ export default function DesignShowcase() {
 
 	React.useEffect(() => {
 		const handleResize = () => {
-			console.log('DesignShowcase mounted');
 			const calcX = window.innerWidth / 2 - canvasState.width / 2;
-			console.log('calcX', calcX);
 			setStartX(calcX);
 		};
 
@@ -29,7 +27,6 @@ export default function DesignShowcase() {
 		window.addEventListener('resize', handleResize);
 
 		return () => {
-			console.log('DesignShowcase unmounted');
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
@@ -83,7 +80,7 @@ export default function DesignShowcase() {
 						flexDirection: 'column',
 					}}
 				>
-					<ShowBox />
+					{startX !== 0 && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
 			<QueryClientProvider client={queryClient}>
