@@ -11,7 +11,7 @@ const itemVariants = {
 	closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
 };
 
-const SvgExapnd = () => {
+const SvgExpand = () => {
 	return (
 		<div className='w-4 h-4'>
 			<svg
@@ -96,7 +96,7 @@ const App = (props: PropComponentProps<string>) => {
 						style={{ originY: 0.5 }}
 						className='items-center cursor-pointer'
 					>
-						<SvgExapnd />
+						<SvgExpand />
 					</motion.div>
 				</motion.div>
 				<motion.div
