@@ -9,7 +9,7 @@ const App = () => {
 	const [, setMargin] = useRecoilState(CanvasMarginState);
 
 	return (
-		<motion.div className='w-auto h-auto py-6 px-6 rounded-md shadow-lg box-border justify-center border border-[#e5e7e8] opacity-80 flex flex-row space-x-5 bg-white'>
+		<motion.div className='w-auto h-auto py-6 px-6 rounded-md shadow-lg box-border justify-center border border-[#e5e7e8] bg-opacity-80 flex flex-row space-x-5 bg-white'>
 			<Icon
 				SVG={<SvgSettingCanvasMoveUp />}
 				onClickHandler={() =>

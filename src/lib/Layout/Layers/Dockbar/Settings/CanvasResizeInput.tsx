@@ -9,7 +9,7 @@ const App = () => {
 
 	return (
 		<motion.div
-			className='w-[300px] h-auto py-6 px-14 rounded-md shadow-lg box-border justify-center opacity-80'
+			className='w-[300px] h-auto py-6 px-14 rounded-md shadow-lg box-border justify-center bg-opacity-80'
 			animate={{
 				border: isEdit ? '1px solid #0786c8' : '1px solid #e5e7e8',
 				backgroundColor: isEdit ? '#0786c8' : '#fff',
