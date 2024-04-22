@@ -9,7 +9,7 @@ export interface IContentLoadingSkeletonProps {
 
 export const ContentLoadingSkeleton = React.forwardRef(
 	(props: IContentLoadingSkeletonProps, ref: any) => {
-		const repeater = React.useMemo(() => Array.from({ length: props?.items || 5 }), [props?.items]);
+		const repeater = React.useMemo(() => Array.from({ length: props?.items || 3 }), [props?.items]);
 
 		return (
 			<Stack direction='row' spacing={2} ref={ref}>
@@ -36,7 +36,7 @@ export const ContentLoadingSkeleton = React.forwardRef(
 								duration: 0.5,
 							}}
 						>
-							<Card sx={{ width: '10rem', height: '7.5rem' }}>
+							<Card sx={{ width: '16rem', height: '12rem' }}>
 								<CardContent>
 									<Skeleton variant='text' width='100%' />
 									<Skeleton variant='text' width='100%' />

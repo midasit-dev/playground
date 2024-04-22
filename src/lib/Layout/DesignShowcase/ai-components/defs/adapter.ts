@@ -1,63 +1,93 @@
-import { ISelectionData, IQueryKey } from './Interface';
-import { v4 as uuidv4 } from 'uuid';
+import { ISelectionData, IQueryKey, IListItem, ISuggest } from './Interface';
+import * as mock from './mock';
 import * as _secured from './_secured';
 
+const getToken = async () => {
+	const authApiEndpoint: string = _secured.authApiEndpoint;
+	const userIdentifier: string = _secured.userIdentifier;
+
+	const authFetcher = await fetch(authApiEndpoint, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: userIdentifier,
+	});
+
+	if (!authFetcher.ok) return {};
+	const authData: any = await authFetcher.json();
+	return `${authData.tokenType} ${authData.token}`;
+};
+
+const sleep = async () => {
+	await new Promise((resolve) => setTimeout(resolve, 500));
+};
+
+export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest> => {
+	const isMock = Boolean(
+		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
+	);
+	if (value === undefined) throw Error('No value provided');
+
+	const fnId = '01HVK86H606EGJ2SC8VXSV9AGJ';
+
+	let schema = {};
+	let fn = {};
+
+	if (isMock) {
+		// Simulate a network request
+		await sleep();
+		schema = mock.mockFunctionInfo.schema;
+		fn = mock.mockFunctionInfo.function;
+	} else {
+		const functionResponse = await fetch(
+			`${_secured.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
+				value.functionLanguage
+			}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-AUTH-TOKEN': `${await getToken()}`,
+				},
+			},
+		);
+		const functionData = await functionResponse.json();
+
+		schema = functionData.schema;
+		fn = functionData.function;
+	}
+
+	return {
+		schema,
+		function: fn,
+	};
+};
+
 export const functionListAdapter = async (value: IQueryKey) => {
-	const _body = await require('./Schema.json');
+	const _body = await require('./pySchema.json');
 
 	const isMock = Boolean(
 		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
 	);
 
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
-	const threadId: string = '01HVTCTVKFPNEJS5Q0DYTREAXB';
-	const aiApiEndpoint: string = _secured.getAiResponse(threadId);
-	const authApiEndpoint: string = _secured.authApiEndpoint;
-	const userIdentifier: string = _secured.userIdentifier;
+	const fnId: string = '01HVK86H606EGJ2SC8VXSV9AGJ';
+	const aiApiEndpoint: string = _secured.getAiResponse(fnId);
 
 	if (value === undefined) return {};
 
-	let mockData: ISelectionData = {};
 	if (isMock) {
-		// Simulate a network request
-		const result = await fetch('https://mocktarget.apigee.net/echo', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				functionList: [
-					{ functionId: uuidv4(), functionName: `mock data 1\n${value}`, similarityScore: 0.87 },
-					{ functionId: uuidv4(), functionName: `mock data 2\n${value}`, similarityScore: 0.85 },
-					{ functionId: uuidv4(), functionName: `mock data 3\n${value}`, similarityScore: 0.8 },
-				],
-			}),
-		});
-		const data: any = await result.json();
-
-		// Parse the response, this is a mock data.
-		try {
-			mockData = JSON.parse(data.body);
-		} catch {}
-
+		let mockData: ISelectionData = {};
+		await sleep();
+		mockData.functionList = mock.mockFunctionList;
 		return mockData;
 	} else {
-		const authFetcher = await fetch(authApiEndpoint, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: userIdentifier,
-		});
-
-		if (!authFetcher.ok) return {};
-		const authData: any = await authFetcher.json();
-
 		const aiResult = await fetch(aiApiEndpoint, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-AUTH-TOKEN': `${authData.tokenType} ${authData.token}`,
+				'X-AUTH-TOKEN': `${await getToken()}`,
 			},
 			body: JSON.stringify(_body),
 		});

@@ -6,22 +6,23 @@ import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
 import Layout from './ai-components/Abracadabra';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { IListItem } from './ai-components/defs/Interface';
+import { ISuggest } from './ai-components/defs/Interface';
 
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
 	const [startX, setStartX] = React.useState(0);
+	const [startY, setStartY] = React.useState(0);
 
 	//Recoil
 	const canvasState = useRecoilValue(CanvasState);
 
 	React.useEffect(() => {
 		const handleResize = () => {
-			console.log('DesignShowcase mounted');
 			const calcX = window.innerWidth / 2 - canvasState.width / 2;
-			console.log('calcX', calcX);
 			setStartX(calcX);
+			const calcY = window.innerHeight / 2 - canvasState.height / 2 - 32;
+			setStartY(calcY);
 		};
 
 		handleResize();
@@ -29,7 +30,6 @@ export default function DesignShowcase() {
 		window.addEventListener('resize', handleResize);
 
 		return () => {
-			console.log('DesignShowcase unmounted');
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
@@ -77,17 +77,17 @@ export default function DesignShowcase() {
 						width: '100%',
 						height: '100%',
 						position: 'absolute',
-						top: '20%',
+						top: startY,
 						left: startX,
 						display: 'flex',
 						flexDirection: 'column',
 					}}
 				>
-					<ShowBox />
+					{startX !== 0 && startY !== 0 && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
 			<QueryClientProvider client={queryClient}>
-				<Layout onItemClick={(item: IListItem) => {}} />
+				<Layout onItemClick={(item: ISuggest) => {}} />
 			</QueryClientProvider>
 		</div>
 	);

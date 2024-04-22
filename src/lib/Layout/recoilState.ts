@@ -125,6 +125,11 @@ export const GuideLayerVisibleState = atom<boolean>({
 	default: false,
 });
 
+export const ShowcaseCanvasLockState = atom<boolean>({
+	key: 'ShowcaseCanvasLockState',
+	default: true,
+});
+
 export const CanvasMarginState = atom<any>({
 	key: 'CanvasMarginState',
 	default: {
