@@ -28,17 +28,6 @@ export const LayersMenuState = atom<{
 export const CanvasState = atom<Canvas>({
 	key: 'CanvasState',
 	default: { width: 640, height: 640 },
-	effects: [
-		({ setSelf, onSet }) => {
-			//setSelf는 초기값 지정.
-			setSelf({ width: 640, height: 640 });
-
-			//onSet은 값이 변경될 때마다 실행.
-			onSet((newValue, oldValue, isReset) => {
-				window.playground.canvas = newValue;
-			});
-		},
-	],
 });
 
 export const defaultControllerState = {
@@ -62,14 +51,6 @@ export const LayerRenderingBoxesState = atom<Box[]>({
 export const LayersState = atom<Layers>({
 	key: 'LayersState',
 	default: [],
-	effects: [
-		({ setSelf, onSet }) => {
-			setSelf([]);
-			onSet((newValue, oldValue) => {
-				window.playground.layers = newValue;
-			});
-		},
-	],
 });
 
 export const ComponentizedRenderingBoxesState = atom<Box[]>({
@@ -154,4 +135,9 @@ export const CanvasMarginState = atom<any>({
 export const SelectedAddComponentKey = atom<string>({
 	key: 'SelectedAddComponentKey',
 	default: 'Alert',
+});
+
+export const PythonState = atom<string>({
+	key: 'PythonState',
+	default: '',
 });

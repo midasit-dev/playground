@@ -1,27 +1,11 @@
 import * as React from 'react';
-import Layout from './Layout/index';
 import { SnackbarProvider, closeSnackbar } from 'notistack';
 import { RecoilRoot } from 'recoil';
 import { IconButton, Icon } from '@midasit-dev/moaui';
+import Root, { type PlaygroundProps } from './root';
 import './output.css';
 
-declare global {
-	interface Window {
-		playground: {
-			canvas: any;
-			layers: any;
-		};
-	}
-}
-
-export default function Playground() {
-	React.useEffect(() => {
-		window.playground = {
-			canvas: {},
-			layers: [],
-		};
-	})
-
+const Playground = (props: PlaygroundProps) => {
 	return (
 		<RecoilRoot>
 			<SnackbarProvider
@@ -36,8 +20,10 @@ export default function Playground() {
 					</IconButton>
 				)}
 			>
-				<Layout />
+				<Root {...props} />
 			</SnackbarProvider>
 		</RecoilRoot>
 	);
-}
+};
+
+export default Playground;
