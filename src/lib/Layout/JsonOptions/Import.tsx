@@ -106,12 +106,12 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 					method: 'get',
 				});
 
-				setTempCanvas(data.canvas);
-				setTempLayers(data.layers);
+				if (data.canvas) setTempCanvas(data.canvas);
+				if (data.layers) setTempLayers(data.layers);
 			}
 		};
 		if (open === true) init();
-	}, [items, setDialogOpen, value]);
+	}, [items, open, setDialogOpen, value]);
 
 	//update layers value
 	const setCanvas = useSetRecoilState(CanvasState);

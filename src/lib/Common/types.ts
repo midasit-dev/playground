@@ -41,8 +41,9 @@ interface Canvas {
 }
 
 interface ExportLayers {
-	canvas: Canvas;
-	layers: Layers;
+	canvas?: Canvas;
+	layers?: Layers;
+	python?: string;
 }
 
 interface LayoutSchema {
@@ -69,6 +70,22 @@ interface Box {
 	element: JSX.Element;
 }
 
+interface Schema {
+	canvas?: Canvas;
+	layers?: Layers;
+	python?: string;
+}
+
+interface PlaygroundProps {
+	schema?: Schema;
+	onChange?: (schema: Schema) => void;
+}
+
+interface ExportCodes {
+	tsx?: string;
+	py?: string;
+}
+
 export type {
 	LayoutSchema,
 	LayoutSchemas,
@@ -78,4 +95,7 @@ export type {
 	Canvas,
 	ExportLayers,
 	Box,
+	Schema,
+	PlaygroundProps,
+	ExportCodes,
 };

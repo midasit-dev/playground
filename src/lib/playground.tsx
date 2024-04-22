@@ -2,7 +2,8 @@ import * as React from 'react';
 import { SnackbarProvider, closeSnackbar } from 'notistack';
 import { RecoilRoot } from 'recoil';
 import { IconButton, Icon } from '@midasit-dev/moaui';
-import Root, { type PlaygroundProps } from './root';
+import { PlaygroundProps } from './Common/types';
+import Root from './root';
 import './output.css';
 
 const Playground = (props: PlaygroundProps) => {
