@@ -54,18 +54,8 @@ export const MenuItem = ({ i }) => {
 			whileTap={{ scale: 0.95 }}
 			style={styleLi}
 		>
-			<div
-				style={{
-					...styleIconPlaceholder,
-					...style,
-				}}
-			/>
-			<div
-				style={{
-					...styleTextPlaceholder,
-					...style,
-				}}
-			/>
+			<div style={{ ...styleIconPlaceholder, ...style }} />
+			<div style={{ ...styleTextPlaceholder, ...style }} />
 		</motion.li>
 	);
 };

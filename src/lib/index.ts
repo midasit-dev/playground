@@ -1,20 +1,20 @@
 import {
 	type Schema,
 	type PlaygroundProps,
-	type ExportLayers,
+	type ExportSchema,
 	type ExportCodes,
 } from './Common/types';
-import { default as transfromSchemaToJSON } from './ExportFunctions/ExportSchema';
-import { default as transformSchemaToCodes } from './ExportFunctions/ExportCodes';
+import { default as transformSchemaToExportSchema } from './ExportFunctions/ExportSchema';
+import { default as transformSchemaToExportCodes } from './ExportFunctions/ExportCodes';
 import { default as Playground } from './playground';
 
 export {
 	type PlaygroundProps,
 	type Schema,
-	type ExportLayers,
+	type ExportSchema,
 	type ExportCodes,
-	transfromSchemaToJSON,
-	transformSchemaToCodes,
+	transformSchemaToExportSchema,
+	transformSchemaToExportCodes,
 };
 
 export default Playground;

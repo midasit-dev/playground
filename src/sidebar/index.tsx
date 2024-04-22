@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useCycle, type MotionStyle } from 'framer-motion';
 import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
-import { Navigation } from './Navigation';
+import { Navigation } from './MenuItems';
 import { zindex_navbar_closed, zindex_navbar_opend } from '../lib/Common/zindex';
 
 const styleNav = {

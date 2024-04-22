@@ -1,4 +1,4 @@
-import { Layer, Layers, type Schema, type ExportLayers } from '../Common/types';
+import { Layer, Layers, type Schema, type ExportSchema } from '../Common/types';
 import { v4 as uuidv4 } from 'uuid';
 
 function replaceIds(layers: Layers | undefined, saveUUID: string): Layers {
@@ -22,7 +22,7 @@ function replaceIds(layers: Layers | undefined, saveUUID: string): Layers {
 	return layers.map((layer) => findAndReplaceId(layer));
 }
 
-function transfromSchemaToJSON(schema: Schema): ExportLayers {
+function transformSchemaToExportSchema(schema: Schema): ExportSchema {
 	//동일한 id, key일 경우 리렌더링이 되지 않는 문제 해결을 위해
 	//id값에 uuid를 붙여준다.
 	//저장 시점 UUID 기록
@@ -35,4 +35,4 @@ function transfromSchemaToJSON(schema: Schema): ExportLayers {
 	};
 }
 
-export default transfromSchemaToJSON;
+export default transformSchemaToExportSchema;

@@ -45,7 +45,7 @@ function toStringJSXElement(layers: Layer[]): string {
 	return result.slice(0, -1);
 }
 
-function transformSchemaToCodes(schema: Schema): ExportCodes {
+function transformSchemaToExportCodes(schema: Schema): ExportCodes {
 	if (!schema.canvas || !schema.layers) {
 		console.error('canvas or layers is not defined');
 		return {};
@@ -75,4 +75,4 @@ export default App;`;
 	};
 }
 
-export default transformSchemaToCodes;
+export default transformSchemaToExportCodes;

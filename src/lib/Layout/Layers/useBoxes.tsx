@@ -19,7 +19,7 @@ export const useBoxes = (props: useBoxesProps) => {
 	const handleClickDelete = React.useCallback(
 		(id: string) => {
 			setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== id));
-			setLayers((prevBoxSchemas) => prevBoxSchemas.filter((box) => box.id !== id));
+			setLayers((prevLayers) => prevLayers.filter((layer) => layer.id !== id));
 		},
 		[setBoxes, setLayers],
 	);

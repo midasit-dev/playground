@@ -3,7 +3,7 @@ import { GuideBox, Icon, IconButton, TextField, Tooltip, Dialog } from '@midasit
 import onClickHandler from '../../Shared/OnClickHandler';
 import { useRecoilValue } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
-import { ExportLayers, Layer, Layers } from '../../Common/types';
+import { ExportSchema, Layer, Layers } from '../../Common/types';
 import { useSnackbar } from 'notistack';
 import { v4 as uuidv4 } from 'uuid';
 import { getCurrentTime } from '../../Shared/GetCurrentTime';
@@ -77,7 +77,7 @@ const App = (props: { openJsonExportMenu: boolean; setOpenJsonExportMenu: any })
 									prevValue = getCurrentTime().fullWithExtension('json');
 								}
 								if (!prevValue.includes('.json')) prevValue += '.json';
-								const exportLayers: ExportLayers = {
+								const ExportSchema: ExportSchema = {
 									canvas: {
 										width: canvas.width,
 										height: canvas.height,
@@ -89,7 +89,7 @@ const App = (props: { openJsonExportMenu: boolean; setOpenJsonExportMenu: any })
 									path: './exports/layers',
 									body: {
 										fileName: prevValue,
-										content: JSON.stringify(exportLayers, null, 2),
+										content: JSON.stringify(ExportSchema, null, 2),
 									},
 									method: 'post',
 								});

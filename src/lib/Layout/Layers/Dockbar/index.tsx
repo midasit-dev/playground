@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
-import { LayersState } from '../../recoilState';
+import { LayerRenderingBoxesState, LayersState } from '../../recoilState';
 import { Icon, SvgPreDelete, SvgAllDelete, SvgSettingCanvas } from './Svg';
 import Toggle from './Toggle';
 import Settings from './Settings';
@@ -10,6 +10,7 @@ import { zindex_dockbar } from '../../../Common/zindex';
 const App = (props: any) => {
 	const { preDeleteLayerHandler, allDeleteLayersHandler } = props;
 	const layers = useRecoilValue(LayersState);
+	const boxes = useRecoilValue(LayerRenderingBoxesState);
 
 	const [isOn, setIsOn] = React.useState(false);
 
@@ -30,7 +31,8 @@ const App = (props: any) => {
 				whileHover={{ color: '#62baf3', scale: 1.2 }}
 				style={{ opacity: layers.length === 0 ? 0.4 : 1 }}
 				onClick={() => {
-					console.log(layers);
+					console.log('Current Layers: ', layers);
+					console.log('Current Boxes: ', boxes);
 				}}
 			>
 				{toFormatting(layers.length)}

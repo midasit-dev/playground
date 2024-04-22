@@ -6,8 +6,8 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import PaletteOutlinedIcon from '@mui/icons-material/PaletteOutlined';
 import MuseumIcon from '@mui/icons-material/Museum';
 import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
-import { modeName } from '.';
 
+const modeName = ['Layers', 'Componentized'];
 const buttonSpace = 6;
 
 export default function ModeButtons(props: any) {

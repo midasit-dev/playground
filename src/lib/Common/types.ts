@@ -40,7 +40,7 @@ interface Canvas {
 	height: number;
 }
 
-interface ExportLayers {
+interface ExportSchema {
 	canvas?: Canvas;
 	layers?: Layers;
 	python?: string;
@@ -93,7 +93,7 @@ export type {
 	Layer,
 	Layers,
 	Canvas,
-	ExportLayers,
+	ExportSchema,
 	Box,
 	Schema,
 	PlaygroundProps,

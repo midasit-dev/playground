@@ -12,7 +12,7 @@ import {
 import onClickHandler from '../../Shared/OnClickHandler';
 import { useSetRecoilState } from 'recoil';
 import { CanvasState, LayersState } from '../recoilState';
-import { Canvas, ExportLayers, Layers } from '../../Common/types';
+import { Canvas, ExportSchema, Layers } from '../../Common/types';
 
 const App = (props: { openJsonImportMenu: boolean; setOpenJsonImportMenu: any }) => {
 	const { openJsonImportMenu, setOpenJsonImportMenu } = props;
@@ -101,7 +101,7 @@ const ImportDialog = ({ open, setDialogOpen, setOpenJsonImportMenu }: any) => {
 		const init = async () => {
 			if (!items.has('NONE')) {
 				const fileName = getKeyByValue(items, value);
-				const data: ExportLayers = await onClickHandler({
+				const data: ExportSchema = await onClickHandler({
 					path: `./exports/layers/${fileName}`,
 					method: 'get',
 				});

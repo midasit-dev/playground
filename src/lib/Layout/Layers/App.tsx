@@ -3,12 +3,12 @@ import { useBoxes } from './useBoxes';
 import { useController } from './useController';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
-import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
+import { motion, AnimatePresence } from 'framer-motion';
 import DockbarBottm from './Dockbar';
 import Canvas from './Canvas';
 
-const App = () => {
-	const [, setBoxes] = useRecoilState(LayerRenderingBoxesState);
+export const App = () => {
+	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
 	const layers = useRecoilValue(LayersState);
 	const { initialize: initializeInputs } = useController();
 	const { createNewBox, handleClickAddBox, handleClickPrevDelete, handleClickDelAllBoxes } =
@@ -29,7 +29,7 @@ const App = () => {
 			);
 		}
 		setBoxes(newBoxes);
-	}, [createNewBox, layers, setBoxes]);
+	}, [boxes.length, createNewBox, layers, setBoxes]);
 
 	return (
 		<AnimatePresence>
@@ -49,5 +49,3 @@ const App = () => {
 		</AnimatePresence>
 	);
 };
-
-export default App;

@@ -10,7 +10,7 @@ import {
 } from '../../recoilState';
 import { ControllerInputs } from '../../../Common/types';
 import { zindex_canvas } from '../../../Common/zindex';
-import { canvas_snap_criteria, nearestMultipleOfCanvasSnapCriteria } from '../../../Common/const';
+import { nearestMultipleOfCanvasSnapCriteria } from '../../../Common/const';
 
 const guideLayerSize = {
 	width: 160,

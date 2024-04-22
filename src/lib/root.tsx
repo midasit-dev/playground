@@ -14,13 +14,14 @@ function Root(props: PlaygroundProps) {
 
 	//Impot 영역
 	useEffect(() => {
-		//만약 schema가 존재한다면, 값을 Setting한다.
+		// 만약 schema가 존재하고 변경된 경우에만 값을 설정한다.
 		if (schema) {
 			if (schema.canvas) setCanvas(schema.canvas);
 			if (schema.layers) setLayers(schema.layers);
 			if (schema.python) setPython(schema.python);
 		}
-	}, [schema, setCanvas, setLayers, setPython]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [schema]);
 
 	//Export 영역
 	useEffect(() => {
