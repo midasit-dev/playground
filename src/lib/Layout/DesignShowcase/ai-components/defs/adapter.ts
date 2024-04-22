@@ -66,8 +66,8 @@ export const functionListAdapter = async (value: IQueryKey) => {
 	);
 
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
-	const threadId: string = '01HVTCTVKFPNEJS5Q0DYTREAXB';
-	const aiApiEndpoint: string = _secured.getAiResponse(threadId);
+	const fnId: string = '01HVK86H606EGJ2SC8VXSV9AGJ';
+	const aiApiEndpoint: string = _secured.getAiResponse(fnId);
 
 	if (value === undefined) return {};
 
