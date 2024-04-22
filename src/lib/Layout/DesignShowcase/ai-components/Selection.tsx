@@ -88,7 +88,7 @@ export const Selection = (props: ISelectionProps) => {
 							transform: 'translateY(-50%)',
 						}}
 					>
-						<ContentLoadingSkeleton key='selection-loading' items={5} />
+						<ContentLoadingSkeleton key='selection-loading' items={3} />
 					</div>
 				)}
 				{isError && (
