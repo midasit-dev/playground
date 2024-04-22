@@ -29,30 +29,33 @@ function isEmptyObject(obj: object): boolean {
 export default async function Converter(pySchema: any = {}) {
 	const uiSchema = await require('./uiSchema.json');
 	const pySchematest = await require('./pySchema.json');
-	const TextFieldV2SampleJson = TextFieldV2Sample;
-	pySchema = pySchematest;
+	pySchema = {...pySchematest};
 
-	function convertSchema(pySchema: any = {}, uiSchema: any = [], parentKey: string = '') {
-		for (const key in pySchema) {
+	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
+		let result: any = [];
+
+		for (const key in pySchemaParams) {
 			// console.log('key:', key);
 			if (
-				pySchema[key] === 'object' ||
+				pySchemaParams[key] === 'object' ||
 				key === 'description' ||
 				key === 'required' ||
 				key === 'color'
 			) {
 				continue;
-			} else if (typeof pySchema[key] === 'object' && pySchema[key] !== null) {
-				convertSchema(pySchema[key], uiSchema, key);
+			} else if (typeof pySchemaParams[key] === 'object' && pySchemaParams[key] !== null) {
+				// convertSchema(pySchemaParams[key], layers, key);
+				result.push(convertSchema(pySchemaParams[key], layers, key));
 			} else {
-				const compSchema = insertRealComponent(key, parentKey, pySchema);
-				console.log('compSchema:', compSchema);
+				const compSchema = insertRealComponent(key, parentKey, pySchemaParams);
 				if (compSchema) {
-					uiSchema.push(compSchema);
-					return;
+					// layers.push(compSchema);
+					return compSchema;
+					// return compSchema?.children?.[0]?.props?.title;
 				}
 			}
 		}
+		return result;
 	}
 
 	function insertRealComponent(key: string, parentKey: string, pySchema: any) {
@@ -66,13 +69,14 @@ export default async function Converter(pySchema: any = {}) {
 			parent: null,
 		};
 		if (pySchema[key] === 'string') {
-			console.log('string', { key: key, value: pySchema[key], parentKey: parentKey });
-			ComponentSchema = makeBasicSchema('TextFieldV2', TextFieldV2SampleJson);
+			const sampleCode = {...TextFieldV2Sample};
+			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
 			if (ComponentSchema.props.title) ComponentSchema.props.title = parentKey;
 			if (ComponentSchema.props.placeholder && pySchema['description'])
 				ComponentSchema.props.placeholder = pySchema['description'];
+
 			let float_Comp_Schema = insertFloatingBox(ComponentSchema, width, height, parentKey);
 			if (isEmptyObject(float_Comp_Schema.children[0])) {
 				float_Comp_Schema.children.splice(0, 1);
@@ -84,14 +88,12 @@ export default async function Converter(pySchema: any = {}) {
 	}
 
 	function insertFloatingBox(
-		ComponentSchema: any,
+		ComponentSchema: { id: string; type: string; props: any; children: any; parent: any },
 		width: string,
 		height: string,
 		parentKey: string,
 	) {
-		console.log('parentKey:', parentKey);
-		console.log('ComponentSchema title:', ComponentSchema.props.title);
-		const floatingBoxJson = {
+		return {
 			id: `1-FloatingBox-${uuidv4()}`,
 			type: 'FloatingBox',
 			props: {
@@ -105,14 +107,13 @@ export default async function Converter(pySchema: any = {}) {
 					center: true,
 				},
 			},
-			children: [{}],
+			children: [ComponentSchema],
 			parent: null,
 		};
-		floatingBoxJson.children.push(ComponentSchema);
-		return floatingBoxJson;
 	}
 
-	convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
-	console.log('uiSchema: ', uiSchema);
+	const result = convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
+	uiSchema.layers = result[0];
+	console.log('uiSchema', uiSchema);
 	return uiSchema;
 }
