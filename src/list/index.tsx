@@ -5,14 +5,14 @@ import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
 
-const styleNav = {
+const styleNav = (isOpen: Boolean) => ({
 	position: 'absolute',
 	top: 0,
 	left: 0,
 	bottom: 0,
-	width: '300px',
+	width: isOpen ? '300px' : "50px",
 	zIndex: 1001,
-} as MotionStyle;
+}) as MotionStyle;
 
 const styleBackground = {
 	position: 'absolute',
@@ -53,7 +53,7 @@ const SideBar = () => {
 			animate={isOpen ? 'open' : 'closed'}
 			custom={height}
 			ref={containerRef}
-			style={styleNav}
+			style={styleNav(isOpen)}
 		>
 			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-black-medium' />
 			<Navigation />
