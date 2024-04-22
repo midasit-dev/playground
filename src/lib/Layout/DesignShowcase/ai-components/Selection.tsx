@@ -17,11 +17,11 @@ export interface ISelectionProps {
 	onDelete?: (item: IListItem) => void;
 }
 
-const functionDetailGetter = async (item: IListItem) : Promise<ISuggest> => {
+const functionDetailGetter = async (item: IListItem): Promise<ISuggest> => {
 	return await new Promise(async (resolve, reject) => {
 		try {
 			resolve(await functionDetailAdapter(item));
-		} catch(error) {
+		} catch (error) {
 			reject(error);
 		}
 	});
@@ -30,7 +30,9 @@ const functionDetailGetter = async (item: IListItem) : Promise<ISuggest> => {
 export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {}, onDelete = () => {}, query } = props;
 	const setLoading = useSetRecoilState(fetchingStateAtom);
-	const [loadingTarget, setLoadingTarget] = React.useState<string | number | undefined | null>(null);
+	const [loadingTarget, setLoadingTarget] = React.useState<string | number | undefined | null>(
+		null,
+	);
 	const { data, isError, isLoading, isSuccess, refetch, error } = useQuery(
 		[QueryKeys.SELECTION_KEY, query],
 		async () => {
@@ -49,14 +51,16 @@ export const Selection = (props: ISelectionProps) => {
 
 	const handleOnClick = (item: IListItem) => {
 		setLoadingTarget(item.functionId);
-		functionDetailGetter(item).then((value: ISuggest) => {
-			console.log(value);
-			setLoadingTarget(null);
-			onClick?.(value);
-		}).catch((error) => {
-			console.error(error);
-			setLoadingTarget(null);
-		});
+		functionDetailGetter(item)
+			.then((value: ISuggest) => {
+				console.log(value);
+				setLoadingTarget(null);
+				onClick?.(value);
+			})
+			.catch((error) => {
+				console.error(error);
+				setLoadingTarget(null);
+			});
 	};
 
 	return (

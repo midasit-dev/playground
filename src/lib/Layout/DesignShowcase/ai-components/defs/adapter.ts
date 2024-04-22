@@ -17,17 +17,19 @@ const getToken = async () => {
 	if (!authFetcher.ok) return {};
 	const authData: any = await authFetcher.json();
 	return `${authData.tokenType} ${authData.token}`;
-}
+};
 
 const sleep = async () => {
 	await new Promise((resolve) => setTimeout(resolve, 500));
 };
 
 export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest> => {
-	const isMock = Boolean(_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === "");
-	if (value === undefined) throw Error("No value provided");
+	const isMock = Boolean(
+		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
+	);
+	if (value === undefined) throw Error('No value provided');
 
-	const fnId = "01HVK86H606EGJ2SC8VXSV9AGJ";
+	const fnId = '01HVK86H606EGJ2SC8VXSV9AGJ';
 
 	let schema = {};
 	let fn = {};
@@ -38,13 +40,18 @@ export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest>
 		schema = mock.mockFunctionInfo.schema;
 		fn = mock.mockFunctionInfo.function;
 	} else {
-		const functionResponse = await fetch(`${_secured.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${value.functionLanguage}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-AUTH-TOKEN': `${await getToken()}`,
+		const functionResponse = await fetch(
+			`${_secured.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
+				value.functionLanguage
+			}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-AUTH-TOKEN': `${await getToken()}`,
+				},
 			},
-		});
+		);
 		const functionData = await functionResponse.json();
 
 		schema = functionData.schema;
@@ -54,8 +61,7 @@ export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest>
 	return {
 		schema,
 		function: fn,
-	}
-
+	};
 };
 
 export const functionListAdapter = async (value: IQueryKey) => {
@@ -77,7 +83,6 @@ export const functionListAdapter = async (value: IQueryKey) => {
 		mockData.functionList = mock.mockFunctionList;
 		return mockData;
 	} else {
-
 		const aiResult = await fetch(aiApiEndpoint, {
 			method: 'POST',
 			headers: {

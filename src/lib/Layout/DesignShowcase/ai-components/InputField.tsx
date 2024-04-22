@@ -89,7 +89,7 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 						width: '100%',
 						maxWidth: props.maxWidth,
 						background: theme.palette.background.default,
-						borderRadius: "7px",
+						borderRadius: '7px',
 					})}
 					InputProps={{
 						endAdornment: (

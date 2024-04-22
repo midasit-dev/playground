@@ -5,14 +5,15 @@ import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './Navigation';
 
-const styleNav = (isOpen: Boolean) => ({
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	bottom: 0,
-	width: isOpen ? '300px' : "50px",
-	zIndex: 1001,
-}) as MotionStyle;
+const styleNav = (isOpen: Boolean) =>
+	({
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		bottom: 0,
+		width: isOpen ? '300px' : '50px',
+		zIndex: 1001,
+	} as MotionStyle);
 
 const styleBackground = {
 	position: 'absolute',

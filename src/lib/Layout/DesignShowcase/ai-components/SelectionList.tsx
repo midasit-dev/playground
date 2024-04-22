@@ -52,18 +52,26 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 								duration: 0.5,
 							}}
 						>
-							<div style={{
-								position: "relative",
-								width: "16rem",
-								height: "12rem",
-							}}>
-								<Stack width='100%' height='100%' padding={0} key={item.functionId} sx={{
-									position: "absolute",
-									background: "white",
-									borderRadius: "4px",
-									boxShadow: "0px 2px 8px 2px rgba(0, 0, 0, 0.1)",
-									overflow: "hidden",
-								}}>
+							<div
+								style={{
+									position: 'relative',
+									width: '16rem',
+									height: '12rem',
+								}}
+							>
+								<Stack
+									width='100%'
+									height='100%'
+									padding={0}
+									key={item.functionId}
+									sx={{
+										position: 'absolute',
+										background: 'white',
+										borderRadius: '4px',
+										boxShadow: '0px 2px 8px 2px rgba(0, 0, 0, 0.1)',
+										overflow: 'hidden',
+									}}
+								>
 									<Stack
 										position='absolute'
 										width='16rem'
@@ -105,7 +113,12 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 											)}
 										</AnimatePresence>
 									</Stack>
-									<Stack justifyContent='space-between' direction='column' height='100%' padding={2}>
+									<Stack
+										justifyContent='space-between'
+										direction='column'
+										height='100%'
+										padding={2}
+									>
 										<Stack direction='row' justifyContent='space-between'>
 											<Stack>
 												<Typography sx={noDragTextArea}>{`Suggestion`}</Typography>
@@ -166,17 +179,20 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 										</Stack>
 									</Stack>
 								</Stack>
-								{
-									loading && (
-										<Stack position="absolute" justifyContent="center" alignItems="center" width="100%" height="100%" sx={{
-											backgroundColor: "rgba(255, 255, 255, 0.5)",
-										}}>
-											{loadingTarget === item.functionId && loading && (
-												<CircularProgress />)
-											}
-										</Stack>
-									)
-								}
+								{loading && (
+									<Stack
+										position='absolute'
+										justifyContent='center'
+										alignItems='center'
+										width='100%'
+										height='100%'
+										sx={{
+											backgroundColor: 'rgba(255, 255, 255, 0.5)',
+										}}
+									>
+										{loadingTarget === item.functionId && loading && <CircularProgress />}
+									</Stack>
+								)}
 							</div>
 						</motion.div>
 					);
