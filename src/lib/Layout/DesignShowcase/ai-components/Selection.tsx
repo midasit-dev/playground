@@ -2,24 +2,35 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import SelectionList from './SelectionList';
 import { QueryKeys } from './defs/QueryKeys';
-import { IListItem, IQueryKey } from './defs/Interface';
+import { IListItem, IQueryKey, ISuggest } from './defs/Interface';
 import { AnimatePresence } from 'framer-motion';
 import FallbackCard from './FallbackCard';
 import { Stack } from '@mui/material';
-import { functionListAdapter } from './defs/adapter';
+import { functionDetailAdapter, functionListAdapter } from './defs/adapter';
 import { useSetRecoilState } from 'recoil';
 import { fetchingStateAtom } from './defs/atom';
 import { ContentLoadingSkeleton } from './Skeletons';
 
 export interface ISelectionProps {
 	query?: IQueryKey;
-	onClick?: (item: IListItem) => void;
+	onClick?: (item: ISuggest) => void;
 	onDelete?: (item: IListItem) => void;
 }
+
+const functionDetailGetter = async (item: IListItem) : Promise<ISuggest> => {
+	return await new Promise(async (resolve, reject) => {
+		try {
+			resolve(await functionDetailAdapter(item));
+		} catch(error) {
+			reject(error);
+		}
+	});
+};
 
 export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {}, onDelete = () => {}, query } = props;
 	const setLoading = useSetRecoilState(fetchingStateAtom);
+	const [loadingTarget, setLoadingTarget] = React.useState<string | number | undefined | null>(null);
 	const { data, isError, isLoading, isSuccess, refetch, error } = useQuery(
 		[QueryKeys.SELECTION_KEY, query],
 		async () => {
@@ -36,6 +47,18 @@ export const Selection = (props: ISelectionProps) => {
 		},
 	);
 
+	const handleOnClick = (item: IListItem) => {
+		setLoadingTarget(item.functionId);
+		functionDetailGetter(item).then((value: ISuggest) => {
+			console.log(value);
+			setLoadingTarget(null);
+			onClick?.(value);
+		}).catch((error) => {
+			console.error(error);
+			setLoadingTarget(null);
+		});
+	};
+
 	return (
 		<Stack direction='row' spacing={2}>
 			<AnimatePresence>
@@ -43,15 +66,11 @@ export const Selection = (props: ISelectionProps) => {
 					<div key='selection-success-container'>
 						<SelectionList
 							key='selection-success'
-							list={
-								data || [
-									{ functionId: '1', functionName: 'test', similarityScore: 0.5 },
-									{ functionId: '2', functionName: 'test', similarityScore: 0.5 },
-									{ functionId: '3', functionName: 'test', similarityScore: 0.5 },
-								]
-							}
-							onClick={onClick}
+							list={data}
+							onClick={handleOnClick}
 							onDelete={onDelete}
+							loading={loadingTarget !== null}
+							loadingTarget={loadingTarget}
 						/>
 					</div>
 				)}

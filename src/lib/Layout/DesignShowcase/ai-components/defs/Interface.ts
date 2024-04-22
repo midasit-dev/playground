@@ -1,7 +1,13 @@
 export interface IListItem {
 	functionId: string | number;
 	functionName: string;
+	functionLanguage: string;
 	similarityScore: number;
+}
+
+export interface ISuggest {
+	schema: Object;
+	function: Object;
 }
 
 export interface ISelectionData {
@@ -11,5 +17,5 @@ export interface ISelectionData {
 export type IQueryKey = string | number | undefined;
 
 export interface IFooterProps {
-	onItemClick?: (item: IListItem) => void;
+	onItemClick?: (item: ISuggest) => void;
 }
