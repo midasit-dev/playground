@@ -25,7 +25,7 @@ const SvgDelete = () => (
 );
 
 const App = (props: any) => {
-	const { index, layer } = props;
+	const { index } = props;
 	const [isClicked, setIsClicked] = useState(false);
 
 	//현재 선택하고 있는 Layer의 ID

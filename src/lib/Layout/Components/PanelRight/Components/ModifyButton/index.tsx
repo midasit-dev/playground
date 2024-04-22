@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { useSetRecoilState } from 'recoil';
 import { PropComponentLayerModifyValueState } from '../../../../recoilState';
-import { SvgModify } from '../../Svg';
 
 const App = (props: any) => {
-	const { index, layer } = props;
+	const { layer } = props;
 
 	//Properties to modify 컴포넌트가 활성화 될 수 있도록,
 	//수정 버튼 클릭 시, 현재 컴포넌트 데이터를 임시 저장공간에 저장한다.

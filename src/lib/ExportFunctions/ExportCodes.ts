@@ -75,4 +75,4 @@ export default App;`;
 	};
 }
 
-export default transformSchemaToExportCodes;
+export { transformSchemaToExportCodes };

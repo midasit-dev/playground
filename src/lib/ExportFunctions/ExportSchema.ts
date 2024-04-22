@@ -35,4 +35,4 @@ function transformSchemaToExportSchema(schema: Schema): ExportSchema {
 	};
 }
 
-export default transformSchemaToExportSchema;
+export { transformSchemaToExportSchema };

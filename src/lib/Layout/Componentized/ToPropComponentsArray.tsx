@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import JSONEditor, { type JSONEditorOptions } from 'jsoneditor';
 import { debounce } from 'lodash';
-import { GuideBox } from '@midasit-dev/moaui';
+import { Typography, GuideBox } from '@midasit-dev/moaui';
 import { PropComponentProps, usePropComponent } from './ToPropComponents';
 
 import 'jsoneditor/dist/jsoneditor.min.css';
-import ShowHideButton from '../../../Shared/ShowHideButton';
-
-import { motion } from 'framer-motion';
+import ShowHideButton from '../../Shared/ShowHideButton';
 
 const JsonEditor = (props: { name: string; arr: any[]; updateGlobalValue: (prev: any) => any }) => {
 	const { name, arr, updateGlobalValue } = props;
@@ -80,26 +78,13 @@ const ToPropComponentArray = (props: PropComponentProps<any[]>): JSX.Element => 
 	const [open, setOpen] = useState(false);
 
 	return (
-		<motion.div animate={{ opacity: 1 }}>
-			<div className='w-full flex flex-row justify-between items-center'>
-				<p className='text-gray-600 text-xs'>{name}</p>
+		<GuideBox width='100%' horSpaceBetween verCenter spacing={1}>
+			<GuideBox row horSpaceBetween verCenter>
+				<Typography variant='body1'>{name}</Typography>
 				<ShowHideButton state={[open, setOpen]} />
-			</div>
-			<motion.div
-				initial={{ x: -50, opacity: 0 }}
-				animate={{
-					x: open ? 0 : -50,
-					opacity: open ? 1 : 0,
-				}}
-				exit={{ x: -50, opacity: 0 }}
-			>
-				{open && (
-					<div className='pt-3'>
-						<JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />
-					</div>
-				)}
-			</motion.div>
-		</motion.div>
+			</GuideBox>
+			{open && <JsonEditor name={name} arr={localValue} updateGlobalValue={updateGlobalValue} />}
+		</GuideBox>
 	);
 };
 

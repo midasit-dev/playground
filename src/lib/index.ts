@@ -4,8 +4,8 @@ import {
 	type ExportSchema,
 	type ExportCodes,
 } from './Common/types';
-import { default as transformSchemaToExportSchema } from './ExportFunctions/ExportSchema';
-import { default as transformSchemaToExportCodes } from './ExportFunctions/ExportCodes';
+import { transformSchemaToExportSchema } from './ExportFunctions/ExportSchema';
+import { transformSchemaToExportCodes } from './ExportFunctions/ExportCodes';
 import { default as Playground } from './playground';
 
 export {
