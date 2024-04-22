@@ -29,7 +29,7 @@ function isEmptyObject(obj: object): boolean {
 export default async function Converter(pySchema: any = {}) {
 	const uiSchema = await require('./uiSchema.json');
 	const pySchematest = await require('./pySchema.json');
-	pySchema = {...pySchematest};
+	pySchema = { ...pySchematest };
 
 	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
 		let result: any = [];
@@ -69,7 +69,7 @@ export default async function Converter(pySchema: any = {}) {
 			parent: null,
 		};
 		if (pySchema[key] === 'string') {
-			const sampleCode = {...TextFieldV2Sample};
+			const sampleCode = { ...TextFieldV2Sample };
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
