@@ -102,8 +102,6 @@ function removeString(str: string, remove: string): string {
 
 export default async function Converter(pySchema: any = {}) {
 	const uiSchema = await require('./uiSchema.json');
-	const pySchematest = await require('./pySchema.json');
-	pySchema = { ...pySchematest };
 
 	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
 		let result: any = [];
@@ -119,7 +117,6 @@ export default async function Converter(pySchema: any = {}) {
 						sampleSchema.props['width'],
 						sampleSchema.props['height'],
 					);
-					console.log('ColorPickerSchema', float_colorPicker_Schema);
 					result.push(float_colorPicker_Schema);
 				} else result.push(convertSchema(pySchemaParams[key], layers, key));
 			} else {
@@ -145,6 +142,7 @@ export default async function Converter(pySchema: any = {}) {
 
 		if (pySchema[key] === 'string') {
 			const sampleCode = { ...TextFieldV2Sample };
+			if(sampleCode.id) sampleCode.id = parentKey;
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
@@ -152,7 +150,6 @@ export default async function Converter(pySchema: any = {}) {
 			if (ComponentSchema.props.placeholder && pySchema['description'])
 				ComponentSchema.props.placeholder = pySchema['description'];
 
-			console.log('TextFieldV2 Schema', ComponentSchema);
 			let float_Comp_Schema = insertFloatingBox(ComponentSchema, width, height, parentKey);
 
 			return float_Comp_Schema;
@@ -186,7 +183,6 @@ export default async function Converter(pySchema: any = {}) {
 	}
 
 	const result = convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
-	console.log('result', result);
 	uiSchema.layers = [...result[0] as any[]];
 	uiSchema.layers.push({...RunButtonSchema});
 	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, "columns");

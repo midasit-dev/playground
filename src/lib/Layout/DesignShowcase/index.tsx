@@ -1,13 +1,13 @@
 import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { CanvasState, ShowCaseBoxState } from '../recoilState';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { CanvasState, ShowCaseBoxState, LayersState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
 import Layout from './ai-components/Abracadabra';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ISuggest } from './ai-components/defs/Interface';
-
+import Converter from './ai-components/defs/Converter';
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
@@ -15,7 +15,8 @@ export default function DesignShowcase() {
 	const [startY, setStartY] = React.useState(0);
 
 	//Recoil
-	const canvasState = useRecoilValue(CanvasState);
+	const [canvasState, setCanvasState] = useRecoilState(CanvasState);
+	const setLayersState = useSetRecoilState(LayersState);
 
 	React.useEffect(() => {
 		const handleResize = () => {
@@ -33,6 +34,12 @@ export default function DesignShowcase() {
 			window.removeEventListener('resize', handleResize);
 		};
 	}, []);
+
+	async function onClickShowButton(item: ISuggest){
+		const uiSchema = await Converter(item);
+		setCanvasState(uiSchema.canvas);
+		setLayersState(uiSchema.layers);
+	}
 
 	return (
 		<div
@@ -87,7 +94,7 @@ export default function DesignShowcase() {
 				</div>
 			</motion.div>
 			<QueryClientProvider client={queryClient}>
-				<Layout onItemClick={(item: ISuggest) => {}} />
+				<Layout onItemClick={onClickShowButton} />
 			</QueryClientProvider>
 		</div>
 	);
