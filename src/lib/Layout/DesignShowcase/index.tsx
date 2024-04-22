@@ -35,7 +35,7 @@ export default function DesignShowcase() {
 		};
 	}, []);
 
-	async function onClickShowButton(item: ISuggest){
+	async function onClickShowButton(item: ISuggest) {
 		const uiSchema = await Converter(item);
 		setCanvasState(uiSchema.canvas);
 		setLayersState(uiSchema.layers);

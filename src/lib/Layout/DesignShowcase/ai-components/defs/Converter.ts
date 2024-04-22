@@ -142,7 +142,7 @@ export default async function Converter(pySchema: any = {}) {
 
 		if (pySchema[key] === 'string') {
 			const sampleCode = { ...TextFieldV2Sample };
-			if(sampleCode.id) sampleCode.id = parentKey;
+			if (sampleCode.id) sampleCode.id = parentKey;
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
@@ -183,9 +183,9 @@ export default async function Converter(pySchema: any = {}) {
 	}
 
 	const result = convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
-	uiSchema.layers = [...result[0] as any[]];
-	uiSchema.layers.push({...RunButtonSchema});
-	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, "columns");
+	uiSchema.layers = [...(result[0] as any[])];
+	uiSchema.layers.push({ ...RunButtonSchema });
+	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, 'columns');
 	console.log('uiSchema', uiSchema);
 	return uiSchema;
 }
