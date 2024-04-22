@@ -12,7 +12,7 @@ interface Schema {
 
 function makeBasicSchema(type: string = '', props: any = {}, children: any = []): Schema {
 	const BasicSchema = {
-		id: `1-${type}-${uuidv4()}`,
+		id: `1-${type}-${uuidv4().slice(0, 8)}`,
 		type: type,
 		props: props,
 		children: children,
@@ -22,12 +22,8 @@ function makeBasicSchema(type: string = '', props: any = {}, children: any = [])
 	return BasicSchema;
 }
 
-function isEmptyObject(obj: object): boolean {
-	return Object.keys(obj).length === 0;
-}
-
 const RunButtonSchema = {
-	id: `1-FloatingBox-${uuidv4()}`,
+	id: `1-FloatingBox-${uuidv4().slice(0, 8)}`,
 	type: 'FloatingBox',
 	props: {
 		x: 0,
@@ -42,7 +38,7 @@ const RunButtonSchema = {
 	},
 	children: [
 		{
-			id: `1-Button-${uuidv4()}`,
+			id: `1-Button-${uuidv4().slice(0, 8)}`,
 			type: 'Button',
 			props: {
 				children: 'Run',
@@ -59,7 +55,7 @@ const RunButtonSchema = {
 };
 
 const ColorPickerSchema = {
-	id: `1-ColorPicker-${uuidv4()}`,
+	id: `1-ColorPicker-${uuidv4().slice(0, 8)}`,
 	type: 'ColorPicker',
 	props: {
 		showRGB: true,
@@ -171,7 +167,7 @@ export default async function Converter(pySchema: any = {}) {
 		parentKey: string = '',
 	) {
 		return {
-			id: `1-FloatingBox-${uuidv4()}`,
+			id: `1-FloatingBox-${uuidv4().slice(0, 8)}`,
 			type: 'FloatingBox',
 			props: {
 				x: 0,
