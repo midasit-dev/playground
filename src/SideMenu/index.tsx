@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useCycle, type MotionStyle } from 'framer-motion';
 import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
-import { Navigation } from './MenuItems';
+import MenuItems from './MenuItems';
 import { ZINDEX } from '../lib';
 
 const styleNav = {
@@ -75,7 +75,7 @@ const SideBar = () => {
 			}}
 		>
 			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-black-medium' />
-			<Navigation />
+			<MenuItems />
 			<MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
 		</motion.nav>
 	);

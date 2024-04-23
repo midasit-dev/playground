@@ -13,10 +13,12 @@ const variants = {
 	},
 };
 
-export const Navigation = () => (
+const MenuItems = () => (
 	<motion.ul variants={variants} className='m-0 p-[25px] absolute top-[100px] w-[300x]'>
 		<SchemaDownload />
 		<SchemaUpload />
 		<CodeDownload />
 	</motion.ul>
 );
+
+export default MenuItems;
