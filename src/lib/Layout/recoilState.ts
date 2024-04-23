@@ -143,9 +143,14 @@ export const SelectedAddComponentKey = atom<string>({
 	default: 'Alert',
 });
 
-export const PythonState = atom<string>({
-	key: 'PythonState',
+export const PythonRawState = atom<string>({
+	key: 'PythonRawState',
 	default: '',
+});
+
+export const PythonSchemaState = atom<object>({
+	key: 'PythonSchemaState',
+	default: {},
 });
 
 export const AIQuery = atom<IQueryKey>({

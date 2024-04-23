@@ -43,7 +43,8 @@ interface Canvas {
 interface ExportSchema {
 	canvas?: Canvas;
 	layers?: Layers;
-	python?: string;
+	pythonRaw?: string;
+	pythonSchema?: object;
 }
 
 interface LayoutSchema {
@@ -73,7 +74,8 @@ interface Box {
 interface Schema {
 	canvas?: Canvas;
 	layers?: Layers;
-	python?: string;
+	pythonRaw?: string;
+	pythonSchema?: object;
 }
 
 interface PlaygroundProps {
