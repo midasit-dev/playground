@@ -4,7 +4,7 @@ import { motion, useCycle, type MotionStyle } from 'framer-motion';
 import { useDimensions } from './use-dimensions';
 import { MenuToggle } from './MenuToggle';
 import { Navigation } from './MenuItems';
-import { zindex_navbar_closed, zindex_navbar_opend } from '../lib/Common/zindex';
+import { ZINDEX } from '../lib';
 
 const styleNav = {
 	position: 'absolute',
@@ -53,13 +53,13 @@ const SideBar = () => {
 			// delay를 0.5초 줘서 zIndex를 100으로 변경한다.
 			setTimeout(() => {
 				if (containerRef.current) {
-					containerRef.current.style.zIndex = zindex_navbar_closed.toString();
+					containerRef.current.style.zIndex = ZINDEX.zindex_navbar_closed.toString();
 				}
 			}, 800);
 		} else {
 			// list 열렸을 때
 			if (containerRef.current) {
-				containerRef.current.style.zIndex = zindex_navbar_opend.toString();
+				containerRef.current.style.zIndex = ZINDEX.zindex_navbar_opend.toString();
 			}
 		}
 	}, [isOpen]);
