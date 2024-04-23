@@ -1,6 +1,7 @@
 //uuid
 import { v4 as uuidv4 } from 'uuid';
 import { TextFieldV2Sample, SwitchSample, ColorPickerSample } from '@midasit-dev/moaui';
+import { cloneDeep } from 'lodash';
 
 interface Schema {
 	id: string;
@@ -160,35 +161,37 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 		layers: any = [],
 		direction: string = 'rows',
 	) {
+		const layer = cloneDeep(layers);
 		let preFloatBoxX = '0';
 		let preFloatBoxY = '0';
 		let preFloatBoxWidth = '0';
 		let preFloatBoxHeight = '0';
-		for (let i = 0; i < layers.length; i++) {
+		for (let i = 0; i < layer.length; i++) {
 			if (i === layers.length - 1) break;
-			if (layers[i].type === 'FloatingBox') {
-				if (layers[i].props) {
-					preFloatBoxX = layers[i].props.x;
-					preFloatBoxY = layers[i].props.y;
-					preFloatBoxWidth = layers[i].props.width.toString();
-					preFloatBoxHeight = layers[i].props.height.toString();
+			if (layer[i].type === 'FloatingBox') {
+				if (layer[i].props) {
+					preFloatBoxX = layer[i].props.x;
+					preFloatBoxY = layer[i].props.y;
+					preFloatBoxWidth = layer[i].props.width.toString();
+					preFloatBoxHeight = layer[i].props.height.toString();
 	
 					if (direction === 'rows') {
 						preFloatBoxWidth = removeString(preFloatBoxWidth, 'px');
-						layers[i + 1].props.x = Number(preFloatBoxWidth) + Number(preFloatBoxX) + 10;
+						layer[i + 1].props.x = Number(preFloatBoxWidth) + Number(preFloatBoxX) + 10;
 					} else if (direction === 'columns' || direction === '') {
 						preFloatBoxHeight = removeString(preFloatBoxHeight, 'px');
-						layers[i + 1].props.y = Number(preFloatBoxHeight) + Number(preFloatBoxY) + 10;
+						layer[i + 1].props.y = Number(preFloatBoxHeight) + Number(preFloatBoxY) + 10;
 					}
 				}
 			}
 		}
+		return layer;
 	}
 
 	const result = convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
 	uiSchema.layers = [...(result[0] as any[])];
 	uiSchema.layers.push({ ...RunButtonSchema });
-	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
+	uiSchema.layers = floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
 	console.log('uiSchema', uiSchema);
 	return uiSchema;
 }
