@@ -47,7 +47,7 @@ const App = (props: PropComponentProps<string>) => {
 	const updateInputValue = useCallback(
 		(e: any) => {
 			const curValue = e.target.value;
-			if (curValue !== '' && curValue !== undefined) {
+			if (curValue !== undefined) {
 				setLocalValue(e.target.value);
 				updateGlobalValue((prev: any) => ({
 					...prev,
