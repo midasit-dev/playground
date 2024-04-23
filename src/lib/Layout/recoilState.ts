@@ -157,3 +157,8 @@ export const AIQuery = atom<IQueryKey>({
 	key: 'AIQuery',
 	default: undefined,
 });
+
+export const PythonArgumentComponentState = atom<object>({
+	key: 'PythonArgumentComponentState',
+	default: {},
+});

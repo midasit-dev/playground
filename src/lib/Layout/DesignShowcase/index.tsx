@@ -9,6 +9,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ISuggest } from './ai-components/defs/Interface';
 import Converter from './ai-components/defs/Converter';
 import ShowTime from './ai-components/Showtime';
+import { ConvertResult } from '../../Common/types';
+
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
@@ -38,9 +40,10 @@ export default function DesignShowcase() {
 	}, []);
 
 	async function onClickShowButton(item: ISuggest) {
-		const uiSchema = await Converter(item, '');
-		setCanvasState(uiSchema.canvas);
-		for (const item of uiSchema.layers) {
+		setLayersState([]);
+		const result : ConvertResult = await Converter(item, '');
+		setCanvasState(result.uiSchema.canvas);
+		for (const item of result.uiSchema.layers) {
 			await showtimeRef.current.doStartJob(item);
 			setLayersState((prev) => [...prev, item]);
 		}

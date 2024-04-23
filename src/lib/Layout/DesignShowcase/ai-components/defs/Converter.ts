@@ -2,16 +2,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { TextFieldV2Sample, SwitchSample, ColorPickerSample } from '@midasit-dev/moaui';
 import { cloneDeep } from 'lodash';
+import { BasicUISchema, ConvertResult } from '../../../../Common/types';
 
-interface Schema {
-	id: string;
-	type: string;
-	props: any;
-	children: any;
-	parent: any;
-}
 
-function makeBasicSchema(type: string = '', props: any = {}, children: any = []): Schema {
+function makeBasicSchema(type: string = '', props: any = {}, children: any = []): BasicUISchema {
 	const BasicSchema = {
 		id: `1-${type}-${uuidv4().slice(0, 8)}`,
 		type: type,
@@ -42,6 +36,7 @@ const RunButtonSchema = {
 			id: `1-Button-${uuidv4().slice(0, 8)}`,
 			type: 'Button',
 			props: {
+				id: 'Button-Run',
 				children: 'Run',
 				disabled: false,
 				width: '150px',
@@ -59,6 +54,7 @@ const ColorPickerSchema = {
 	id: `1-ColorPicker-${uuidv4().slice(0, 8)}`,
 	type: 'ColorPicker',
 	props: {
+		id: 'color',
 		showRGB: true,
 		direction: 'column',
 		width: '220px',
@@ -72,12 +68,14 @@ function removeString(str: string, remove: string): string {
 	return str.replace(remove, '');
 }
 
-export default async function Converter(pySchema: any = {}, direction: string = '') {
+export default async function Converter(
+	pySchema: any = {},
+	direction: string = '',
+): Promise<ConvertResult> {
 	const uiSchema = await require('./uiSchema.json');
-	let maxWidth = '0';
-	let maxHeight = '0';
-	
-	
+
+	let pyArgumentComponent: { [key: string]: string } = {}; // Explicitly define the type of pyArgumentComponent
+
 	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
 		let result: any = [];
 
@@ -87,6 +85,7 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 			} else if (typeof pySchemaParams[key] === 'object' && pySchemaParams[key] !== null) {
 				if (key === 'color') {
 					const sampleSchema = { ...ColorPickerSchema };
+					pyArgumentComponent['ColorPicker'] = 'color';
 					let float_colorPicker_Schema = insertFloatingBox(
 						sampleSchema,
 						sampleSchema.props['width'],
@@ -107,7 +106,7 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 	function insertRealComponent(key: string, parentKey: string, pySchema: any) {
 		let width = '0';
 		let height = '0';
-		let ComponentSchema: Schema = {
+		let ComponentSchema: BasicUISchema = {
 			id: '',
 			type: '',
 			props: {},
@@ -118,6 +117,7 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 		if (pySchema[key] === 'string') {
 			const sampleCode = { ...TextFieldV2Sample };
 			if ('id' in sampleCode) sampleCode.id = parentKey;
+			pyArgumentComponent['TextFieldV2'] = parentKey;
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
@@ -156,7 +156,7 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 			parent: null,
 		};
 	}
-	
+
 	function floatingBox_readjustXY_byPreFloatingBoxWidthHeight(
 		layers: any = [],
 		direction: string = 'rows',
@@ -174,7 +174,6 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 					preFloatBoxY = layer[i].props.y;
 					preFloatBoxWidth = layer[i].props.width.toString();
 					preFloatBoxHeight = layer[i].props.height.toString();
-	
 					if (direction === 'rows') {
 						preFloatBoxWidth = removeString(preFloatBoxWidth, 'px');
 						layer[i + 1].props.x = Number(preFloatBoxWidth) + Number(preFloatBoxX) + 10;
@@ -193,5 +192,5 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 	uiSchema.layers.push({ ...RunButtonSchema });
 	uiSchema.layers = floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
 	console.log('uiSchema', uiSchema);
-	return uiSchema;
+	return { uiSchema: uiSchema, pyArgumentComponent: pyArgumentComponent };
 }

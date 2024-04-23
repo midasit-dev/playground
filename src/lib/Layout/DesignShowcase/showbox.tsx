@@ -1,10 +1,11 @@
 import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
 	CanvasState,
 	LayersState,
 	ShowCaseBoxState,
 	ShowcaseCanvasLockState,
+	PythonArgumentComponentState,
 } from '../recoilState';
 import { type Layer } from '../../Common/types';
 import ToComponent from '../Componentized/ToComponent';
@@ -23,7 +24,7 @@ export default function ShowBox() {
 
 	async function onClickTest() {
 		await Converter(pySchema);
-		setLayers([])
+		setLayers([]);
 	}
 
 	return (
@@ -65,10 +66,7 @@ export default function ShowBox() {
 					/>
 					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickTest} />
 				</div>
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
+				<div
 					className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
 					style={{
 						zIndex: 1,
@@ -88,11 +86,23 @@ export default function ShowBox() {
 							event.stopPropagation();
 						}}
 					>
-						{layers.map((layer: Layer, index: number) => {
-							return <ToComponent key={index} layer={layer} parentPage={PageString.Showcase} />;
-						})}
+						<AnimatePresence>
+							{layers.map((layer: Layer, index: number) => {
+								return (
+									<motion.div
+										key={layer.id}
+										initial={{ x: 1000, y:300, opacity: 0}}
+										animate={{ x: 0, y: 0, opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 1, type: 'spring', stiffness: 120, damping: 20}}
+									>
+										<ToComponent layer={layer} parentPage={PageString.Showcase} />
+									</motion.div>
+								);
+							})}
+						</AnimatePresence>
 					</div>
-				</motion.div>
+				</div>
 			</Rnd>
 		</AnimatePresence>
 	);

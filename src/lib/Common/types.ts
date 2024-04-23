@@ -88,6 +88,24 @@ interface ExportCodes {
 	py?: string;
 }
 
+interface BasicUISchema {
+	id: string;
+	type: string;
+	props: any;
+	children: any;
+	parent: any;
+}
+
+interface ConvertResult {
+	uiSchema: uiSchema;
+	pyArgumentComponent: object;
+}
+
+interface uiSchema {
+	canvas: Canvas;
+	layers: Layers;
+}
+
 export type {
 	LayoutSchema,
 	LayoutSchemas,
@@ -100,4 +118,7 @@ export type {
 	Schema,
 	PlaygroundProps,
 	ExportCodes,
+	BasicUISchema,
+	ConvertResult,
 };
+

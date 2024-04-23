@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { SvgCode } from '../Svg';
 import { useRecoilValue } from 'recoil';
 import { AppSchemaStateForExport } from '../../../recoilState';
-import { transformSchemaToExportCodes, type ExportCodes } from '../../../lib';
+import { TransformSchemaToExportCodes, type ExportCodes } from '../../../lib';
 import { v4 as uuid4 } from 'uuid';
 
 const variants = {
@@ -26,7 +26,7 @@ const variants = {
 const App = () => {
 	const appSchemaStateForExport = useRecoilValue(AppSchemaStateForExport);
 	const onClickHandler = useCallback(() => {
-		const exportCodes: ExportCodes = transformSchemaToExportCodes(appSchemaStateForExport);
+		const exportCodes: ExportCodes = TransformSchemaToExportCodes(appSchemaStateForExport);
 		const json = JSON.stringify(exportCodes, null, 2);
 		const blob = new Blob([json], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);

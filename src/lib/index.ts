@@ -6,7 +6,7 @@ import {
 } from './Common/types';
 import * as ZINDEX from './Common/zindex';
 import { transformSchemaToExportSchema } from './ExportFunctions/ExportSchema';
-import { transformSchemaToExportCodes } from './ExportFunctions/ExportCodes';
+import { TransformSchemaToExportCodes } from './ExportFunctions/ExportCodes';
 import { default as Playground } from './playground';
 
 export {
@@ -15,7 +15,7 @@ export {
 	type ExportSchema,
 	type ExportCodes,
 	transformSchemaToExportSchema,
-	transformSchemaToExportCodes,
+	TransformSchemaToExportCodes,
 	ZINDEX,
 };
 
