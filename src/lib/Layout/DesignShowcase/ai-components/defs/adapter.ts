@@ -25,7 +25,7 @@ const sleep = async () => {
 
 export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo): Promise<ISuggest> => {
 	const isMock = Boolean(
-		secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '',
+		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') && (_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
 	);
 	if (value === undefined) throw Error('No value provided');
 
@@ -40,15 +40,16 @@ export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo)
 		schema = mock.mockFunctionInfo.schema;
 		fn = mock.mockFunctionInfo.function;
 	} else {
+		const secureinfo = (secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined) ? _secured : secure;
 		const functionResponse = await fetch(
-			`${secure.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
+			`${secureinfo.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
 				value.functionLanguage
 			}`,
 			{
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-AUTH-TOKEN': `${await getToken(secure)}`,
+					'X-AUTH-TOKEN': `${await getToken(secureinfo)}`,
 				},
 			},
 		);
@@ -68,12 +69,13 @@ export const functionListAdapter = async (value: IQueryKey, secure:SecureInfo) =
 	const _body = await require('./pySchema.json');
 
 	const isMock = Boolean(
-		secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '',
+		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') && (_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
 	);
 
+	const secureinfo = (secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined) ? _secured : secure;
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
 	const fnId: string = '01HVK86H606EGJ2SC8VXSV9AGJ';
-	const aiApiEndpoint: string = secure.getAiResponse(fnId);
+	const aiApiEndpoint: string = secureinfo.getAiResponse(fnId);
 
 	if (value === undefined) return {};
 
@@ -87,7 +89,7 @@ export const functionListAdapter = async (value: IQueryKey, secure:SecureInfo) =
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-AUTH-TOKEN': `${await getToken(secure)}`,
+				'X-AUTH-TOKEN': `${await getToken(secureinfo)}`,
 			},
 			body: JSON.stringify(_body),
 		});
