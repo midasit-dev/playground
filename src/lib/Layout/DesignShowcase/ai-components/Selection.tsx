@@ -93,7 +93,7 @@ export const Selection = (props: ISelectionProps) => {
 					</motion.div>
 				)}
 				{isFetching && (
-					<div
+					<motion.div
 						key='selection-loading-container'
 						style={{
 							display: 'flex',
@@ -105,7 +105,7 @@ export const Selection = (props: ISelectionProps) => {
 						}}
 					>
 						<ContentLoadingSkeleton key='selection-loading' items={3} />
-					</div>
+					</motion.div>
 				)}
 				{isError && (
 					<FallbackCard key='selection-error' error={error} resetErrorBoundary={refetch} />
