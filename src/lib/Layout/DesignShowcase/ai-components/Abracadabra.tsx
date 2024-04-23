@@ -7,10 +7,11 @@ import { ISelectionData, IListItem, IQueryKey, IFooterProps } from './defs/Inter
 import { useQueryClient } from 'react-query';
 import { QueryKeys } from './defs/QueryKeys';
 import { fetchingStateAtom } from './defs/atom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { AIQuery } from '../../recoilState';
 
 function Footer(props: IFooterProps) {
-	const [query, setQuery] = React.useState<IQueryKey>(undefined);
+	const [query, setQuery] = useRecoilState(AIQuery);
 	const queryClient = useQueryClient();
 	const isLoading = useRecoilValue(fetchingStateAtom);
 

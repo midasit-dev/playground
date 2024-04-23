@@ -2,6 +2,7 @@ import { ControllerInputs, type Layers, type Layer, type Box, Canvas } from '../
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
 import { type GuideBoxProps } from '@midasit-dev/moaui';
+import { IQueryKey } from './DesignShowcase/ai-components/defs/Interface';
 
 export const LayersMenuState = atom<{
 	canvas: RndProps;
@@ -145,4 +146,9 @@ export const SelectedAddComponentKey = atom<string>({
 export const PythonState = atom<string>({
 	key: 'PythonState',
 	default: '',
+});
+
+export const AIQuery = atom<IQueryKey>({
+	key: 'AIQuery',
+	default: undefined,
 });
