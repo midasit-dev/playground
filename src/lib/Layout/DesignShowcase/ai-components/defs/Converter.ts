@@ -116,7 +116,7 @@ export default async function Converter(pySchema: any = {}, direction: string = 
 
 		if (pySchema[key] === 'string') {
 			const sampleCode = { ...TextFieldV2Sample };
-			if (sampleCode.id) sampleCode.id = parentKey;
+			if ('id' in sampleCode) sampleCode.id = parentKey;
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
