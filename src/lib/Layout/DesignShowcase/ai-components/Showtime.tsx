@@ -74,15 +74,18 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
             <motion.div
                 key="testPanelDialog"
                 initial={{
+					x: 500,
 					y: 500,
 					scale: 0,
                 }}
                 animate={{
+					x: [500,250,0],
 					y: [450,250,0],
 					scale: [0.5, 0.75, 1],
                     opacity: 1,
                 }}
                 exit={{
+					x: 500,
 					y: 500,
 					scale: 0,
                     opacity: 0,
