@@ -17,7 +17,7 @@ export const ContentLoadingSkeleton = React.forwardRef(
 					return (
 						<motion.div
 							layout
-							key={`ai-response-skeleton-${Math.random()}`}
+							key={`ai-response-skeleton-${index}`}
 							initial={{
 								y: 100,
 								opacity: 0,

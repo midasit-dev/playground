@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import SelectionList from './SelectionList';
 import { QueryKeys } from './defs/QueryKeys';
 import { IListItem, IQueryKey, ISuggest } from './defs/Interface';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import FallbackCard from './FallbackCard';
 import { Stack } from '@mui/material';
 import { functionDetailAdapter, functionListAdapter } from './defs/adapter';
@@ -33,7 +33,7 @@ export const Selection = (props: ISelectionProps) => {
 	const [loadingTarget, setLoadingTarget] = React.useState<string | number | undefined | null>(
 		null,
 	);
-	const { data, isError, isLoading, isSuccess, refetch, error } = useQuery(
+	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		[QueryKeys.SELECTION_KEY, query],
 		async () => {
 			setLoading?.(true);
@@ -46,6 +46,7 @@ export const Selection = (props: ISelectionProps) => {
 			refetchOnReconnect: false,
 			cacheTime: 0,
 			select: (data) => data?.functionList || [],
+			keepPreviousData: false,
 		},
 	);
 
@@ -63,33 +64,44 @@ export const Selection = (props: ISelectionProps) => {
 			});
 	};
 
+	const [memoizedData, setMemoizedData] = React.useState<IListItem[]>(data || []);
+
+	React.useEffect(() => {
+		setMemoizedData((prev:any) => {
+			if (isFetching) return [];
+			
+			if (prev !== data) {
+				return data;
+			}
+			return prev;
+		});
+	}, [isFetching, data]);
+
 	return (
-		<Stack direction='row' spacing={2}>
+		<Stack direction='row' spacing={2} position="relative" height="12rem">
 			<AnimatePresence>
 				{isSuccess && (
-					<div key='selection-success-container'>
+					<motion.div key='selection-success-container'>
 						<SelectionList
 							key='selection-success'
-							list={data}
+							list={memoizedData}
 							onClick={handleOnClick}
 							onDelete={onDelete}
 							loading={loadingTarget !== null}
 							loadingTarget={loadingTarget}
 						/>
-					</div>
+					</motion.div>
 				)}
-				{isLoading && (
+				{isFetching && (
 					<div
 						key='selection-loading-container'
 						style={{
 							display: 'flex',
 							justifyContent: 'center',
-							width: '100%',
 							alignItems: 'center',
-							position: 'fixed',
-							left: 0,
-							bottom: 0,
-							transform: 'translateY(-50%)',
+							width: "100%",
+							position: 'absolute',
+							margin: 0,
 						}}
 					>
 						<ContentLoadingSkeleton key='selection-loading' items={3} />
