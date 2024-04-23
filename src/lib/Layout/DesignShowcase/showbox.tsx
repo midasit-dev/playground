@@ -17,12 +17,13 @@ import pySchema from './ai-components/defs/pySchema.json';
 
 export default function ShowBox() {
 	const canvasState = useRecoilValue(CanvasState);
-	const [layers] = useRecoilState(LayersState);
+	const [layers, setLayers] = useRecoilState(LayersState);
 	const [showCaseBoxState, setShowCaseBoxState] = useRecoilState(ShowCaseBoxState);
 	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
 
 	async function onClickTest() {
-		const test = await Converter(pySchema);
+		await Converter(pySchema);
+		setLayers([])
 	}
 
 	return (
@@ -53,14 +54,14 @@ export default function ShowBox() {
 						justifyContent: 'end',
 						alignItems: 'center',
 					}}
-					onClick={() => {
-						setLockDraggingCanvas(!lockDraggingCanvas);
-					}}
 				>
 					<Icon
 						iconName={lockDraggingCanvas ? 'Lock' : 'LockOpenOutlined'}
 						opacity={1}
 						toButton={true}
+						onClick={() => {
+							setLockDraggingCanvas(!lockDraggingCanvas);
+						}}
 					/>
 					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickTest} />
 				</div>
