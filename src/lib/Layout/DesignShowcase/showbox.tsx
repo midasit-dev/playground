@@ -1,11 +1,10 @@
 import React from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
 	CanvasState,
 	LayersState,
 	ShowCaseBoxState,
 	ShowcaseCanvasLockState,
-	PythonArgumentComponentState,
 } from '../recoilState';
 import { type Layer } from '../../Common/types';
 import ToComponent from '../Componentized/ToComponent';
@@ -23,8 +22,9 @@ export default function ShowBox() {
 	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
 
 	async function onClickTest() {
-		await Converter(pySchema);
+		const test = await Converter(pySchema);
 		setLayers([]);
+		console.log(test.pyArgumentComponent);
 	}
 
 	return (
@@ -91,10 +91,10 @@ export default function ShowBox() {
 								return (
 									<motion.div
 										key={layer.id}
-										initial={{ x: 1000, y:300, opacity: 0}}
+										initial={{ x: 1000, y: 300, opacity: 0 }}
 										animate={{ x: 0, y: 0, opacity: 1 }}
 										exit={{ opacity: 0 }}
-										transition={{ duration: 1, type: 'spring', stiffness: 120, damping: 20}}
+										transition={{ duration: 1, type: 'spring', stiffness: 120, damping: 20 }}
 									>
 										<ToComponent layer={layer} parentPage={PageString.Showcase} />
 									</motion.div>

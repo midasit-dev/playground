@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { CanvasState, ShowCaseBoxState, LayersState } from '../recoilState';
+import { CanvasState, LayersState, PythonState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
@@ -16,11 +16,14 @@ const queryClient = new QueryClient();
 export default function DesignShowcase() {
 	const [startX, setStartX] = React.useState(0);
 	const [startY, setStartY] = React.useState(0);
-	const showtimeRef = React.useRef<{doStartJob: any}>({doStartJob: new Promise((resolve: any) => resolve(""))});
+	const showtimeRef = React.useRef<{ doStartJob: any }>({
+		doStartJob: new Promise((resolve: any) => resolve('')),
+	});
 
-	//Recoil
+	//RecoilF
 	const [canvasState, setCanvasState] = useRecoilState(CanvasState);
 	const setLayersState = useSetRecoilState(LayersState);
+	const setPython = useSetRecoilState(PythonState);
 
 	React.useEffect(() => {
 		const handleResize = () => {
@@ -41,12 +44,14 @@ export default function DesignShowcase() {
 
 	async function onClickShowButton(item: ISuggest) {
 		setLayersState([]);
-		const result : ConvertResult = await Converter(item, '');
+		const result: ConvertResult = await Converter(item, '');
 		setCanvasState(result.uiSchema.canvas);
 		for (const item of result.uiSchema.layers) {
 			await showtimeRef.current.doStartJob(item);
 			setLayersState((prev) => [...prev, item]);
 		}
+		console.log('py: ', result.pyArgumentComponent);
+		setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
 	}
 
 	return (

@@ -1,8 +1,5 @@
 import { cloneDeep } from 'lodash';
 import { Layer, type Schema, type ExportCodes } from '../Common/types';
-import { useRecoilValue } from 'recoil';
-import { PythonArgumentComponentState } from '../Layout/recoilState';
-import React from 'react';
 
 const tsxBasicCode = (schema: Schema, pyConnectDOMCode: string = ''): string => {
 	if (!schema.canvas || !schema.layers) {
@@ -78,26 +75,21 @@ function toStringJSXElement(layers: Layer[]): string {
 	return result.slice(0, -1);
 }
 
-function TransformSchemaToExportCodes(schema: Schema): ExportCodes {
-	const pythonArgumentComponentState = useRecoilValue(PythonArgumentComponentState);
-
-	React.useEffect(() => {
-		console.log('pythonArgumentComponentState', pythonArgumentComponentState);
-	}, [pythonArgumentComponentState]);
-
+function transformSchemaToExportCodes(schema: Schema): ExportCodes {
 	if (!schema.canvas || !schema.layers) {
 		console.error('canvas or layers is not defined');
 		return {};
 	}
-
+	const pyArguComp = { ...schema.python?.argumentComponent };
+	console.log(pyArguComp);
 	//generate tsx
-	if (schema.pythonRaw && schema.pythonSchema) {
+	if (schema.python) {
 		const pyConnectDOMCode = makeJSXDOMConnectCode(schema);
 		const tsx_pyCode = tsxBasicCode(schema, pyConnectDOMCode);
 
 		return {
 			tsx: tsx_pyCode,
-			py: schema.pythonRaw,
+			py: schema.python.rawCode,
 		};
 	} else {
 		const tsxCode = tsxBasicCode(schema);
@@ -108,15 +100,15 @@ function TransformSchemaToExportCodes(schema: Schema): ExportCodes {
 function makeJSXDOMConnectCode(schema: Schema): string {
 	let jsxDOMCode: string = '';
 	const uiSchemaLayer = cloneDeep(schema.layers);
-	if(uiSchemaLayer === undefined || uiSchemaLayer.length === 0) return '';
+	if (uiSchemaLayer === undefined || uiSchemaLayer.length === 0) return '';
 	else {
 		for (let i = 0; i < uiSchemaLayer.length; i++) {
 			const layer = uiSchemaLayer[i];
-			if(layer.type === 'FloatingBox'){
-				if(layer.children && layer.children.length > 0){
-					for(let j = 0; j < layer.children.length; j++){
+			if (layer.type === 'FloatingBox') {
+				if (layer.children && layer.children.length > 0) {
+					for (let j = 0; j < layer.children.length; j++) {
 						const childLayer = layer.children[j];
-						if(childLayer.type === 'RunButton'){
+						if (childLayer.type === 'RunButton') {
 							jsxDOMCode += `Moaui.connectDOM('${childLayer.id}', '${childLayer.props.id}');\n`;
 						}
 					}
@@ -128,4 +120,4 @@ function makeJSXDOMConnectCode(schema: Schema): string {
 	}
 }
 
-export { TransformSchemaToExportCodes };
+export { transformSchemaToExportCodes };

@@ -4,7 +4,6 @@ import { TextFieldV2Sample, SwitchSample, ColorPickerSample } from '@midasit-dev
 import { cloneDeep } from 'lodash';
 import { BasicUISchema, ConvertResult } from '../../../../Common/types';
 
-
 function makeBasicSchema(type: string = '', props: any = {}, children: any = []): BasicUISchema {
 	const BasicSchema = {
 		id: `1-${type}-${uuidv4().slice(0, 8)}`,
@@ -85,7 +84,7 @@ export default async function Converter(
 			} else if (typeof pySchemaParams[key] === 'object' && pySchemaParams[key] !== null) {
 				if (key === 'color') {
 					const sampleSchema = { ...ColorPickerSchema };
-					pyArgumentComponent['ColorPicker'] = 'color';
+					pyArgumentComponent['color'] = 'ColorPicker';
 					let float_colorPicker_Schema = insertFloatingBox(
 						sampleSchema,
 						sampleSchema.props['width'],
@@ -117,7 +116,7 @@ export default async function Converter(
 		if (pySchema[key] === 'string') {
 			const sampleCode = { ...TextFieldV2Sample };
 			if ('id' in sampleCode) sampleCode.id = parentKey;
-			pyArgumentComponent['TextFieldV2'] = parentKey;
+			pyArgumentComponent[parentKey] = 'TextFieldV2';
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;

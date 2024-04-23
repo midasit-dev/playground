@@ -67,9 +67,9 @@ export const Selection = (props: ISelectionProps) => {
 	const [memoizedData, setMemoizedData] = React.useState<IListItem[]>(data || []);
 
 	React.useEffect(() => {
-		setMemoizedData((prev:any) => {
+		setMemoizedData((prev: any) => {
 			if (isFetching) return [];
-			
+
 			if (prev !== data) {
 				return data;
 			}
@@ -78,7 +78,7 @@ export const Selection = (props: ISelectionProps) => {
 	}, [isFetching, data]);
 
 	return (
-		<Stack direction='row' spacing={2} position="relative" height="12rem">
+		<Stack direction='row' spacing={2} position='relative' height='12rem'>
 			<AnimatePresence>
 				{isSuccess && (
 					<motion.div key='selection-success-container'>
@@ -99,7 +99,7 @@ export const Selection = (props: ISelectionProps) => {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							width: "100%",
+							width: '100%',
 							position: 'absolute',
 							margin: 0,
 						}}
