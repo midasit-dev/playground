@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Rnd } from 'react-rnd';
 import { Icon } from '@midasit-dev/moaui';
 import Converter from './ai-components/defs/Converter';
+import pySchema from './ai-components/defs/pySchema.json';
 
 export default function ShowBox() {
 	const canvasState = useRecoilValue(CanvasState);
@@ -21,7 +22,7 @@ export default function ShowBox() {
 	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
 
 	async function onClickTest() {
-		const test = await Converter();
+		const test = await Converter(pySchema);
 	}
 
 	return (
