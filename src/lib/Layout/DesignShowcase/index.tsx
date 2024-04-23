@@ -1,6 +1,7 @@
 import React from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 import { CanvasState, ShowCaseBoxState, LayersState } from '../recoilState';
+import { loadingTargetStateAtom, fetchingStateAtom } from './ai-components/defs/atom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
 import ColorfulBg from './colorfulBg';
@@ -16,7 +17,11 @@ const queryClient = new QueryClient();
 export default function DesignShowcase() {
 	const [startX, setStartX] = React.useState(0);
 	const [startY, setStartY] = React.useState(0);
-	const showtimeRef = React.useRef<{doStartJob: any}>({doStartJob: new Promise((resolve: any) => resolve(""))});
+	const showtimeRef = React.useRef<{ doStartJob: any }>({
+		doStartJob: new Promise((resolve: any) => resolve('')),
+	});
+	const resetLoadingTarget = useResetRecoilState(loadingTargetStateAtom);
+	const setFetchingState = useSetRecoilState(fetchingStateAtom);
 
 	//Recoil
 	const [canvasState, setCanvasState] = useRecoilState(CanvasState);
@@ -40,6 +45,7 @@ export default function DesignShowcase() {
 	}, []);
 
 	async function onClickShowButton(item: ISuggest) {
+		setFetchingState(true);
 		setLayersState([]);
 		const result : ConvertResult = await Converter(item, '');
 		setCanvasState(result.uiSchema.canvas);
@@ -47,6 +53,8 @@ export default function DesignShowcase() {
 			await showtimeRef.current.doStartJob(item);
 			setLayersState((prev) => [...prev, item]);
 		}
+		resetLoadingTarget();
+		setFetchingState(false);
 	}
 
 	return (

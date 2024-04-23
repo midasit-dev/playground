@@ -89,7 +89,7 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 						width: '100%',
 						maxWidth: props.maxWidth,
 					})}
-					className="wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg"
+					className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
 					InputProps={{
 						endAdornment: (
 							<React.Fragment>

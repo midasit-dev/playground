@@ -8,8 +8,9 @@ import FallbackCard from './FallbackCard';
 import { Stack } from '@mui/material';
 import { functionDetailAdapter, functionListAdapter } from './defs/adapter';
 import { useSetRecoilState } from 'recoil';
-import { fetchingStateAtom } from './defs/atom';
+import { fetchingStateAtom, loadingTargetStateAtom } from './defs/atom';
 import { ContentLoadingSkeleton } from './Skeletons';
+import { useRecoilState } from "recoil";
 
 export interface ISelectionProps {
 	query?: IQueryKey;
@@ -30,9 +31,7 @@ const functionDetailGetter = async (item: IListItem): Promise<ISuggest> => {
 export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {}, onDelete = () => {}, query } = props;
 	const setLoading = useSetRecoilState(fetchingStateAtom);
-	const [loadingTarget, setLoadingTarget] = React.useState<string | number | undefined | null>(
-		null,
-	);
+	const [loadingTarget, setLoadingTarget] = useRecoilState<any>(loadingTargetStateAtom);
 	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		[QueryKeys.SELECTION_KEY, query],
 		async () => {
@@ -54,8 +53,6 @@ export const Selection = (props: ISelectionProps) => {
 		setLoadingTarget(item.functionId);
 		functionDetailGetter(item)
 			.then((value: ISuggest) => {
-				console.log(value);
-				setLoadingTarget(null);
 				onClick?.(value);
 			})
 			.catch((error) => {
@@ -67,9 +64,9 @@ export const Selection = (props: ISelectionProps) => {
 	const [memoizedData, setMemoizedData] = React.useState<IListItem[]>(data || []);
 
 	React.useEffect(() => {
-		setMemoizedData((prev:any) => {
+		setMemoizedData((prev: any) => {
 			if (isFetching) return [];
-			
+
 			if (prev !== data) {
 				return data;
 			}
@@ -78,7 +75,7 @@ export const Selection = (props: ISelectionProps) => {
 	}, [isFetching, data]);
 
 	return (
-		<Stack direction='row' spacing={2} position="relative" height="12rem">
+		<Stack direction='row' spacing={2} position='relative' height='12rem'>
 			<AnimatePresence>
 				{isSuccess && (
 					<motion.div key='selection-success-container'>
@@ -99,7 +96,7 @@ export const Selection = (props: ISelectionProps) => {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							width: "100%",
+							width: '100%',
 							position: 'absolute',
 							margin: 0,
 						}}
