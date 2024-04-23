@@ -67,42 +67,16 @@ const ColorPickerSchema = {
 	parent: null,
 };
 
-function floatingBox_readjustXY_byPreFloatingBoxWidthHeight(
-	layers: any = [],
-	direction: string = 'rows',
-) {
-	let preFloatBoxX = '0';
-	let preFloatBoxY = '0';
-	let preFloatBoxWidth = '0';
-	let preFloatBoxHeight = '0';
-	for (let i = 0; i < layers.length; i++) {
-		if (i === layers.length - 1) break;
-		if (layers[i].type === 'FloatingBox') {
-			if (layers[i].props) {
-				preFloatBoxX = layers[i].props.x;
-				preFloatBoxY = layers[i].props.y;
-				preFloatBoxWidth = layers[i].props.width.toString();
-				preFloatBoxHeight = layers[i].props.height.toString();
-
-				if (direction === 'rows') {
-					preFloatBoxWidth = removeString(preFloatBoxWidth, 'px');
-					layers[i + 1].props.x = Number(preFloatBoxWidth) + Number(preFloatBoxX) + 10;
-				} else if (direction === 'columns') {
-					preFloatBoxHeight = removeString(preFloatBoxHeight, 'px');
-					layers[i + 1].props.y = Number(preFloatBoxHeight) + Number(preFloatBoxY) + 10;
-				}
-			}
-		}
-	}
-}
-
 function removeString(str: string, remove: string): string {
 	return str.replace(remove, '');
 }
 
-export default async function Converter(pySchema: any = {}) {
+export default async function Converter(pySchema: any = {}, direction: string = '') {
 	const uiSchema = await require('./uiSchema.json');
-
+	let maxWidth = '0';
+	let maxHeight = '0';
+	
+	
 	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
 		let result: any = [];
 
@@ -181,11 +155,40 @@ export default async function Converter(pySchema: any = {}) {
 			parent: null,
 		};
 	}
+	
+	function floatingBox_readjustXY_byPreFloatingBoxWidthHeight(
+		layers: any = [],
+		direction: string = 'rows',
+	) {
+		let preFloatBoxX = '0';
+		let preFloatBoxY = '0';
+		let preFloatBoxWidth = '0';
+		let preFloatBoxHeight = '0';
+		for (let i = 0; i < layers.length; i++) {
+			if (i === layers.length - 1) break;
+			if (layers[i].type === 'FloatingBox') {
+				if (layers[i].props) {
+					preFloatBoxX = layers[i].props.x;
+					preFloatBoxY = layers[i].props.y;
+					preFloatBoxWidth = layers[i].props.width.toString();
+					preFloatBoxHeight = layers[i].props.height.toString();
+	
+					if (direction === 'rows') {
+						preFloatBoxWidth = removeString(preFloatBoxWidth, 'px');
+						layers[i + 1].props.x = Number(preFloatBoxWidth) + Number(preFloatBoxX) + 10;
+					} else if (direction === 'columns' || direction === '') {
+						preFloatBoxHeight = removeString(preFloatBoxHeight, 'px');
+						layers[i + 1].props.y = Number(preFloatBoxHeight) + Number(preFloatBoxY) + 10;
+					}
+				}
+			}
+		}
+	}
 
 	const result = convertSchema(pySchema['schema']['parameters'], uiSchema['layers']);
 	uiSchema.layers = [...(result[0] as any[])];
 	uiSchema.layers.push({ ...RunButtonSchema });
-	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, 'columns');
+	floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
 	console.log('uiSchema', uiSchema);
 	return uiSchema;
 }
