@@ -1,3 +1,5 @@
+import { type PySchema } from '../../../../Common/types';
+
 export interface IListItem {
 	functionId: string | number;
 	functionName: string;
@@ -6,8 +8,8 @@ export interface IListItem {
 }
 
 export interface ISuggest {
-	schema: Object;
-	function: Object;
+	schema: PySchema;
+	function: string;
 }
 
 export interface ISelectionData {

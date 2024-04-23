@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { Layer, type Schema, type ExportCodes } from '../Common/types';
+import { Layer, type Schema, type ExportCodes, type Python } from '../Common/types';
 
 const tsxBasicCode = (schema: Schema, pyConnectDOMCode: string = ''): string => {
 	if (!schema.canvas || !schema.layers) {
@@ -80,11 +80,12 @@ function transformSchemaToExportCodes(schema: Schema): ExportCodes {
 		console.error('canvas or layers is not defined');
 		return {};
 	}
-	const pyArguComp = { ...schema.python?.argumentComponent };
-	console.log(pyArguComp);
+
 	//generate tsx
 	if (schema.python) {
-		const pyConnectDOMCode = makeJSXDOMConnectCode(schema);
+		const python = { ...schema.python };
+		const pyConnectDOMCode = makeJSXDOMConnectCode(python);
+		console.log('pyConnectDOMCode:', pyConnectDOMCode);
 		const tsx_pyCode = tsxBasicCode(schema, pyConnectDOMCode);
 
 		return {
@@ -97,27 +98,43 @@ function transformSchemaToExportCodes(schema: Schema): ExportCodes {
 	}
 }
 
-function makeJSXDOMConnectCode(schema: Schema): string {
-	let jsxDOMCode: string = '';
-	const uiSchemaLayer = cloneDeep(schema.layers);
-	if (uiSchemaLayer === undefined || uiSchemaLayer.length === 0) return '';
-	else {
-		for (let i = 0; i < uiSchemaLayer.length; i++) {
-			const layer = uiSchemaLayer[i];
-			if (layer.type === 'FloatingBox') {
-				if (layer.children && layer.children.length > 0) {
-					for (let j = 0; j < layer.children.length; j++) {
-						const childLayer = layer.children[j];
-						if (childLayer.type === 'RunButton') {
-							jsxDOMCode += `Moaui.connectDOM('${childLayer.id}', '${childLayer.props.id}');\n`;
-						}
-					}
-				}
+const DOMBasicCode = (code: string, functionName: string): string => {
+	return `React.useEffect(() => {
+    document.getElementById("Button-Run")?.addEventListener("click", () => {
+      const py_func = pyscript.interpreter.globals.get("${functionName}");
+			py_func(JSON.stringify({
+					${code}
+				})
+			);
+    });
+  }, []);`;
+};
+
+function makeJSXDOMConnectCode(python: Python): string {
+	let jsxDOMCode = '';
+	const arguComp: any = cloneDeep(python.argumentComponent);
+	console.log('arguComp', python);
+	if (arguComp) {
+		const keys = Object.keys(arguComp);
+		for (let i = 0; i < keys.length; i++) {
+			const key: string = keys[i];
+			const component = arguComp[key];
+			switch (component) {
+				case 'TextFieldV2':
+					jsxDOMCode += `${key} : (document.getElementById('${key}') as HTMLInputElement).value,\n`;
+					break;
+				case 'ColorPicker':
+					jsxDOMCode += `${key} : (document.getElementById('${key}') as HTMLDivElement).getAttribute('data-temporary'),\n`;
+					break;
 			}
 		}
-
-		return jsxDOMCode;
 	}
+
+	if (jsxDOMCode !== '') {
+		jsxDOMCode = DOMBasicCode(jsxDOMCode, python.pySchema.schema.name);
+	}
+
+	return jsxDOMCode;
 }
 
 export { transformSchemaToExportCodes };

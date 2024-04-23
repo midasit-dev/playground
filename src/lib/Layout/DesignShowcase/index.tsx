@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ISuggest } from './ai-components/defs/Interface';
 import Converter from './ai-components/defs/Converter';
 import ShowTime from './ai-components/Showtime';
-import { ConvertResult } from '../../Common/types';
+import { ConvertResult, PySchemaContainer } from '../../Common/types';
 
 const queryClient = new QueryClient();
 
@@ -55,10 +55,11 @@ export default function DesignShowcase() {
 				await showtimeRef.current.doStartJob(item);
 				setLayersState((prev) => [...prev, item]);
 			}
-	
-			console.log('py: ', result.pyArgumentComponent);
+			setPython((prev) => ({ ...prev, rawCode: item.function }));
+			setPython((prev) => ({ ...prev, pySchema: { schema: item.schema } }));
 			setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
-		} catch {} finally {
+		} catch {
+		} finally {
 			resetLoadingTarget();
 			setFetchingState(false);
 		}

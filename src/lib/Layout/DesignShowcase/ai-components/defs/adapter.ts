@@ -31,8 +31,8 @@ export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest>
 
 	const fnId = '01HVK86H606EGJ2SC8VXSV9AGJ';
 
-	let schema = {};
-	let fn = {};
+	let schema: any = { schema: { name: '', parameters: {}, description: '' }, topK: 0 };
+	let fn = '';
 
 	if (isMock) {
 		// Simulate a network request

@@ -10,7 +10,7 @@ import { functionDetailAdapter, functionListAdapter } from './defs/adapter';
 import { useSetRecoilState } from 'recoil';
 import { fetchingStateAtom, loadingTargetStateAtom } from './defs/atom';
 import { ContentLoadingSkeleton } from './Skeletons';
-import { useRecoilState } from "recoil";
+import { useRecoilState } from 'recoil';
 
 export interface ISelectionProps {
 	query?: IQueryKey;

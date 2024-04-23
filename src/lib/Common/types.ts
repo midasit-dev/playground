@@ -78,10 +78,20 @@ interface Schema {
 
 interface Python {
 	rawCode: string;
-	schema: object;
+	pySchema: PySchemaContainer;
 	argumentComponent: object;
 }
 
+interface PySchemaContainer {
+	schema: PySchema;
+	topK?: number;
+}
+
+interface PySchema {
+	name: string;
+	parameters: object;
+	description: string;
+}
 interface PlaygroundProps {
 	schema?: Schema;
 	onChange?: (schema: Schema) => void;
@@ -125,4 +135,6 @@ export type {
 	BasicUISchema,
 	ConvertResult,
 	Python,
+	PySchemaContainer,
+	PySchema,
 };

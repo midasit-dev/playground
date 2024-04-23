@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { CanvasState } from '../../recoilState';
 import { motion, AnimatePresence } from 'framer-motion';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 //@ts-ignore
 import SyntaxHighlighter from 'react-syntax-highlighter';
 
@@ -95,8 +95,8 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
 					}}
 					style={{
 						position: 'fixed',
-						width: "20rem",
-						height: "100vh",
+						width: '30rem',
+						height: '100vh',
 						top: 0,
 						right: 0,
 						zIndex: 1000,
@@ -108,10 +108,15 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
 						height='100%'
 					>
 						<Stack direction='column' margin={2} height='100%' overflow='hidden'>
-							<SyntaxHighlighter language="JSON" wrapLongLines customStyle={{
-								fontSize: "0.75rem",
-								backgroundColor: "transparent",
-							}}>
+							{loadingDlgOverlayText}
+							<SyntaxHighlighter
+								language='JSON'
+								wrapLongLines
+								customStyle={{
+									fontSize: '0.75rem',
+									backgroundColor: 'transparent',
+								}}
+							>
 								{textStream}
 							</SyntaxHighlighter>
 						</Stack>
@@ -129,11 +134,11 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
 							}}
 						>
 							<Stack
-								className="wrapper-box rounded-md backdrop-filter backdrop-blur-lg"
+								className='wrapper-box rounded-md background-color-white'
 								alignItems='center'
 								justifyContent='space-between'
 								width='15rem'
-								height='12rem'
+								height='15rem'
 								padding={4}
 								spacing={6}
 							>
@@ -157,7 +162,6 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
 										height: '3.5rem',
 									}}
 								/>
-								{loadingDlgOverlayText}
 							</Stack>
 						</Stack>
 					</Box>

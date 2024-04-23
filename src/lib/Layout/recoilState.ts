@@ -152,7 +152,11 @@ export const SelectedAddComponentKey = atom<string>({
 
 export const PythonState = atom<Python>({
 	key: 'PythonState',
-	default: { rawCode: '', schema: {}, argumentComponent: {} },
+	default: {
+		rawCode: '',
+		pySchema: { schema: { name: '', parameters: {}, description: '' }, topK: 0 },
+		argumentComponent: {},
+	},
 });
 
 export const AIQuery = atom<IQueryKey>({
