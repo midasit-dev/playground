@@ -19,7 +19,7 @@ export interface ISelectionProps {
 	onDelete?: (item: IListItem) => void;
 }
 
-const functionDetailGetter = async (item: IListItem, secure:SecureInfo): Promise<ISuggest> => {
+const functionDetailGetter = async (item: IListItem, secure: SecureInfo): Promise<ISuggest> => {
 	return await new Promise(async (resolve, reject) => {
 		try {
 			resolve(await functionDetailAdapter(item, secure));

@@ -170,7 +170,11 @@ export const SecurePropsState = atom<SecureInfo>({
 	default: {
 		authApiEndpoint: '',
 		userIdentifier: '',
-		getAiResponse: (value) => {return ''},
-		getAiSchemaCode: (threadId, functionId) => {return ''},
-	}
+		getAiResponse: (value) => {
+			return '';
+		},
+		getAiSchemaCode: (threadId, functionId) => {
+			return '';
+		},
+	},
 });

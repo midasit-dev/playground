@@ -106,12 +106,11 @@ interface SecureInfo {
 }
 
 interface AiResponse {
-  (value: string): string;
+	(value: string): string;
 }
 
-
 interface AiSchemaCode {
-  (threadId: string | number, functionId: string | number): string;
+	(threadId: string | number, functionId: string | number): string;
 }
 
 interface ExportCodes {

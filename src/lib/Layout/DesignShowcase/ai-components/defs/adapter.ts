@@ -2,7 +2,7 @@ import { ISelectionData, IQueryKey, IListItem, ISuggest } from './Interface';
 import * as mock from './mock';
 import * as _secured from './_secured';
 import { SecureInfo } from '../../../../Common/types';
-const getToken = async (secure:SecureInfo) => {
+const getToken = async (secure: SecureInfo) => {
 	const authApiEndpoint: string = secure.authApiEndpoint;
 	const userIdentifier: string = secure.userIdentifier;
 
@@ -23,9 +23,13 @@ const sleep = async () => {
 	await new Promise((resolve) => setTimeout(resolve, 500));
 };
 
-export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo): Promise<ISuggest> => {
+export const functionDetailAdapter = async (
+	value: IListItem,
+	secure: SecureInfo,
+): Promise<ISuggest> => {
 	const isMock = Boolean(
-		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') && (_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
+		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') &&
+			(_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
 	);
 	if (value === undefined) throw Error('No value provided');
 
@@ -40,7 +44,8 @@ export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo)
 		schema = mock.mockFunctionInfo.schema;
 		fn = mock.mockFunctionInfo.function;
 	} else {
-		const secureinfo = (secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined) ? _secured : secure;
+		const secureinfo =
+			secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined ? _secured : secure;
 		const functionResponse = await fetch(
 			`${secureinfo.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
 				value.functionLanguage
@@ -65,14 +70,16 @@ export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo)
 	};
 };
 
-export const functionListAdapter = async (value: IQueryKey, secure:SecureInfo) => {
+export const functionListAdapter = async (value: IQueryKey, secure: SecureInfo) => {
 	const _body = await require('./pySchema.json');
 
 	const isMock = Boolean(
-		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') && (_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
+		(secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '') &&
+			(_secured.authApiEndpoint === '' || _secured.authApiEndpoint === undefined),
 	);
 
-	const secureinfo = (secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined) ? _secured : secure;
+	const secureinfo =
+		secure.authApiEndpoint === '' || secure.authApiEndpoint === undefined ? _secured : secure;
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
 	const fnId: string = '01HVK86H606EGJ2SC8VXSV9AGJ';
 	const aiApiEndpoint: string = secureinfo.getAiResponse(fnId);
