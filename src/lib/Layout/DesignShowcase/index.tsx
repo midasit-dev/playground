@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
-import { CanvasState, ShowCaseBoxState, LayersState } from '../recoilState';
+import { CanvasState, LayersState, PythonState } from '../recoilState';
 import { loadingTargetStateAtom, fetchingStateAtom } from './ai-components/defs/atom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ShowBox from './showbox';
@@ -23,9 +23,10 @@ export default function DesignShowcase() {
 	const resetLoadingTarget = useResetRecoilState(loadingTargetStateAtom);
 	const setFetchingState = useSetRecoilState(fetchingStateAtom);
 
-	//Recoil
+	//RecoilF
 	const [canvasState, setCanvasState] = useRecoilState(CanvasState);
 	const setLayersState = useSetRecoilState(LayersState);
+	const setPython = useSetRecoilState(PythonState);
 
 	React.useEffect(() => {
 		const handleResize = () => {
@@ -47,7 +48,7 @@ export default function DesignShowcase() {
 	async function onClickShowButton(item: ISuggest) {
 		setFetchingState(true);
 		setLayersState([]);
-		const result : ConvertResult = await Converter(item, '');
+		const result: ConvertResult = await Converter(item, '');
 		setCanvasState(result.uiSchema.canvas);
 		for (const item of result.uiSchema.layers) {
 			await showtimeRef.current.doStartJob(item);
@@ -55,6 +56,8 @@ export default function DesignShowcase() {
 		}
 		resetLoadingTarget();
 		setFetchingState(false);
+		console.log('py: ', result.pyArgumentComponent);
+		setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
 	}
 
 	return (

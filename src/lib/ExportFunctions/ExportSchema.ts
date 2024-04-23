@@ -31,8 +31,7 @@ function transformSchemaToExportSchema(schema: Schema): ExportSchema {
 	return {
 		canvas: schema.canvas,
 		layers: replaceIds(schema.layers, saveUUID),
-		pythonRaw: schema.pythonRaw,
-		pythonSchema: schema.pythonSchema,
+		python: schema.python,
 	};
 }
 

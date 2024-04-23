@@ -1,4 +1,11 @@
-import { ControllerInputs, type Layers, type Layer, type Box, Canvas } from '../Common/types';
+import {
+	ControllerInputs,
+	type Layers,
+	type Layer,
+	type Box,
+	Canvas,
+	type Python,
+} from '../Common/types';
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
 import { type GuideBoxProps } from '@midasit-dev/moaui';
@@ -143,22 +150,12 @@ export const SelectedAddComponentKey = atom<string>({
 	default: 'Alert',
 });
 
-export const PythonRawState = atom<string>({
-	key: 'PythonRawState',
-	default: '',
-});
-
-export const PythonSchemaState = atom<object>({
-	key: 'PythonSchemaState',
-	default: {},
+export const PythonState = atom<Python>({
+	key: 'PythonState',
+	default: { rawCode: '', schema: {}, argumentComponent: {} },
 });
 
 export const AIQuery = atom<IQueryKey>({
 	key: 'AIQuery',
 	default: undefined,
-});
-
-export const PythonArgumentComponentState = atom<object>({
-	key: 'PythonArgumentComponentState',
-	default: {},
 });
