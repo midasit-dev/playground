@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Playground, { type Schema } from './lib';
-import SideBar from './sidebar';
+import SideMenu from './SideMenu';
 import { AppSchemaStateForExport, AppSchemaStateForImport } from './recoilState';
 import { RecoilRoot, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -10,7 +10,7 @@ const App = () => {
 
 	return (
 		<Fragment>
-			<SideBar />
+			<SideMenu />
 			<Playground
 				schema={appSchemaStateForImport}
 				onChange={(schema: Schema) => setAppSchemaStateForExport(schema)}
