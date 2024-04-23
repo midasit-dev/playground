@@ -46,18 +46,22 @@ export default function DesignShowcase() {
 	}, []);
 
 	async function onClickShowButton(item: ISuggest) {
-		setFetchingState(true);
-		setLayersState([]);
-		const result: ConvertResult = await Converter(item, '');
-		setCanvasState(result.uiSchema.canvas);
-		for (const item of result.uiSchema.layers) {
-			await showtimeRef.current.doStartJob(item);
-			setLayersState((prev) => [...prev, item]);
+		try {
+			setFetchingState(true);
+			setLayersState([]);
+			const result: ConvertResult = await Converter(item, '');
+			setCanvasState(result.uiSchema.canvas);
+			for (const item of result.uiSchema.layers) {
+				await showtimeRef.current.doStartJob(item);
+				setLayersState((prev) => [...prev, item]);
+			}
+	
+			console.log('py: ', result.pyArgumentComponent);
+			setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
+		} catch {} finally {
+			resetLoadingTarget();
+			setFetchingState(false);
 		}
-		resetLoadingTarget();
-		setFetchingState(false);
-		console.log('py: ', result.pyArgumentComponent);
-		setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
 	}
 
 	return (
