@@ -1,10 +1,10 @@
 import { ISelectionData, IQueryKey, IListItem, ISuggest } from './Interface';
 import * as mock from './mock';
 import * as _secured from './_secured';
-
-const getToken = async () => {
-	const authApiEndpoint: string = _secured.authApiEndpoint;
-	const userIdentifier: string = _secured.userIdentifier;
+import { SecureInfo } from '../../../../Common/types';
+const getToken = async (secure:SecureInfo) => {
+	const authApiEndpoint: string = secure.authApiEndpoint;
+	const userIdentifier: string = secure.userIdentifier;
 
 	const authFetcher = await fetch(authApiEndpoint, {
 		method: 'POST',
@@ -23,9 +23,9 @@ const sleep = async () => {
 	await new Promise((resolve) => setTimeout(resolve, 500));
 };
 
-export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest> => {
+export const functionDetailAdapter = async (value: IListItem, secure:SecureInfo): Promise<ISuggest> => {
 	const isMock = Boolean(
-		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
+		secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '',
 	);
 	if (value === undefined) throw Error('No value provided');
 
@@ -41,14 +41,14 @@ export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest>
 		fn = mock.mockFunctionInfo.function;
 	} else {
 		const functionResponse = await fetch(
-			`${_secured.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
+			`${secure.getAiSchemaCode(fnId, value.functionId)}?functionLanguage=${
 				value.functionLanguage
 			}`,
 			{
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-AUTH-TOKEN': `${await getToken()}`,
+					'X-AUTH-TOKEN': `${await getToken(secure)}`,
 				},
 			},
 		);
@@ -64,16 +64,16 @@ export const functionDetailAdapter = async (value: IListItem): Promise<ISuggest>
 	};
 };
 
-export const functionListAdapter = async (value: IQueryKey) => {
+export const functionListAdapter = async (value: IQueryKey, secure:SecureInfo) => {
 	const _body = await require('./pySchema.json');
 
 	const isMock = Boolean(
-		_secured?.authApiEndpoint === undefined || _secured.authApiEndpoint === '',
+		secure?.authApiEndpoint === undefined || secure.authApiEndpoint === '',
 	);
 
 	//id: 01HVK86H606EGJ2SC8VXSV9AGJ
 	const fnId: string = '01HVK86H606EGJ2SC8VXSV9AGJ';
-	const aiApiEndpoint: string = _secured.getAiResponse(fnId);
+	const aiApiEndpoint: string = secure.getAiResponse(fnId);
 
 	if (value === undefined) return {};
 
@@ -87,7 +87,7 @@ export const functionListAdapter = async (value: IQueryKey) => {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				'X-AUTH-TOKEN': `${await getToken()}`,
+				'X-AUTH-TOKEN': `${await getToken(secure)}`,
 			},
 			body: JSON.stringify(_body),
 		});

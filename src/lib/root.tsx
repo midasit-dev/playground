@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
 import Layout from './Layout/index';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import './output.css';
 import { type PlaygroundProps } from './Common/types';
-import { CanvasState, LayersState, PythonState } from './Layout/recoilState';
+import { CanvasState, LayersState, PythonState, SecurePropsState } from './Layout/recoilState';
 
 function Root(props: PlaygroundProps) {
-	const { schema, onChange } = props;
+	const { schema, onChange, secure } = props;
 
 	const [canvas, setCanvas] = useRecoilState(CanvasState);
 	const [layers, setLayers] = useRecoilState(LayersState);
 	const [python, setPython] = useRecoilState(PythonState);
-
+	const setSecure = useSetRecoilState(SecurePropsState);
 	//Impot 영역
 	useEffect(() => {
 		// 만약 schema가 존재하고 변경된 경우에만 값을 설정한다.
@@ -22,6 +22,10 @@ function Root(props: PlaygroundProps) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [schema]);
+
+	useEffect(() => {
+		if (secure) setSecure(secure);
+	}, [secure, setSecure]);
 
 	//Export 영역
 	useEffect(() => {

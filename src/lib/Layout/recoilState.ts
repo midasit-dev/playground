@@ -5,6 +5,7 @@ import {
 	type Box,
 	Canvas,
 	type Python,
+	type SecureInfo,
 } from '../Common/types';
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
@@ -162,4 +163,14 @@ export const PythonState = atom<Python>({
 export const AIQuery = atom<IQueryKey>({
 	key: 'AIQuery',
 	default: undefined,
+});
+
+export const SecurePropsState = atom<SecureInfo>({
+	key: 'SecurePropsState',
+	default: {
+		authApiEndpoint: '',
+		userIdentifier: '',
+		getAiResponse: (value) => {return ''},
+		getAiSchemaCode: (threadId, functionId) => {return ''},
+	}
 });

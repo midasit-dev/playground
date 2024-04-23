@@ -10,18 +10,19 @@ import { functionDetailAdapter, functionListAdapter } from './defs/adapter';
 import { useSetRecoilState } from 'recoil';
 import { fetchingStateAtom, loadingTargetStateAtom } from './defs/atom';
 import { ContentLoadingSkeleton } from './Skeletons';
-import { useRecoilState } from 'recoil';
-
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { SecurePropsState } from '../../recoilState';
+import { SecureInfo } from '../../../Common/types';
 export interface ISelectionProps {
 	query?: IQueryKey;
 	onClick?: (item: ISuggest) => void;
 	onDelete?: (item: IListItem) => void;
 }
 
-const functionDetailGetter = async (item: IListItem): Promise<ISuggest> => {
+const functionDetailGetter = async (item: IListItem, secure:SecureInfo): Promise<ISuggest> => {
 	return await new Promise(async (resolve, reject) => {
 		try {
-			resolve(await functionDetailAdapter(item));
+			resolve(await functionDetailAdapter(item, secure));
 		} catch (error) {
 			reject(error);
 		}
@@ -31,12 +32,13 @@ const functionDetailGetter = async (item: IListItem): Promise<ISuggest> => {
 export const Selection = (props: ISelectionProps) => {
 	const { onClick = () => {}, onDelete = () => {}, query } = props;
 	const setLoading = useSetRecoilState(fetchingStateAtom);
+	const secureInfo = useRecoilValue(SecurePropsState);
 	const [loadingTarget, setLoadingTarget] = useRecoilState<any>(loadingTargetStateAtom);
 	const { data, isError, isFetching, isSuccess, refetch, error } = useQuery(
 		[QueryKeys.SELECTION_KEY, query],
 		async () => {
 			setLoading?.(true);
-			return await functionListAdapter(query).finally(() => setLoading?.(false));
+			return await functionListAdapter(query, secureInfo).finally(() => setLoading?.(false));
 		},
 		{
 			enabled: true,
@@ -51,7 +53,7 @@ export const Selection = (props: ISelectionProps) => {
 
 	const handleOnClick = (item: IListItem) => {
 		setLoadingTarget(item.functionId);
-		functionDetailGetter(item)
+		functionDetailGetter(item, secureInfo)
 			.then((value: ISuggest) => {
 				onClick?.(value);
 			})

@@ -95,6 +95,23 @@ interface PySchema {
 interface PlaygroundProps {
 	schema?: Schema;
 	onChange?: (schema: Schema) => void;
+	secure?: SecureInfo;
+}
+
+interface SecureInfo {
+	authApiEndpoint: string;
+	userIdentifier: string;
+	getAiResponse: AiResponse;
+	getAiSchemaCode: AiSchemaCode;
+}
+
+interface AiResponse {
+  (value: string): string;
+}
+
+
+interface AiSchemaCode {
+  (threadId: string | number, functionId: string | number): string;
 }
 
 interface ExportCodes {
@@ -137,4 +154,5 @@ export type {
 	Python,
 	PySchemaContainer,
 	PySchema,
+	SecureInfo,
 };
