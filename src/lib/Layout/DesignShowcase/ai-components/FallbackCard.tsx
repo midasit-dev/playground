@@ -29,7 +29,7 @@ export function FallbackCard({ error, resetErrorBoundary }: IFallbackCardProps |
 				type: 'spring',
 			}}
 		>
-			<Card sx={{ width: '10rem', height: '7.5rem' }}>
+			<Card sx={{ width: '16rem', height: '12rem' }} className="wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg">
 				<CardContent>
 					<Typography variant='body1'>unable to obtain data.</Typography>
 				</CardContent>

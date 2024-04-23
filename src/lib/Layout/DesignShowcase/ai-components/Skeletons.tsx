@@ -36,7 +36,7 @@ export const ContentLoadingSkeleton = React.forwardRef(
 								duration: 0.5,
 							}}
 						>
-							<Card sx={{ width: '16rem', height: '12rem' }}>
+							<Card sx={{ width: '16rem', height: '12rem' }} className="wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg">
 								<CardContent>
 									<Skeleton variant='text' width='100%' />
 									<Skeleton variant='text' width='100%' />

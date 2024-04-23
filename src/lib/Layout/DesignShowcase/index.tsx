@@ -8,11 +8,13 @@ import Layout from './ai-components/Abracadabra';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ISuggest } from './ai-components/defs/Interface';
 import Converter from './ai-components/defs/Converter';
+import ShowTime from './ai-components/Showtime';
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
 	const [startX, setStartX] = React.useState(0);
 	const [startY, setStartY] = React.useState(0);
+	const showtimeRef = React.useRef<{doStartJob: any}>({doStartJob: new Promise((resolve: any) => resolve(""))});
 
 	//Recoil
 	const [canvasState, setCanvasState] = useRecoilState(CanvasState);
@@ -38,7 +40,10 @@ export default function DesignShowcase() {
 	async function onClickShowButton(item: ISuggest) {
 		const uiSchema = await Converter(item, '');
 		setCanvasState(uiSchema.canvas);
-		setLayersState(uiSchema.layers);
+		for (const item of uiSchema.layers) {
+			await showtimeRef.current.doStartJob(item);
+			setLayersState((prev) => [...prev, item]);
+		}
 	}
 
 	return (
@@ -93,6 +98,7 @@ export default function DesignShowcase() {
 					{startX !== 0 && startY !== 0 && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
+			<ShowTime startX={startX} startY={startY} ref={showtimeRef} />
 			<QueryClientProvider client={queryClient}>
 				<Layout onItemClick={onClickShowButton} />
 			</QueryClientProvider>

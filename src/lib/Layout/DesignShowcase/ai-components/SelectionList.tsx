@@ -61,14 +61,12 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 							>
 								<Stack
 									width='100%'
+									className="wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg"
 									height='100%'
 									padding={0}
 									key={item.functionId}
 									sx={{
 										position: 'absolute',
-										background: 'white',
-										borderRadius: '4px',
-										boxShadow: '0px 2px 8px 2px rgba(0, 0, 0, 0.1)',
 										overflow: 'hidden',
 									}}
 								>
