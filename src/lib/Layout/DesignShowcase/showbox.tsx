@@ -91,7 +91,7 @@ export default function ShowBox() {
 								return (
 									<motion.div
 										key={layer.id}
-										initial={{ x: 1000, y: 300, opacity: 0 }}
+										initial={{ x: 1000, y: 0, opacity: 0 }}
 										animate={{ x: 0, y: 0, opacity: 1 }}
 										exit={{ opacity: 0 }}
 										transition={{ duration: 1, type: 'spring', stiffness: 120, damping: 20 }}

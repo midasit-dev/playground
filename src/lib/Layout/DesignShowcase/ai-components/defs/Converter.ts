@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { TextFieldV2Sample, SwitchSample, ColorPickerSample } from '@midasit-dev/moaui';
 import { cloneDeep } from 'lodash';
 import { BasicUISchema, ConvertResult } from '../../../../Common/types';
+import { dir } from 'console';
 
 function makeBasicSchema(type: string = '', props: any = {}, children: any = []): BasicUISchema {
 	const BasicSchema = {
@@ -20,9 +21,9 @@ const RunButtonSchema = {
 	id: `1-FloatingBox-${uuidv4().slice(0, 8)}`,
 	type: 'FloatingBox',
 	props: {
-		x: 0,
+		x: 16,
 		y: 0,
-		width: '150px',
+		width: '220px',
 		height: '30px',
 		guideBoxProps: {
 			width: 'inherit',
@@ -38,7 +39,7 @@ const RunButtonSchema = {
 				id: 'Button-Run',
 				children: 'Run',
 				disabled: false,
-				width: '150px',
+				width: '100%',
 				loading: false,
 				variant: 'contained',
 				color: 'normal',
@@ -74,6 +75,10 @@ export default async function Converter(
 	const uiSchema = await require('./uiSchema.json');
 
 	let pyArgumentComponent: { [key: string]: string } = {}; // Explicitly define the type of pyArgumentComponent
+	let maxWidth = '220px';
+	let maxHeight = '30px';
+	let totalWidth = 0;
+	let totalHeight = 0;
 
 	function convertSchema(pySchemaParams: any = {}, layers: any = [], parentKey: string = ''): any {
 		let result: any = [];
@@ -85,6 +90,8 @@ export default async function Converter(
 				if (key === 'color') {
 					const sampleSchema = { ...ColorPickerSchema };
 					pyArgumentComponent['color'] = 'ColorPicker';
+					if (maxWidth < sampleSchema.props.width) maxWidth = sampleSchema.props.width;
+					if (maxHeight < sampleSchema.props.height) maxHeight = sampleSchema.props.height;
 					let float_colorPicker_Schema = insertFloatingBox(
 						sampleSchema,
 						sampleSchema.props['width'],
@@ -118,7 +125,16 @@ export default async function Converter(
 			if ('id' in sampleCode) sampleCode.id = parentKey;
 			pyArgumentComponent[parentKey] = 'TextFieldV2';
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
-			if (ComponentSchema.props.width) width = ComponentSchema.props.width;
+			if (ComponentSchema.props.width) {
+				if (maxWidth < ComponentSchema.props.width) {
+					maxWidth = ComponentSchema.props.width;
+					width = ComponentSchema.props.width;
+					ComponentSchema.props.width = '100%';
+				} else {
+					width = maxWidth;
+					ComponentSchema.props.width = '100%';
+				}
+			}
 			if (ComponentSchema.props.height) height = ComponentSchema.props.height;
 			if (ComponentSchema.props.title) ComponentSchema.props.title = parentKey;
 			if (ComponentSchema.props.placeholder && pySchema['description'])
@@ -137,12 +153,14 @@ export default async function Converter(
 		height: string,
 		parentKey: string = '',
 	) {
+		totalWidth = totalWidth + Number(removeString(width, 'px')) + 16;
+		totalHeight = totalHeight + Number(removeString(height, 'px')) + 16;
 		return {
 			id: `1-FloatingBox-${uuidv4().slice(0, 8)}`,
 			type: 'FloatingBox',
 			props: {
-				x: 0,
-				y: 0,
+				x: 16,
+				y: 16,
 				width: width,
 				height: height,
 				guideBoxProps: {
@@ -190,6 +208,13 @@ export default async function Converter(
 	uiSchema.layers = [...(result[0] as any[])];
 	uiSchema.layers.push({ ...RunButtonSchema });
 	uiSchema.layers = floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
+	if(direction === 'rows') {
+		uiSchema.canvas.height =  Number(removeString(maxHeight, 'px')) + 32;
+		uiSchema.canvas.width = totalWidth + Number(removeString(RunButtonSchema.props.width, 'px')) + 16;
+	} else if(direction === 'columns' || direction === '') {
+		uiSchema.canvas.height = totalHeight + Number(removeString(RunButtonSchema.props.height, 'px')) + 16;
+		uiSchema.canvas.width = Number(removeString(maxWidth, 'px')) + 32;
+	}
 	console.log('uiSchema', uiSchema);
 	return { uiSchema: uiSchema, pyArgumentComponent: pyArgumentComponent };
 }

@@ -10,8 +10,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ISuggest } from './ai-components/defs/Interface';
 import Converter from './ai-components/defs/Converter';
 import ShowTime from './ai-components/Showtime';
-import { ConvertResult, PySchemaContainer } from '../../Common/types';
-
+import { ConvertResult } from '../../Common/types';
+import InfinitLoading from './Loading/InfinitLoading';
 const queryClient = new QueryClient();
 
 export default function DesignShowcase() {
@@ -20,6 +20,7 @@ export default function DesignShowcase() {
 	const showtimeRef = React.useRef<{ doStartJob: any }>({
 		doStartJob: new Promise((resolve: any) => resolve('')),
 	});
+	const [loading, setLoading] = React.useState(false);
 	const resetLoadingTarget = useResetRecoilState(loadingTargetStateAtom);
 	const setFetchingState = useSetRecoilState(fetchingStateAtom);
 
@@ -29,35 +30,43 @@ export default function DesignShowcase() {
 	const setPython = useSetRecoilState(PythonState);
 
 	React.useEffect(() => {
-		const handleResize = () => {
-			const calcX = window.innerWidth / 2 - canvasState.width / 2;
-			setStartX(calcX);
-			const calcY = window.innerHeight / 2 - canvasState.height / 2 - 32;
-			setStartY(calcY);
-		};
-
-		handleResize();
-
-		window.addEventListener('resize', handleResize);
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
+		const x = window.innerWidth / 2 - canvasState.width / 2;
+		const y = window.innerHeight / 2 - canvasState.height / 2;
+		setStartX(x);
+		setStartY(y);
 	}, []);
+
+	React.useEffect(() => {
+		setLoading(true);
+	}, [canvasState.height, canvasState.width]);
+
+	React.useEffect(() => {
+		if (loading) {
+			setTimeout(() => {
+				const x = window.innerWidth / 2 - canvasState.width / 2;
+				const y = window.innerHeight / 2 - canvasState.height / 2;
+				setStartX(x);
+				setStartY(y);
+				setLoading(false);
+			}, 1500);
+		}
+	}, [loading]);
 
 	async function onClickShowButton(item: ISuggest) {
 		try {
 			setFetchingState(true);
 			setLayersState([]);
 			const result: ConvertResult = await Converter(item, '');
-			setCanvasState(result.uiSchema.canvas);
 			for (const item of result.uiSchema.layers) {
 				await showtimeRef.current.doStartJob(item);
 				setLayersState((prev) => [...prev, item]);
 			}
-			setPython((prev) => ({ ...prev, rawCode: item.function }));
-			setPython((prev) => ({ ...prev, pySchema: { schema: item.schema } }));
-			setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
+			setTimeout(() => {
+				setCanvasState(result.uiSchema.canvas);
+				setPython((prev) => ({ ...prev, rawCode: item.function }));
+				setPython((prev) => ({ ...prev, pySchema: { schema: item.schema } }));
+				setPython((prev) => ({ ...prev, argumentComponent: result.pyArgumentComponent }));
+			}, 1000);
 		} catch {
 		} finally {
 			resetLoadingTarget();
@@ -76,6 +85,7 @@ export default function DesignShowcase() {
 				overflow: 'hidden',
 			}}
 		>
+
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -103,6 +113,7 @@ export default function DesignShowcase() {
 						<ColorfulBg key='chat-login-background' />
 					</motion.div>
 				</AnimatePresence>
+				
 				<div
 					style={{
 						width: '100%',
@@ -114,7 +125,8 @@ export default function DesignShowcase() {
 						flexDirection: 'column',
 					}}
 				>
-					{startX !== 0 && startY !== 0 && <ShowBox key='ShowBox' />}
+					{loading && <InfinitLoading x={window.innerWidth / 2} y={window.innerHeight / 2 - 32}/>}
+					{startX !== 0 && startY !== 0 && !loading && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
 			<ShowTime startX={startX} startY={startY} ref={showtimeRef} />
