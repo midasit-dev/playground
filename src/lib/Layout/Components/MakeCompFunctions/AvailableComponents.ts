@@ -22,6 +22,7 @@ enum AvailableComps {
 	TextFieldV2 = 'TextFieldV2',
 	Typography = 'Typography',
 	ColorPicker = 'ColorPicker',
+	SVG = 'SVG',
 }
 
 function isAvailableComp(comp: string): comp is AvailableComps {
