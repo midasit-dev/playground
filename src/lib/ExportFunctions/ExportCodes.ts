@@ -19,7 +19,8 @@ const tsxBasicCode = (schema: Schema, pyConnectDOMCode: string = ''): string => 
 	 import Moaui from '@midasit-dev/moaui';
 	 
 	 const App = () => {
-		${pyConnectDOMCode}
+${pyConnectDOMCode}
+
 		 return (
 			 <Moaui.Panel variant='box' relative width={${schemaCanvas.width}} height={${schemaCanvas.height}}>
 	 ${toStringJSXElement(schemaLayers)}
@@ -121,10 +122,10 @@ function makeJSXDOMConnectCode(python: Python): string {
 			const component = arguComp[key];
 			switch (component) {
 				case 'TextFieldV2':
-					jsxDOMCode += `${key} : (document.getElementById('${key}') as HTMLInputElement).value,\n`;
+					jsxDOMCode += `\t\t\t\t${key} : (document.getElementById('${key}') as HTMLInputElement).value,\n`;
 					break;
 				case 'ColorPicker':
-					jsxDOMCode += `${key} : (document.getElementById('${key}') as HTMLDivElement).getAttribute('data-temporary'),\n`;
+					jsxDOMCode += `\t\t\t\t${key} : JSON.pares((document.getElementById('${key}') as HTMLDivElement).getAttribute('data-temporary') as string),\n`;
 					break;
 			}
 		}
