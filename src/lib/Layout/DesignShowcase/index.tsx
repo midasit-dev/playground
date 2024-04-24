@@ -118,13 +118,13 @@ export default function DesignShowcase() {
 						width: '100%',
 						height: '100%',
 						position: 'absolute',
-						top: startY,
+						top: startY - 60,
 						left: startX,
 						display: 'flex',
 						flexDirection: 'column',
 					}}
 				>
-					{loading && <InfinitLoading x={window.innerWidth / 2} y={window.innerHeight / 2 - 32} />}
+					{loading && <InfinitLoading x={window.innerWidth / 2 - 55} y={window.innerHeight / 2 - 60} />}
 					{startX !== 0 && startY !== 0 && !loading && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>
