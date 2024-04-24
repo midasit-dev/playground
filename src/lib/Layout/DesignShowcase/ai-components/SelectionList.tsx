@@ -66,8 +66,8 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 									padding={0}
 									key={item.functionId}
 									sx={{
-										":hover": {
-											transform: "scale(1.1)",
+										':hover': {
+											transform: 'scale(1.1)',
 										},
 										position: 'absolute',
 										overflow: 'hidden',

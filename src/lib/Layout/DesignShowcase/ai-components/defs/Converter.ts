@@ -122,7 +122,7 @@ export default async function Converter(
 
 		if (pySchema[key] === 'string') {
 			const sampleCode: { [key: string]: any } = { ...TextFieldV2Sample };
-			sampleCode["id"] = parentKey;
+			sampleCode['id'] = parentKey;
 			pyArgumentComponent[parentKey] = 'TextFieldV2';
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
 			console.log('ComponentSchema', ComponentSchema);
