@@ -19,7 +19,7 @@ const tsxBasicCode = (schema: Schema, pyConnectDOMCode: string = ''): string => 
 	 import Moaui from '@midasit-dev/moaui';
 	 
 	 const App = () => {
-${pyConnectDOMCode}
+		${pyConnectDOMCode}
 
 		 return (
 			 <Moaui.Panel variant='box' relative width={${schemaCanvas.width}} height={${schemaCanvas.height}}>
@@ -104,7 +104,7 @@ const DOMBasicCode = (code: string, functionName: string): string => {
     document.getElementById("Button-Run")?.addEventListener("click", () => {
       const py_func = pyscript.interpreter.globals.get("${functionName}");
 			py_func(JSON.stringify({
-					${code}
+${code}
 				})
 			);
     });
