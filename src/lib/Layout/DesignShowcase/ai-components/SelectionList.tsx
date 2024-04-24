@@ -56,7 +56,7 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 								style={{
 									position: 'relative',
 									width: '16rem',
-									height: '12rem',
+									height: '8rem',
 								}}
 							>
 								<Stack
@@ -69,6 +69,7 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 										position: 'absolute',
 										overflow: 'hidden',
 									}}
+									onClick={() => onClick?.(item)}
 								>
 									<Stack
 										position='absolute'
@@ -163,18 +164,6 @@ export const SelectionList = React.forwardRef((props: ISelectionListProps, ref: 
 										>
 											{item.functionName}
 										</Typography>
-										<Separator />
-										<Stack
-											justifyContent='space-between'
-											direction='row'
-											alignItems='center'
-											width='100%'
-										>
-											<div />
-											<Button variant='text' onClick={() => onClick?.(item)}>
-												Show
-											</Button>
-										</Stack>
 									</Stack>
 								</Stack>
 								{loading && (

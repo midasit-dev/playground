@@ -42,7 +42,7 @@ const ShowTime = React.forwardRef((props: any, ref: any) => {
 		await new Promise((resolve, reject) => {
 			const interval = setInterval(() => {
 				setLoadingDlgOverlayText('Processing UI Schema');
-				let sliceBy = getRandomArbitrary(5, 10);
+				let sliceBy = getRandomArbitrary(20, 30);
 				if (start < text.length) {
 					start += sliceBy;
 					rpt++;

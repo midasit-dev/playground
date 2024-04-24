@@ -30,7 +30,7 @@ export function FallbackCard({ error, resetErrorBoundary }: IFallbackCardProps |
 			}}
 		>
 			<Card
-				sx={{ width: '16rem', height: '12rem' }}
+				sx={{ width: '16rem', height: '8rem' }}
 				className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
 			>
 				<CardContent>

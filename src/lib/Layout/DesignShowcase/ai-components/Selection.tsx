@@ -77,7 +77,7 @@ export const Selection = (props: ISelectionProps) => {
 	}, [isFetching, data]);
 
 	return (
-		<Stack direction='row' spacing={2} position='relative' height='12rem'>
+		<Stack direction='row' spacing={2} position='relative' height='8rem'>
 			<AnimatePresence>
 				{isSuccess && (
 					<motion.div key='selection-success-container'>

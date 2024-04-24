@@ -58,13 +58,6 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 		<Stack
 			direction='column'
 			width='100%'
-			sx={(theme) => ({
-				background:
-					theme.palette.mode === 'dark'
-						? 'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.75))'
-						: 'linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.75))',
-				backdropFilter: 'blur(4px)',
-			})}
 		>
 			<Stack
 				direction='column'
