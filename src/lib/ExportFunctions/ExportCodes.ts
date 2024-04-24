@@ -125,7 +125,7 @@ function makeJSXDOMConnectCode(python: Python): string {
 					jsxDOMCode += `\t\t\t\t${key} : (document.getElementById('${key}') as HTMLInputElement).value,\n`;
 					break;
 				case 'ColorPicker':
-					jsxDOMCode += `\t\t\t\t${key} : JSON.pares((document.getElementById('${key}') as HTMLDivElement).getAttribute('data-temporary') as string),\n`;
+					jsxDOMCode += `\t\t\t\t${key} : JSON.parse((document.getElementById('${key}') as HTMLDivElement).getAttribute('data-temporary') as string),\n`;
 					break;
 			}
 		}
