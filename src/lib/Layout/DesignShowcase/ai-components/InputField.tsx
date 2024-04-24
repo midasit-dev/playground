@@ -55,10 +55,7 @@ const ChatInput = React.forwardRef((props: IChatInputProps, ref) => {
 	);
 
 	return (
-		<Stack
-			direction='column'
-			width='100%'
-		>
+		<Stack direction='column' width='100%'>
 			<Stack
 				direction='column'
 				display='flex'

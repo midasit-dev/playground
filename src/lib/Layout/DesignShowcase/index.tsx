@@ -85,7 +85,6 @@ export default function DesignShowcase() {
 				overflow: 'hidden',
 			}}
 		>
-
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -113,7 +112,7 @@ export default function DesignShowcase() {
 						<ColorfulBg key='chat-login-background' />
 					</motion.div>
 				</AnimatePresence>
-				
+
 				<div
 					style={{
 						width: '100%',
@@ -125,7 +124,7 @@ export default function DesignShowcase() {
 						flexDirection: 'column',
 					}}
 				>
-					{loading && <InfinitLoading x={window.innerWidth / 2} y={window.innerHeight / 2 - 32}/>}
+					{loading && <InfinitLoading x={window.innerWidth / 2} y={window.innerHeight / 2 - 32} />}
 					{startX !== 0 && startY !== 0 && !loading && <ShowBox key='ShowBox' />}
 				</div>
 			</motion.div>

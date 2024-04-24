@@ -121,10 +121,11 @@ export default async function Converter(
 		};
 
 		if (pySchema[key] === 'string') {
-			const sampleCode = { ...TextFieldV2Sample };
-			if ('id' in sampleCode) sampleCode.id = parentKey;
+			const sampleCode: { [key: string]: any } = { ...TextFieldV2Sample };
+			sampleCode["id"] = parentKey;
 			pyArgumentComponent[parentKey] = 'TextFieldV2';
 			ComponentSchema = makeBasicSchema('TextFieldV2', sampleCode);
+			console.log('ComponentSchema', ComponentSchema);
 			if (ComponentSchema.props.width) {
 				if (maxWidth < ComponentSchema.props.width) {
 					maxWidth = ComponentSchema.props.width;
@@ -208,11 +209,13 @@ export default async function Converter(
 	uiSchema.layers = [...(result[0] as any[])];
 	uiSchema.layers.push({ ...RunButtonSchema });
 	uiSchema.layers = floatingBox_readjustXY_byPreFloatingBoxWidthHeight(uiSchema.layers, direction);
-	if(direction === 'rows') {
-		uiSchema.canvas.height =  Number(removeString(maxHeight, 'px')) + 32;
-		uiSchema.canvas.width = totalWidth + Number(removeString(RunButtonSchema.props.width, 'px')) + 16;
-	} else if(direction === 'columns' || direction === '') {
-		uiSchema.canvas.height = totalHeight + Number(removeString(RunButtonSchema.props.height, 'px')) + 16;
+	if (direction === 'rows') {
+		uiSchema.canvas.height = Number(removeString(maxHeight, 'px')) + 32;
+		uiSchema.canvas.width =
+			totalWidth + Number(removeString(RunButtonSchema.props.width, 'px')) + 16;
+	} else if (direction === 'columns' || direction === '') {
+		uiSchema.canvas.height =
+			totalHeight + Number(removeString(RunButtonSchema.props.height, 'px')) + 16;
 		uiSchema.canvas.width = Number(removeString(maxWidth, 'px')) + 32;
 	}
 	console.log('uiSchema', uiSchema);
