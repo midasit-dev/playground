@@ -30,19 +30,21 @@ const App = () => {
 					zIndex: isOn ? zindex_dockbar_more : -1,
 				}}
 			>
-				{layers && layers.length > 0 && (
+				{layers &&
+					layers.length > 0 &&
 					layers.map((layer: Layer, index: number) => {
 						return (
 							<div key={index}>
 								{layer.children && layer.children.length > 0 ? (
-									layer.children.map((child: any) => child.props.id !== '' ? <p className='text-xs'># {child.props.id}</p> : null)
+									layer.children.map((child: any) =>
+										child.props.id !== '' ? <p className='text-xs'># {child.props.id}</p> : null,
+									)
 								) : (
 									<p className='text-xs w-full text-center'>create childrens with 'id'</p>
 								)}
 							</div>
 						);
-					})
-				)}
+					})}
 			</motion.div>
 		</div>
 	);

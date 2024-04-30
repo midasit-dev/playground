@@ -7,7 +7,7 @@ export const Icon = (props: any) => {
 		<motion.div
 			className='w-10 h-10 rounded-md cursor-pointer'
 			whileHover={{ scale: 1.2 }}
-			whileTap={{ scale: 0.9 }}	
+			whileTap={{ scale: 0.9 }}
 			onClick={() => onClickHandler()}
 			style={{
 				pointerEvents: isEnable === undefined || isEnable === true ? 'auto' : 'none',
@@ -149,4 +149,4 @@ export const SvgTag = () => {
 			/>
 		</svg>
 	);
-}
+};
