@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { type Layer, type Layers } from '../../../../Common/types';
 import { useRecoilState } from 'recoil';
@@ -30,35 +30,49 @@ const App = (props: RndBoxProps) => {
 	const [layers, setLayers] = useRecoilState(LayersState);
 
 	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
-	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-		e.stopPropagation();
+	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);
 	const [x, setX] = useState(props.defaultX);
 	const [y, setY] = useState(props.defaultY);
+	const [isDragAndResize, setIsDragAndResize] = useState(false);
 
+	const handleResizeStart = (e: any, direction: any, ref: any) => setIsDragAndResize(true);
 	const handleResizeStop = (e: any, direction: any, ref: any, delta: any, position: any) => {
-		const _x = nearestMultipleOfCanvasSnapCriteria(position.x);
-		const _y = nearestMultipleOfCanvasSnapCriteria(position.y);
-		setX(_x);
-		setY(_y);
-
-		const _width = parseInt(ref.style.width);
-		const _height = parseInt(ref.style.height);
-		setWidth(_width);
-		setHeight(_height);
-
-		onUpdateLayer(_x, _y, _width, _height);
+		try {
+			const _x = nearestMultipleOfCanvasSnapCriteria(position.x);
+			const _y = nearestMultipleOfCanvasSnapCriteria(position.y);
+			setX(_x);
+			setY(_y);
+	
+			const _width = parseInt(ref.style.width);
+			const _height = parseInt(ref.style.height);
+			setWidth(_width);
+			setHeight(_height);
+	
+			onUpdateLayer(_x, _y, _width, _height);
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsDragAndResize(false);
+		}
 	};
 
+	const handleDragStart = (e: any, d: any) => setIsDragAndResize(true);
 	const handleDragStop = (e: any, d: any) => {
-		const _x = nearestMultipleOfCanvasSnapCriteria(d.x);
-		const _y = nearestMultipleOfCanvasSnapCriteria(d.y);
-		setX(_x);
-		setY(_y);
-
-		onUpdateLayer(_x, _y, width, height);
+		try {
+			const _x = nearestMultipleOfCanvasSnapCriteria(d.x);
+			const _y = nearestMultipleOfCanvasSnapCriteria(d.y);
+			setX(_x);
+			setY(_y);
+	
+			onUpdateLayer(_x, _y, width, height);
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsDragAndResize(false);
+		}
 	};
 
 	const onUpdateLayer = (x: number, y: number, width: number, height: number) => {
@@ -146,8 +160,11 @@ const App = (props: RndBoxProps) => {
 				bounds={props.bounds}
 				dragGrid={props.dragGrid}
 				resizeGrid={props.resizeGrid}
+				onResizeStart={handleResizeStart}
 				onResizeStop={handleResizeStop}
+				onDragStart={handleDragStart}
 				onDragStop={handleDragStop}
+				style={{ opacity: isDragAndResize ? 0.7 : 1 }}
 			>
 				<div className='absolute w-[20px] h-[20px] top-1/2 left-1/2 -mt-[10px] -ml-[10px]'>
 					{onDelete && <Icon SVG={<SvgClose />} onClickHandler={() => onDelete(id)} />}
