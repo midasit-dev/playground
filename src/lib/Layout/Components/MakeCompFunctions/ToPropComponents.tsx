@@ -127,7 +127,7 @@ const ToPropComponents = (props: ToPropComponentsProps): JSX.Element => {
 			{options.map(([name, value], index: number) => {
 				return (
 					<ToPropComponent
-						key={index}
+						key={componentType + index}
 						type={componentType}
 						name={name}
 						value={value}
