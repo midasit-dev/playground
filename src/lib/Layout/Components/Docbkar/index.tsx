@@ -13,6 +13,7 @@ import RowColumnToggle from './RowColumnToggle';
 import CenterToggle from './CenterToggle';
 import SpacingControl from './SpacingControl';
 import More from './More';
+import Tag from './Tag';
 import { Layer, Layers } from '../../../Common/types';
 
 const App = () => {
@@ -54,7 +55,7 @@ const App = () => {
 
 	return (
 		<motion.div
-			className='w-[514px] h-24 bottom-20 left-1/2 -ml-[257px] py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
+			className='w-[594px] h-24 bottom-20 left-1/2 -ml-[297px] py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
 			style={{ zIndex: zindex_dockbar }}
 			initial={{ y: 100, opacity: 0 }}
 			animate={{
@@ -76,6 +77,9 @@ const App = () => {
 				<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
 				<div className='relative w-auto items-center'>
 					<More />
+				</div>
+				<div className='relative w-auto items-center'>
+					<Tag />
 				</div>
 			</div>
 		</motion.div>

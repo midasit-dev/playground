@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { SelectedLayerIdState } from '../../recoilState';
+import {  SelectedLayerIdState } from '../../recoilState';
 import Moaui, { type FloatingBoxProps, FloatingBox } from '@midasit-dev/moaui';
 import { type Layer } from '../../../Common/types';
 import { isAvailableComp } from './AvailableComponents';
@@ -69,7 +69,9 @@ const ToComponentReal = <T extends React.ComponentType<any>>(props: {
 	component: T;
 }) => {
 	const { layer, component: Component } = props;
-	return <Component {...JSON.parse(JSON.stringify(layer.props))} />;
+	return (
+			<Component {...JSON.parse(JSON.stringify(layer.props))} />
+	);
 };
 
 const ToComponent = (props: { layer: Layer }) => {

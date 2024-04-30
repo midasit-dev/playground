@@ -30,7 +30,8 @@ const App = (props: RndBoxProps) => {
 	const [layers, setLayers] = useRecoilState(LayersState);
 
 	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
-	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
+	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+		e.stopPropagation();
 
 	const [width, setWidth] = useState(props.defaultWidth);
 	const [height, setHeight] = useState(props.defaultHeight);
@@ -45,12 +46,12 @@ const App = (props: RndBoxProps) => {
 			const _y = nearestMultipleOfCanvasSnapCriteria(position.y);
 			setX(_x);
 			setY(_y);
-	
+
 			const _width = parseInt(ref.style.width);
 			const _height = parseInt(ref.style.height);
 			setWidth(_width);
 			setHeight(_height);
-	
+
 			onUpdateLayer(_x, _y, _width, _height);
 		} catch (err) {
 			console.log(err);
@@ -66,7 +67,7 @@ const App = (props: RndBoxProps) => {
 			const _y = nearestMultipleOfCanvasSnapCriteria(d.y);
 			setX(_x);
 			setY(_y);
-	
+
 			onUpdateLayer(_x, _y, width, height);
 		} catch (err) {
 			console.log(err);
@@ -164,9 +165,9 @@ const App = (props: RndBoxProps) => {
 				onResizeStop={handleResizeStop}
 				onDragStart={handleDragStart}
 				onDragStop={handleDragStop}
-				style={{ 
+				style={{
 					border: isDragAndResize ? '1px dashed #62baf3' : '1px solid #62baf3',
-					opacity: isDragAndResize ? 0.7 : 1 
+					opacity: isDragAndResize ? 0.7 : 1,
 				}}
 			>
 				<div className='absolute w-[20px] h-[20px] top-1/2 left-1/2 -mt-[10px] -ml-[10px]'>

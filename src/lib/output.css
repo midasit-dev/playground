@@ -603,6 +603,10 @@ video {
   }
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .fixed {
   position: fixed;
 }
@@ -675,6 +679,10 @@ video {
   top: 56px;
 }
 
+.top-0 {
+  top: 0px;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -714,6 +722,10 @@ video {
 
 .mr-5 {
   margin-right: 1.25rem;
+}
+
+.-ml-\[297px\] {
+  margin-left: -297px;
 }
 
 .box-border {
@@ -876,8 +888,20 @@ video {
   width: 100%;
 }
 
+.w-\[594px\] {
+  width: 594px;
+}
+
+.min-w-80 {
+  min-width: 20rem;
+}
+
 .max-w-full {
   max-width: 100%;
+}
+
+.max-w-80 {
+  max-width: 20rem;
 }
 
 .flex-\[1\] {
