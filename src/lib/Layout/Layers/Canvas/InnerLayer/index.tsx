@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { type Layer, type Layers } from '../../../../Common/types';
 import { useRecoilState } from 'recoil';
@@ -164,7 +164,10 @@ const App = (props: RndBoxProps) => {
 				onResizeStop={handleResizeStop}
 				onDragStart={handleDragStart}
 				onDragStop={handleDragStop}
-				style={{ opacity: isDragAndResize ? 0.7 : 1 }}
+				style={{ 
+					border: isDragAndResize ? '1px dashed #62baf3' : '1px solid #62baf3',
+					opacity: isDragAndResize ? 0.7 : 1 
+				}}
 			>
 				<div className='absolute w-[20px] h-[20px] top-1/2 left-1/2 -mt-[10px] -ml-[10px]'>
 					{onDelete && <Icon SVG={<SvgClose />} onClickHandler={() => onDelete(id)} />}
