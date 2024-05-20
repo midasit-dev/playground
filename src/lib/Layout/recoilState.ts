@@ -37,7 +37,23 @@ export const LayersMenuState = atom<{
 export const CanvasState = atom<Canvas>({
 	key: 'CanvasState',
 	default: { width: 640, height: 640 },
+	// When CanvasState is updated, then save the new value to sessionStorage
+	effects_UNSTABLE: [
+    ({ setSelf, onSet }) => {
+      // Load initial state from sessionStorage if it exists
+      const savedState = sessionStorage.getItem('CanvasState');
+      if (savedState) {
+        setSelf(JSON.parse(savedState));
+      }
+
+      // Subscribe to state changes and save to sessionStorage
+      onSet(newValue => {
+        sessionStorage.setItem('CanvasState', JSON.stringify(newValue));
+      });
+    },
+  ],
 });
+
 
 export const defaultControllerState = {
 	x: 0,
@@ -60,6 +76,21 @@ export const LayerRenderingBoxesState = atom<Box[]>({
 export const LayersState = atom<Layers>({
 	key: 'LayersState',
 	default: [],
+	// When LayersState is updated, then save the new value to sessionStorage
+	effects_UNSTABLE: [
+		({ setSelf, onSet }) => {
+			// Load initial state from sessionStorage if it exists
+			const savedState = sessionStorage.getItem('LayersState');
+			if (savedState) {
+				setSelf(JSON.parse(savedState));
+			}
+
+			// Subscribe to state changes and save to sessionStorage
+			onSet(newValue => {
+				sessionStorage.setItem('LayersState', JSON.stringify(newValue));
+			});
+		},
+	],
 });
 
 export const ComponentizedRenderingBoxesState = atom<Box[]>({
