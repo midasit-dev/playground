@@ -39,21 +39,20 @@ export const CanvasState = atom<Canvas>({
 	default: { width: 640, height: 640 },
 	// When CanvasState is updated, then save the new value to sessionStorage
 	effects_UNSTABLE: [
-    ({ setSelf, onSet }) => {
-      // Load initial state from sessionStorage if it exists
-      const savedState = sessionStorage.getItem('CanvasState');
-      if (savedState) {
-        setSelf(JSON.parse(savedState));
-      }
+		({ setSelf, onSet }) => {
+			// Load initial state from sessionStorage if it exists
+			const savedState = sessionStorage.getItem('CanvasState');
+			if (savedState) {
+				setSelf(JSON.parse(savedState));
+			}
 
-      // Subscribe to state changes and save to sessionStorage
-      onSet(newValue => {
-        sessionStorage.setItem('CanvasState', JSON.stringify(newValue));
-      });
-    },
-  ],
+			// Subscribe to state changes and save to sessionStorage
+			onSet((newValue) => {
+				sessionStorage.setItem('CanvasState', JSON.stringify(newValue));
+			});
+		},
+	],
 });
-
 
 export const defaultControllerState = {
 	x: 0,
@@ -86,7 +85,7 @@ export const LayersState = atom<Layers>({
 			}
 
 			// Subscribe to state changes and save to sessionStorage
-			onSet(newValue => {
+			onSet((newValue) => {
 				sessionStorage.setItem('LayersState', JSON.stringify(newValue));
 			});
 		},
