@@ -21,7 +21,7 @@ export default function ShowBox() {
 	const [showCaseBoxState, setShowCaseBoxState] = useRecoilState(ShowCaseBoxState);
 	const [lockDraggingCanvas, setLockDraggingCanvas] = useRecoilState(ShowcaseCanvasLockState);
 
-	async function onClickTest() {
+	async function onClickReset() {
 		const test = await Converter(pySchema);
 		setLayers([]);
 		console.log(test.pyArgumentComponent);
@@ -64,7 +64,7 @@ export default function ShowBox() {
 							setLockDraggingCanvas(!lockDraggingCanvas);
 						}}
 					/>
-					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickTest} />
+					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickReset} />
 				</div>
 				<div
 					className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
