@@ -7,7 +7,7 @@ import {
 	ShowcaseCanvasLockState,
 } from '../recoilState';
 import { type Layer } from '../../Common/types';
-import ToComponent from '../Componentized/ToComponent';
+import ToComponent from '../Components/MakeCompFunctions/ToComponent';
 import { PageString } from '../../Common/string';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Rnd } from 'react-rnd';

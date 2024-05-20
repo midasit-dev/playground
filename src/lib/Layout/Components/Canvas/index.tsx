@@ -4,6 +4,7 @@ import { CanvasMarginState, CanvasState, LayersState } from '../../recoilState';
 import { type Layer } from '../../../Common/types';
 import ToComponent from '../MakeCompFunctions/ToComponent';
 import { zindex_canvas } from '../../../Common/zindex';
+import { PageString } from '../../../Common/string';
 
 const App = () => {
 	const canvas = useRecoilValue(CanvasState);
@@ -24,7 +25,7 @@ const App = () => {
 				}}
 			>
 				{layers.map((layer: Layer, index: number) => {
-					return <ToComponent key={index} layer={layer} />;
+					return <ToComponent key={index} layer={layer} parentPage={PageString.Components} />;
 				})}
 			</div>
 		</div>
