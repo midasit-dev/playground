@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import DockbarBottm from './Dockbar';
 import Canvas from './Canvas';
 
+// index.tsx와 중복된 코드로 판단됨. 추후 수정이 필요함. (Todo)
 export const App = () => {
 	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
 	const layers = useRecoilValue(LayersState);
