@@ -92,9 +92,38 @@ export const LayersState = atom<Layers>({
 	],
 });
 
-export const ComponentizedRenderingBoxesState = atom<Box[]>({
-	key: 'ComponentizedRenderingBoxesState',
-	default: [],
+//This atom provides the Redo, Undo function
+//Have a two stacks, one for undo and one for redo
+//When the user changes the LayersState, the undo stack is updated
+//When the user clicks the undo button, the undo stack is popped and the redo stack is pushed
+//When the user clicks the redo button, the redo stack is popped and the undo stack is pushed
+export const UndoRedoState = atom<{
+	undo: Layers[];
+	redo: Layers[];
+}>({
+	key: 'UndoRedoState',
+	default: {
+		undo: [],
+		redo: [],
+	},
+	//if undo stack length is 10, then pop the first element and save it to redo stack
+	//if redo stack length is 10, then pop the first element and save it to redo stack
+	effects_UNSTABLE: [
+		({ setSelf, onSet }) => {
+			onSet((newValue) => {
+				let tempUndo: Layers[] = [];
+				let tempRedo: Layers[] = [];
+				if (newValue.undo.length > 10) {
+					tempUndo = newValue.undo.slice(1);
+					setSelf({ undo: tempUndo, redo: newValue.redo });
+				}
+				if (newValue.redo.length > 10) {
+					tempRedo = newValue.redo.slice(1);
+					setSelf({ undo: newValue.undo, redo: tempRedo });
+				}
+			});
+		},
+	],
 });
 
 export const SelectedLayerIdState = atom<string | null>({

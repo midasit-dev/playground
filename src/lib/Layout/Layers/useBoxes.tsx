@@ -1,8 +1,8 @@
 import React from 'react';
 import InnerLayer from './Canvas/InnerLayer';
 import { ControllerInputs } from '../../Common/types';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { LayerRenderingBoxesState, LayersState } from '../recoilState';
+import { useRecoilState } from 'recoil';
+import { LayerRenderingBoxesState, LayersState, UndoRedoState } from '../recoilState';
 import { v4 as uuid4 } from 'uuid';
 import { canvas_snap_criteria } from '../../Common/const';
 
@@ -12,16 +12,18 @@ interface useBoxesProps {
 
 export const useBoxes = (props: useBoxesProps) => {
 	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
-	const setLayers = useSetRecoilState(LayersState);
+	const [undoRedo, setUndoRedo] = useRecoilState(UndoRedoState);
+	const [layers, setLayers] = useRecoilState(LayersState);
 
 	const { initializeInputs } = props;
 
 	const handleClickDelete = React.useCallback(
 		(id: string) => {
+			setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
 			setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== id));
 			setLayers((prevLayers) => prevLayers.filter((layer) => layer.id !== id));
 		},
-		[setBoxes, setLayers],
+		[setBoxes, setLayers, setUndoRedo, layers],
 	);
 
 	const handleClickPrevDelete = React.useCallback(() => {
@@ -35,10 +37,11 @@ export const useBoxes = (props: useBoxesProps) => {
 	}, [boxes, handleClickDelete, setBoxes]);
 
 	const handleClickDelAllBoxes = React.useCallback(() => {
+		setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
 		setBoxes([]);
 		setLayers([]);
 		initializeInputs();
-	}, [initializeInputs, setBoxes, setLayers]);
+	}, [initializeInputs, setBoxes, setLayers, layers]);
 
 	const createNewBox = React.useCallback(
 		(id: string, inputs: ControllerInputs) => {
@@ -65,7 +68,7 @@ export const useBoxes = (props: useBoxesProps) => {
 				),
 			};
 		},
-		[handleClickDelete, initializeInputs],
+		[handleClickDelete, initializeInputs, canvas_snap_criteria],
 	);
 
 	const handleClickAddBox = React.useCallback(
@@ -100,11 +103,15 @@ export const useBoxes = (props: useBoxesProps) => {
 			//input 최신화
 			initializeInputs(newInputs);
 
+			// 이전 상태 저장
+			setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
+
 			//새로운 box 생성
 			setBoxes((prevBoxes) => {
 				const newBox = createNewBox(newId, newInputs);
 				return [...prevBoxes, newBox];
 			});
+
 			setLayers((prevBoxSchemas) => [
 				...prevBoxSchemas,
 				{
@@ -124,8 +131,34 @@ export const useBoxes = (props: useBoxesProps) => {
 				},
 			]);
 		},
-		[boxes.length, createNewBox, initializeInputs, setBoxes, setLayers],
+		[boxes.length, createNewBox, initializeInputs, setBoxes, setLayers, setUndoRedo, layers],
 	);
+
+	const UndoLayoutState = React.useCallback(() => {
+		// Undo
+		if (undoRedo.undo === null || undoRedo.undo.length === 0) return;
+		const prevLayers = undoRedo.undo[undoRedo.undo.length - 1];
+		setLayers(prevLayers);
+		setUndoRedo((prev: any) => {
+			return {
+				undo: prev.undo.slice(0, prev.undo.length - 1),
+				redo: [...prev.redo, layers],
+			};
+		});
+	}, [setLayers, setUndoRedo, undoRedo.undo, undoRedo.redo, layers]);
+
+	const RedoLayoutState = React.useCallback(() => {
+		// Redo
+		if (undoRedo.redo === null || undoRedo.redo.length === 0) return;
+		const prevLayers = undoRedo.redo[undoRedo.redo.length - 1];
+		setLayers(prevLayers);
+		setUndoRedo((prev: any) => {
+			return {
+				undo: [...prev.undo, layers],
+				redo: prev.redo.slice(0, prev.redo.length - 1),
+			};
+		});
+	}, [setLayers, setUndoRedo, undoRedo.undo, undoRedo.redo, layers]);
 
 	return {
 		handleClickDelete,
@@ -133,5 +166,7 @@ export const useBoxes = (props: useBoxesProps) => {
 		handleClickDelAllBoxes,
 		handleClickAddBox,
 		createNewBox,
+		UndoLayoutState,
+		RedoLayoutState,
 	};
 };

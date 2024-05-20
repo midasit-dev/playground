@@ -55,7 +55,7 @@ const App = () => {
 	const [activeTab, setActiveTab] = useState(tabs[0].id);
 
 	return (
-		<>
+		<React.Fragment>
 			<Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 			<div style={{ width: '100%' }}>
 				<div className='w-full h-inherit'>
@@ -66,7 +66,7 @@ const App = () => {
 					</div>
 				</div>
 			</div>
-		</>
+		</React.Fragment>
 	);
 };
 

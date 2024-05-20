@@ -15,12 +15,27 @@ const App = () => {
 		return () => setSelectedLayerId(null);
 	}, [setSelectedLayerId]);
 
+	function onKeyDown(event: any) {
+		//Undo shortcut "Ctrl + Z",
+		//Redo shortcut "Ctrl + Y", "Ctrl + Shift + Z"
+		if (event.ctrlKey && event.key === 'z') {
+			console.log('ctrl + z');
+		} else if (
+			(event.ctrlKey && event.shiftKey && event.key === 'Z') ||
+			(event.ctrlKey && event.key === 'y')
+		) {
+			console.log('ctrl + shift + z');
+		}
+	}
+
 	return (
 		<AnimatePresence>
 			<motion.div
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				className='bg-gray-100 w-full h-[calc(100vh-56px)]'
+				tabIndex={0}
+				onKeyDown={onKeyDown}
 			>
 				<Canvas />
 				<Dockbar />
