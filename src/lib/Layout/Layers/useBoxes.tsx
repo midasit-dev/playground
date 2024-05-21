@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { LayerRenderingBoxesState, LayersState, UndoRedoState } from '../recoilState';
 import { v4 as uuid4 } from 'uuid';
 import { canvas_snap_criteria } from '../../Common/const';
+import { cloneDeep } from 'lodash';
 
 interface useBoxesProps {
 	initializeInputs: any;
@@ -23,7 +24,7 @@ export const useBoxes = (props: useBoxesProps) => {
 			setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== id));
 			setLayers((prevLayers) => prevLayers.filter((layer) => layer.id !== id));
 		},
-		[setBoxes, setLayers, setUndoRedo, layers],
+		[layers],
 	);
 
 	const handleClickPrevDelete = React.useCallback(() => {
@@ -34,14 +35,14 @@ export const useBoxes = (props: useBoxesProps) => {
 			setBoxes((prevBoxes) => prevBoxes.filter((box) => box.id !== prevId));
 		}
 		handleClickDelete(prevId);
-	}, [boxes, handleClickDelete, setBoxes]);
+	}, [boxes, handleClickDelete]);
 
 	const handleClickDelAllBoxes = React.useCallback(() => {
 		setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
 		setBoxes([]);
 		setLayers([]);
 		initializeInputs();
-	}, [initializeInputs, setBoxes, setLayers, layers]);
+	}, [initializeInputs, layers]);
 
 	const createNewBox = React.useCallback(
 		(id: string, inputs: ControllerInputs) => {
@@ -131,7 +132,7 @@ export const useBoxes = (props: useBoxesProps) => {
 				},
 			]);
 		},
-		[boxes.length, createNewBox, initializeInputs, setBoxes, setLayers, setUndoRedo, layers],
+		[boxes.length, createNewBox, initializeInputs, layers],
 	);
 
 	const UndoLayoutState = React.useCallback(() => {
@@ -145,12 +146,12 @@ export const useBoxes = (props: useBoxesProps) => {
 				redo: [...prev.redo, layers],
 			};
 		});
-	}, [setLayers, setUndoRedo, undoRedo.undo, undoRedo.redo, layers]);
+	}, [undoRedo.undo, undoRedo.redo, layers]);
 
 	const RedoLayoutState = React.useCallback(() => {
 		// Redo
 		if (undoRedo.redo === null || undoRedo.redo.length === 0) return;
-		const prevLayers = undoRedo.redo[undoRedo.redo.length - 1];
+		const prevLayers = cloneDeep(undoRedo.redo[undoRedo.redo.length - 1]);
 		setLayers(prevLayers);
 		setUndoRedo((prev: any) => {
 			return {
@@ -158,7 +159,19 @@ export const useBoxes = (props: useBoxesProps) => {
 				redo: prev.redo.slice(0, prev.redo.length - 1),
 			};
 		});
-	}, [setLayers, setUndoRedo, undoRedo.undo, undoRedo.redo, layers]);
+	}, [undoRedo.undo, undoRedo.redo, layers]);
+
+	React.useEffect(() => {
+		console.log('use undoRedo', undoRedo.undo);
+	}, [undoRedo]);
+
+	React.useEffect(() => {
+		console.log('use layers', layers);
+	}, [layers]);
+
+	React.useEffect(() => {
+		console.log('use boxes', boxes);
+	}, [boxes]);
 
 	return {
 		handleClickDelete,
