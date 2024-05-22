@@ -136,6 +136,11 @@ interface uiSchema {
 	layers: Layers;
 }
 
+interface UndoRedo {
+	undo: Layers[];
+	redo: Layers[];
+}
+
 export type {
 	LayoutSchema,
 	LayoutSchemas,
@@ -154,4 +159,5 @@ export type {
 	PySchemaContainer,
 	PySchema,
 	SecureInfo,
+	UndoRedo,
 };

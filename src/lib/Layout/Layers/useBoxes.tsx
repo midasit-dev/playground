@@ -2,7 +2,7 @@ import React from 'react';
 import InnerLayer from './Canvas/InnerLayer';
 import { ControllerInputs } from '../../Common/types';
 import { useRecoilState } from 'recoil';
-import { LayerRenderingBoxesState, LayersState, UndoRedoState } from '../recoilState';
+import { LayerRenderingBoxesState, LayersState, UndoRedoLayerState } from '../recoilState';
 import { v4 as uuid4 } from 'uuid';
 import { canvas_snap_criteria } from '../../Common/const';
 import { cloneDeep } from 'lodash';
@@ -13,7 +13,7 @@ interface useBoxesProps {
 
 export const useBoxes = (props: useBoxesProps) => {
 	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
-	const [undoRedo, setUndoRedo] = useRecoilState(UndoRedoState);
+	const [undoRedo, setUndoRedo] = useRecoilState(UndoRedoLayerState);
 	const [layers, setLayers] = useRecoilState(LayersState);
 
 	const { initializeInputs } = props;
@@ -77,6 +77,7 @@ export const useBoxes = (props: useBoxesProps) => {
 			type: 'default' | 'left' | 'right' | 'top' | 'bottom' = 'default',
 			inputs: ControllerInputs,
 		) => {
+			console.log('useBoxes handleClickAddBox');
 			//생성 시점 UUID 기록
 			const addUUID = uuid4().slice(0, 8);
 			const newId = `${boxes.length + 1}-FloatingBox-${addUUID}`; //id 생성
@@ -105,14 +106,15 @@ export const useBoxes = (props: useBoxesProps) => {
 			initializeInputs(newInputs);
 
 			// 이전 상태 저장
+			console.log('useBoxes handleClickAddBox setUndoRedo');
 			setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
 
 			//새로운 box 생성
-			setBoxes((prevBoxes) => {
-				const newBox = createNewBox(newId, newInputs);
-				return [...prevBoxes, newBox];
-			});
+			const newBox = createNewBox(newId, newInputs);
+			console.log('useBoxes handleClickAddBox setBoxes');
+			setBoxes((prevBoxes) => [...prevBoxes, newBox]);
 
+			console.log('useBoxes handleClickAddBox setLayers');
 			setLayers((prevBoxSchemas) => [
 				...prevBoxSchemas,
 				{
