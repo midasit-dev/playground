@@ -29,9 +29,9 @@ export const SvgClose = (props: any) => {
 			<path
 				d='M17 7L7 17M7 7L17 17'
 				stroke={color ?? '#62baf3'}
-				stroke-width='2'
-				stroke-linecap='round'
-				stroke-linejoin='round'
+				strokeWidth='2'
+				strokeLinecap='round'
+				strokeLinejoin='round'
 			/>
 		</svg>
 	);

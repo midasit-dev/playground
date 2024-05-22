@@ -27,9 +27,9 @@ export const SvgMinimize = () => (
 		<path
 			d='M4 14H10M10 14V20M10 14L3 21M20 10H14M14 10V4M14 10L21 3'
 			stroke='#4b5563'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );
@@ -45,9 +45,9 @@ export const SvgExpand = () => (
 		<path
 			d='M14 10L21 3M21 3H15M21 3V9M10 14L3 21M3 21H9M3 21L3 15'
 			stroke='#4b5563'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );
@@ -63,9 +63,9 @@ export const SvgArrowDown = () => (
 		<path
 			d='M6 9L12 15L18 9'
 			stroke='#fff'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );

@@ -76,7 +76,7 @@ const SideBar = () => {
 		>
 			<motion.div variants={sidebar} style={styleBackground} className='bg-pg-black-medium' />
 			<MenuItems />
-			<MenuToggle isOpen={isOpen} toggle={() => toggleOpen()} />
+			<MenuToggle isopen={isOpen} toggle={() => toggleOpen()} />
 		</motion.nav>
 	);
 };
