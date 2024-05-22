@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
 	LayersState,
 	SelectedLayerGuideBoxPropsState,
 	SelectedLayerIdState,
 	SelectedLayerState,
+	UndoRedoComponentState,
 } from '../../recoilState';
 import { zindex_dockbar } from '../../../Common/zindex';
 
@@ -33,9 +34,18 @@ const App = () => {
 
 	//guideBoxProps가 변경될 경우, Layer에 실시간 적용
 	//내부 버튼들이 guideBoxProps를 각자 변경 한다. Spacing, RowColumn, Center, ...
-	const [, setLayers] = useRecoilState(LayersState);
+	const [layers, setLayers] = useRecoilState(LayersState);
+	const setUndoRedo = useSetRecoilState(UndoRedoComponentState);
+
+	const UndoRedoFunction = React.useCallback(() => {
+		console.log('UndoRedoFunction layer', layers);
+		setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
+	}, [layers]);
+
 	useEffect(() => {
 		if (!guideBoxProps) return;
+		console.log("guideBoxProps", guideBoxProps);
+		UndoRedoFunction();
 		setLayers((prev: Layers) => {
 			return prev.map((layer: Layer) => {
 				if (layer.id === selectedLayerId) {
