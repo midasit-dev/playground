@@ -7,6 +7,7 @@ import {
 	SelectedLayerIdState,
 	SelectedLayerState,
 	UndoRedoComponentState,
+	UseDockbarState,
 } from '../../recoilState';
 import { zindex_dockbar } from '../../../Common/zindex';
 
@@ -25,10 +26,16 @@ const App = () => {
 	//임시 저장할 guideBoxProps 상태 저장 리코일
 	const [guideBoxProps, setGuideBoxProps] = useRecoilState(SelectedLayerGuideBoxPropsState);
 
+	const [useDockbar, setUseDockbar] = useRecoilState(UseDockbarState);
 	//선택된 Layer Id가 변경될 경우, guideBoxProps를 초기화
 	useEffect(() => {
-		if (selectedLayerId === null) setGuideBoxProps(null);
-		else setGuideBoxProps(selectedLayerById ? selectedLayerById.props.guideBoxProps : null);
+		if (selectedLayerId !== null) {
+			setGuideBoxProps(
+				selectedLayerById
+					? { ...selectedLayerById.props.guideBoxProps, id: selectedLayerById.id }
+					: null,
+			);
+		}
 		// eslint-disable-next-line
 	}, [selectedLayerId]);
 
@@ -37,15 +44,10 @@ const App = () => {
 	const [layers, setLayers] = useRecoilState(LayersState);
 	const setUndoRedo = useSetRecoilState(UndoRedoComponentState);
 
-	const UndoRedoFunction = React.useCallback(() => {
-		console.log('UndoRedoFunction layer', layers);
-		setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
-	}, [layers]);
-
 	useEffect(() => {
-		if (!guideBoxProps) return;
-		console.log("guideBoxProps", guideBoxProps);
-		UndoRedoFunction();
+		if (!useDockbar) return;
+		const nowInfo = { layers: layers, selectedLayerId: selectedLayerId };
+		setUndoRedo((prev: any) => ({ undo: [...prev.undo, nowInfo], redo: [] }));
 		setLayers((prev: Layers) => {
 			return prev.map((layer: Layer) => {
 				if (layer.id === selectedLayerId) {
@@ -60,8 +62,9 @@ const App = () => {
 				return layer;
 			});
 		});
+		setUseDockbar(false);
 		// eslint-disable-next-line
-	}, [guideBoxProps]);
+	}, [useDockbar]);
 
 	return (
 		<motion.div

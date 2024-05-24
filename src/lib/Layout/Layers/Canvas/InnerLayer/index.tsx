@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { type Layer, type Layers } from '../../../../Common/types';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { LayersState, UndoRedoLayerState } from '../../../recoilState';
+import { useRecoilState } from 'recoil';
+import { LayersState } from '../../../recoilState';
 import { Icon, SvgClose } from './Svg';
 import { nearestMultipleOfCanvasSnapCriteria } from '../../../../Common/const';
 
@@ -28,7 +28,6 @@ const App = (props: RndBoxProps) => {
 	const { id, children, onDelete } = props;
 
 	const [layers, setLayers] = useRecoilState(LayersState);
-	const setUndoRedo = useSetRecoilState(UndoRedoLayerState);
 
 	const onClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => e.stopPropagation();
 	const onMouseDownHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
@@ -79,7 +78,6 @@ const App = (props: RndBoxProps) => {
 
 	const onUpdateLayer = (x: number, y: number, width: number, height: number) => {
 		if (setLayers) {
-			setUndoRedo((prev: any) => ({ undo: [...prev.undo, layers], redo: [] }));
 			setLayers((prev: any) => {
 				const newBoxlayers = prev.map((box: any) => {
 					if (box.id === id) {

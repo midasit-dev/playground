@@ -37,7 +37,11 @@ const App = () => {
 							<div key={index}>
 								{layer.children && layer.children.length > 0 ? (
 									layer.children.map((child: any, index: number) =>
-										child.props.id !== '' ? <p key={"layer_p_" + index} className='text-xs'># {child.props.id}</p> : null,
+										child.props.id !== '' ? (
+											<p key={'layer_p_' + index} className='text-xs'>
+												# {child.props.id}
+											</p>
+										) : null,
 									)
 								) : (
 									<p className='text-xs w-full text-center'>create childrens with 'id'</p>

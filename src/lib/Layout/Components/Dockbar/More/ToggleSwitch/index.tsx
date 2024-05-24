@@ -1,7 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
-import { SelectedLayerGuideBoxPropsState } from '../../../../recoilState';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+	SelectedLayerGuideBoxPropsState,
+	UndoRedoDockbar,
+	UseDockbarState,
+} from '../../../../recoilState';
 
 const App = (props: any) => {
 	const { name } = props;
@@ -9,18 +13,22 @@ const App = (props: any) => {
 
 	//임시 저장할 guideBoxProps 상태 저장 리코일
 	const [guideboxProps, setGuideBoxProps] = useRecoilState(SelectedLayerGuideBoxPropsState);
+	const setUndoRedoDockbar = useSetRecoilState(UndoRedoDockbar);
+	const setUseDockbar = useSetRecoilState(UseDockbarState);
 
 	const toggleSwitch = useCallback(() => {
 		const cur = !isOn;
 		setIsOn(cur);
 
+		setUseDockbar(true);
+		setUndoRedoDockbar((prev: any) => ({ undo: [...prev.undo, guideboxProps], redo: [] }));
 		setGuideBoxProps((prev: any) => {
 			let result = { ...prev };
 			if (result[name]) delete result[name];
 			else result = { ...result, [name]: true };
 			return result;
 		});
-	}, [isOn, name, setGuideBoxProps]);
+	}, [isOn, name, guideboxProps]);
 
 	//현재 상태에 따라 토글 스위치 위치 변경
 	useEffect(() => {

@@ -3,12 +3,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import PanelLeft from './PanelLeft';
 import PanelRight from './PanelRight';
 import Canvas from './Canvas';
-import Dockbar from './Docbkar';
-import { useSetRecoilState } from 'recoil';
-import { SelectedLayerIdState } from '../recoilState';
+import Dockbar from './Dockbar';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import {
+	SelectedLayerIdState,
+	LayersState,
+	UndoRedoComponentState,
+	UndoRedoDockbar,
+	SelectedLayerGuideBoxPropsState,
+} from '../recoilState';
 
 const App = () => {
 	const setSelectedLayerId = useSetRecoilState(SelectedLayerIdState);
+	const [layers, setLayers] = useRecoilState(LayersState);
+	const [undoRedo, setUndoRedo] = useRecoilState(UndoRedoComponentState);
+	const [guideBoxProps, setGuideBoxProps] = useRecoilState(SelectedLayerGuideBoxPropsState);
+	const [undoRedoDockbar, setUndoRedoDockbar] = useRecoilState(UndoRedoDockbar);
 
 	useEffect(() => {
 		//나갈 때 selected Layer Id 초기화
@@ -19,14 +29,68 @@ const App = () => {
 		//Undo shortcut "Ctrl + Z",
 		//Redo shortcut "Ctrl + Y", "Ctrl + Shift + Z"
 		if (event.ctrlKey && event.key === 'z') {
-			console.log('ctrl + z');
+			UndoLayoutState();
 		} else if (
 			(event.ctrlKey && event.shiftKey && event.key === 'Z') ||
 			(event.ctrlKey && event.key === 'y')
 		) {
-			console.log('ctrl + shift + z');
+			RedoLayoutState();
 		}
 	}
+
+	const UndoLayoutState = React.useCallback(() => {
+		// Undo
+		if (undoRedo.undo === null || undoRedo.undo.length === 0) return;
+		const currentUndo = undoRedo.undo[undoRedo.undo.length - 1];
+		const prevLayers = currentUndo.layers;
+		const nowInfo = { layers: layers, selectedLayerId: currentUndo.selectedLayerId };
+		setUndoRedo((prev: any) => {
+			return {
+				undo: prev.undo.slice(0, prev.undo.length - 1),
+				redo: [...prev.redo, nowInfo],
+			};
+		});
+		setLayers(prevLayers);
+
+		setSelectedLayerId(currentUndo.selectedLayerId);
+
+		if (undoRedoDockbar.undo === null || undoRedoDockbar.undo.length === 0) return;
+		const prevDockbar = undoRedoDockbar.undo[undoRedoDockbar.undo.length - 1];
+		setUndoRedoDockbar((prev: any) => {
+			return {
+				undo: prev.undo.slice(0, prev.undo.length - 1),
+				redo: [...prev.redo, guideBoxProps],
+			};
+		});
+		setGuideBoxProps(prevDockbar);
+	}, [undoRedo.undo, undoRedo.redo, layers]);
+
+	const RedoLayoutState = React.useCallback(() => {
+		// Redo
+		if (undoRedo.redo === null || undoRedo.redo.length === 0) return;
+		const currentRedo = undoRedo.redo[undoRedo.redo.length - 1];
+		const prevLayers = currentRedo.layers;
+		const nowInfo = { layers: layers, selectedLayerId: currentRedo.selectedLayerId };
+		setUndoRedo((prev: any) => {
+			return {
+				undo: [...prev.undo, nowInfo],
+				redo: prev.redo.slice(0, prev.redo.length - 1),
+			};
+		});
+		setLayers(prevLayers);
+
+		setSelectedLayerId(currentRedo.selectedLayerId);
+
+		if (undoRedoDockbar.redo === null || undoRedoDockbar.redo.length === 0) return;
+		const prevDockbar = undoRedoDockbar.redo[undoRedoDockbar.redo.length - 1];
+		setUndoRedoDockbar((prev: any) => {
+			return {
+				undo: [...prev.undo, guideBoxProps],
+				redo: prev.redo.slice(0, prev.redo.length - 1),
+			};
+		});
+		setGuideBoxProps(prevDockbar);
+	}, [undoRedo.undo, undoRedo.redo, layers]);
 
 	return (
 		<AnimatePresence>

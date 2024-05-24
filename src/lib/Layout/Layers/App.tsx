@@ -9,28 +9,28 @@ import Canvas from './Canvas';
 
 // index.tsx와 중복된 코드로 판단됨. 추후 수정이 필요함. (Todo)
 export const App = () => {
-	const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
-	const layers = useRecoilValue(LayersState);
-	const { initialize: initializeInputs } = useController();
-	const { createNewBox, handleClickAddBox, handleClickPrevDelete, handleClickDelAllBoxes } =
-		useBoxes({ initializeInputs });
+	// const [boxes, setBoxes] = useRecoilState(LayerRenderingBoxesState);
+	// const layers = useRecoilValue(LayersState);
+	// const { initialize: initializeInputs } = useController();
+	// const { createNewBox, handleClickAddBox, handleClickPrevDelete, handleClickDelAllBoxes } =
+	// 	useBoxes({ initializeInputs });
 
-	React.useEffect(() => {
-		//Boxes가 비어있는 경우, 다시 그려준다.
-		const newBoxes = [];
-		for (const schema of layers) {
-			newBoxes.push(
-				createNewBox(schema.id, {
-					x: schema.props.x,
-					y: schema.props.y,
-					width: schema.props.width,
-					height: schema.props.height,
-					spacing: 0,
-				}),
-			);
-		}
-		setBoxes(newBoxes);
-	}, [boxes.length, createNewBox, layers, setBoxes]);
+	// React.useEffect(() => {
+	// 	//Boxes가 비어있는 경우, 다시 그려준다.
+	// 	const newBoxes = [];
+	// 	for (const schema of layers) {
+	// 		newBoxes.push(
+	// 			createNewBox(schema.id, {
+	// 				x: schema.props.x,
+	// 				y: schema.props.y,
+	// 				width: schema.props.width,
+	// 				height: schema.props.height,
+	// 				spacing: 0,
+	// 			}),
+	// 		);
+	// 	}
+	// 	setBoxes(newBoxes);
+	// }, [boxes.length, createNewBox, layers, setBoxes]);
 
 	return (
 		<AnimatePresence>
@@ -41,11 +41,11 @@ export const App = () => {
 				exit={{ opacity: 0 }}
 				className='bg-gray-100 w-full h-[calc(100vh-56px)]'
 			>
-				<Canvas addLayerHandler={handleClickAddBox} />
+				{/* <Canvas addLayerHandler={handleClickAddBox} />
 				<DockbarBottm
 					preDeleteLayerHandler={handleClickPrevDelete}
 					allDeleteLayersHandler={handleClickDelAllBoxes}
-				/>
+				/> */}
 			</motion.div>
 		</AnimatePresence>
 	);

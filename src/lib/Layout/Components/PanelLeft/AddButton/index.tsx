@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
 import {
 	LayersState,
 	PropComponentLayerAddValueState,
 	SelectedLayerIdState,
+	UndoRedoComponentState,
 } from '../../../recoilState';
 import { Layer, Layers } from '../../../../Common/types';
 
@@ -35,12 +36,15 @@ const App = () => {
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 
 	//UI Schema용 전체 데이터 갱신을 위한 Reocil
-	const setLayers = useSetRecoilState(LayersState);
+	const [layers, setLayers] = useRecoilState(LayersState);
+	const setUndoRedo = useSetRecoilState(UndoRedoComponentState);
 
 	//PropComponents에서 임시로 저장한 값을 가져온다.
 	const propCompLayerAddValue = useRecoilValue(PropComponentLayerAddValueState);
 
 	const onClickHandlerAdd = useCallback(() => {
+		const nowInfo = { layers: layers, selectedLayerId: selectedLayerId };
+		setUndoRedo((prev: any) => ({ undo: [...prev.undo, nowInfo], redo: [] }));
 		setLayers((prev: Layers) => {
 			return prev.map((layer: Layer) => {
 				if (layer.id === selectedLayerId) {
@@ -55,7 +59,7 @@ const App = () => {
 				return layer;
 			});
 		});
-	}, [propCompLayerAddValue, selectedLayerId, setLayers]);
+	}, [propCompLayerAddValue, selectedLayerId, layers]);
 
 	return (
 		<motion.div

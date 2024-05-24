@@ -6,12 +6,19 @@ import {
 	Canvas,
 	type Python,
 	type SecureInfo,
-	type UndoRedo,
+	type UndoRedoLayers,
+	type Undo,
+	type Redo,
 } from '../Common/types';
 import { atom, selector } from 'recoil';
 import { type Props as RndProps } from 'react-rnd';
 import { type GuideBoxProps } from '@midasit-dev/moaui';
 import { IQueryKey } from './DesignShowcase/ai-components/defs/Interface';
+
+interface UndoRedoDockbarType {
+	undo: GuideBoxProps[];
+	redo: GuideBoxProps[];
+}
 
 export const LayersMenuState = atom<{
 	canvas: RndProps;
@@ -93,38 +100,7 @@ export const LayersState = atom<Layers>({
 	],
 });
 
-//This atom provides the Redo, Undo function
-//Have a two stacks, one for undo and one for redo
-//When the user changes the LayersState, the undo stack is updated
-//When the user clicks the undo button, the undo stack is popped and the redo stack is pushed
-//When the user clicks the redo button, the redo stack is popped and the undo stack is pushed
-export const UndoRedoLayerState = atom<UndoRedo>({
-	key: 'UndoRedoLayerState',
-	default: {
-		undo: [],
-		redo: [],
-	},
-	//if undo stack length is 10, then pop the first element and save it to redo stack
-	//if redo stack length is 10, then pop the first element and save it to redo stack
-	effects_UNSTABLE: [
-		({ setSelf, onSet }) => {
-			onSet((newValue) => {
-				let tempUndo: Layers[] = [];
-				let tempRedo: Layers[] = [];
-				if (newValue.undo.length > 10) {
-					tempUndo = newValue.undo.slice(1);
-					setSelf({ undo: tempUndo, redo: newValue.redo });
-				}
-				if (newValue.redo.length > 10) {
-					tempRedo = newValue.redo.slice(1);
-					setSelf({ undo: newValue.undo, redo: tempRedo });
-				}
-			});
-		},
-	],
-});
-
-export const UndoRedoComponentState = atom<UndoRedo>({
+export const UndoRedoComponentState = atom<UndoRedoLayers>({
 	key: 'UndoRedoComponentState',
 	default: {
 		undo: [],
@@ -135,8 +111,8 @@ export const UndoRedoComponentState = atom<UndoRedo>({
 	effects_UNSTABLE: [
 		({ setSelf, onSet }) => {
 			onSet((newValue) => {
-				let tempUndo: Layers[] = [];
-				let tempRedo: Layers[] = [];
+				let tempUndo: Undo[] = [];
+				let tempRedo: Redo[] = [];
 				if (newValue.undo.length > 10) {
 					tempUndo = newValue.undo.slice(1);
 					setSelf({ undo: tempUndo, redo: newValue.redo });
@@ -172,7 +148,8 @@ export const SelectedLayerState = selector<Layer | null>({
 		const selectedLayerId = get(SelectedLayerIdState);
 		const layers = get(LayersState);
 		if (selectedLayerId === null) return null;
-		return layers.find((layer: any) => layer.id === selectedLayerId) || null;
+		const selectedLayer = layers.find((layer: any) => layer.id === selectedLayerId) || null;
+		return selectedLayer;
 	},
 });
 
@@ -180,6 +157,37 @@ export const SelectedLayerState = selector<Layer | null>({
 export const SelectedLayerGuideBoxPropsState = atom<GuideBoxProps | null>({
 	key: 'SelectedLayerGuideBoxPropsState',
 	default: {},
+});
+
+export const UseDockbarState = atom<boolean>({
+	key: 'UseDockbarState',
+	default: false,
+});
+
+export const UndoRedoDockbar = atom<UndoRedoDockbarType>({
+	key: 'UndoRedoSelectedLayerGuideBoxPropsState',
+	default: {
+		undo: [],
+		redo: [],
+	},
+	//if undo stack length is 10, then pop the first element and save it to redo stack
+	//if redo stack length is 10, then pop the first element and save it to redo stack
+	effects_UNSTABLE: [
+		({ setSelf, onSet }) => {
+			onSet((newValue) => {
+				let tempUndo: GuideBoxProps[] = [];
+				let tempRedo: GuideBoxProps[] = [];
+				if (newValue.undo.length > 10) {
+					tempUndo = newValue.undo.slice(1);
+					setSelf({ undo: tempUndo, redo: newValue.redo });
+				}
+				if (newValue.redo.length > 10) {
+					tempRedo = newValue.redo.slice(1);
+					setSelf({ undo: newValue.undo, redo: tempRedo });
+				}
+			});
+		},
+	],
 });
 
 export const defaultLayerProps = {

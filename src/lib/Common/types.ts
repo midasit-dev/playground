@@ -136,9 +136,18 @@ interface uiSchema {
 	layers: Layers;
 }
 
-interface UndoRedo {
-	undo: Layers[];
-	redo: Layers[];
+interface Undo {
+	layers: Layers;
+	selectedLayerId: string;
+}
+
+interface Redo {
+	layers: Layers;
+	selectedLayerId: string;
+}
+interface UndoRedoLayers {
+	undo: Undo[];
+	redo: Redo[];
 }
 
 export type {
@@ -159,5 +168,7 @@ export type {
 	PySchemaContainer,
 	PySchema,
 	SecureInfo,
-	UndoRedo,
+	UndoRedoLayers,
+	Undo,
+	Redo,
 };

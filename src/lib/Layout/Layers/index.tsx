@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBoxes } from './useBoxes';
 import { useController } from './useController';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LayerRenderingBoxesState, LayersState } from '../recoilState';
 import { motion, AnimatePresence } from 'framer-motion'; // framer-motion 라이브러리를 임포트합니다.
 import DockbarBottm from './Dockbar';
@@ -11,14 +11,8 @@ const App = () => {
 	const setBoxes = useSetRecoilState(LayerRenderingBoxesState);
 	const layers = useRecoilValue(LayersState);
 	const { initialize: initializeInputs } = useController();
-	const {
-		createNewBox,
-		handleClickAddBox,
-		handleClickPrevDelete,
-		handleClickDelAllBoxes,
-		RedoLayoutState,
-		UndoLayoutState,
-	} = useBoxes({ initializeInputs });
+	const { createNewBox, handleClickAddBox, handleClickPrevDelete, handleClickDelAllBoxes } =
+		useBoxes({ initializeInputs });
 
 	React.useEffect(() => {
 		//Boxes가 비어있는 경우, 다시 그려준다.
@@ -37,19 +31,6 @@ const App = () => {
 		setBoxes(newBoxes);
 	}, [createNewBox, layers, setBoxes]);
 
-	function onKeyDown(event: any) {
-		//Undo shortcut "Ctrl + Z",
-		//Redo shortcut "Ctrl + Y", "Ctrl + Shift + Z"
-		if (event.ctrlKey && event.key === 'z') {
-			UndoLayoutState();
-		} else if (
-			(event.ctrlKey && event.shiftKey && event.key === 'Z') ||
-			(event.ctrlKey && event.key === 'y')
-		) {
-			RedoLayoutState();
-		}
-	}
-
 	return (
 		<AnimatePresence>
 			<motion.div
@@ -58,8 +39,6 @@ const App = () => {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				className='bg-gray-100 w-full h-[calc(100vh-56px)]'
-				tabIndex={0}
-				onKeyDown={onKeyDown}
 			>
 				<Canvas addLayerHandler={handleClickAddBox} />
 				<DockbarBottm

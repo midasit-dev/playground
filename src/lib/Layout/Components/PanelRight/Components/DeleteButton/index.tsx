@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { LayersState, SelectedLayerIdState } from '../../../../recoilState';
+import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { LayersState, SelectedLayerIdState, UndoRedoComponentState } from '../../../../recoilState';
 import { Layer } from '../../../../../Common/types';
 
 const SvgDelete = () => (
@@ -32,10 +32,13 @@ const App = (props: any) => {
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 
 	//전역 데이터의 갱신을 위한 Recoil
-	const setLayers = useSetRecoilState(LayersState);
+	const [layers, setLayers] = useRecoilState(LayersState);
+	const setUndoRedo = useSetRecoilState(UndoRedoComponentState);
 
 	// 현 Component 삭제 함수
 	const deleteCurrentComponent = useCallback(() => {
+		const nowInfo = { layers: layers, selectedLayerId: selectedLayerId };
+		setUndoRedo((prev: any) => ({ undo: [...prev.undo, nowInfo], redo: [] }));
 		setLayers((prev: Layer[]) => {
 			return prev.map((prevLayer: Layer) => {
 				if (prevLayer.id === selectedLayerId) {
@@ -47,7 +50,7 @@ const App = (props: any) => {
 				return prevLayer;
 			});
 		});
-	}, [index, selectedLayerId, setLayers]);
+	}, [index, selectedLayerId, layers]);
 
 	return (
 		<motion.button
