@@ -1,5 +1,5 @@
 import { useSetRecoilState, useRecoilState } from 'recoil';
-import { Icon, SvgRowToggle } from '../Svg';
+import { Icon, SvgRow, SvgColumn } from '../Svg';
 import {
 	SelectedLayerGuideBoxPropsState,
 	UndoRedoDockbar,
@@ -13,8 +13,9 @@ const App = () => {
 	const setUseDockbar = useSetRecoilState(UseDockbarState);
 
 	return (
+		<div>
 		<Icon
-			SVG={<SvgRowToggle />}
+			SVG={<SvgRow />}
 			onClickHandler={() => {
 				setUseDockbar(true);
 				setUndoRedoDockbar((prev: any) => ({ undo: [...prev.undo, guideBoxProps], redo: [] }));
@@ -26,6 +27,7 @@ const App = () => {
 				});
 			}}
 		/>
+		</div>
 	);
 };
 
