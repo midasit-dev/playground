@@ -20,7 +20,7 @@ export const Icon = (props: any) => {
 };
 
 //icons! https://www.untitledui.com/free-icons
-export const SvgRow = () => (
+export const SvgRowColumn = () => (
 	<svg
 		width='100%'
 		height='100%'
@@ -30,42 +30,17 @@ export const SvgRow = () => (
 	>
 		<path
 			d='M17.8 10C18.9201 10 19.4802 10 19.908 9.78201C20.2843 9.59027 20.5903 9.28431 20.782 8.90798C21 8.48016 21 7.92011 21 6.8V6.2C21 5.0799 21 4.51984 20.782 4.09202C20.5903 3.7157 20.2843 3.40973 19.908 3.21799C19.4802 3 18.9201 3 17.8 3L6.2 3C5.0799 3 4.51984 3 4.09202 3.21799C3.71569 3.40973 3.40973 3.71569 3.21799 4.09202C3 4.51984 3 5.07989 3 6.2L3 6.8C3 7.9201 3 8.48016 3.21799 8.90798C3.40973 9.28431 3.71569 9.59027 4.09202 9.78201C4.51984 10 5.07989 10 6.2 10L17.8 10Z'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			stroke='#fff'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 		<path
 			d='M17.8 21C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V17.2C21 16.0799 21 15.5198 20.782 15.092C20.5903 14.7157 20.2843 14.4097 19.908 14.218C19.4802 14 18.9201 14 17.8 14L6.2 14C5.0799 14 4.51984 14 4.09202 14.218C3.71569 14.4097 3.40973 14.7157 3.21799 15.092C3 15.5198 3 16.0799 3 17.2L3 17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21H17.8Z'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
-		/>
-	</svg>
-);
-
-export const SvgColumn = () => (
-	<svg
-		width='100%'
-		height='100%'
-		viewBox='0 0 24 24'
-		fill='none'
-		xmlns='http://www.w3.org/2000/svg'
-	>
-		<path
-			d='M6.8 3H6.2C5.0799 3 4.51984 3 4.09202 3.21799C3.71569 3.40973 3.40973 3.71569 3.21799 4.09202C3 4.51984 3 5.07989 3 6.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.0799 21 6.2 21H6.8C7.9201 21 8.48016 21 8.90798 20.782C9.28431 20.5903 9.59027 20.2843 9.78201 19.908C10 19.4802 10 18.9201 10 17.8V6.2C10 5.0799 10 4.51984 9.78201 4.09202C9.59027 3.71569 9.28431 3.40973 8.90798 3.21799C8.48016 3 7.9201 3 6.8 3Z'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
-		/>
-		<path
-			d='M17.8 3H17.2C16.0799 3 15.5198 3 15.092 3.21799C14.7157 3.40973 14.4097 3.71569 14.218 4.09202C14 4.51984 14 5.0799 14 6.2V17.8C14 18.9201 14 19.4802 14.218 19.908C14.4097 20.2843 14.7157 20.5903 15.092 20.782C15.5198 21 16.0799 21 17.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V6.2C21 5.0799 21 4.51984 20.782 4.09202C20.5903 3.71569 20.2843 3.40973 19.908 3.21799C19.4802 3 18.9201 3 17.8 3Z'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			stroke='#fff'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );
@@ -80,10 +55,10 @@ export const SvgUndo = () => (
 	>
 		<path
 			d='M9 14L4 9M4 9L9 4M4 9H10.4C13.7603 9 15.4405 9 16.7239 9.65396C17.8529 10.2292 18.7708 11.1471 19.346 12.2761C20 13.5595 20 15.2397 20 18.6V20'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			stroke='#fff'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );
@@ -98,10 +73,10 @@ export const SvgRedo = () => (
 	>
 		<path
 			d='M4 20V18.6C4 15.2397 4 13.5595 4.65396 12.2761C5.2292 11.1471 6.14708 10.2292 7.27606 9.65396C8.55953 9 10.2397 9 13.6 9H20M20 9L15 14M20 9L15 4'
-			stroke='currentColor'
-			stroke-width='2'
-			stroke-linecap='round'
-			stroke-linejoin='round'
+			stroke='#fff'
+			strokeWidth='2'
+			strokeLinecap='round'
+			strokeLinejoin='round'
 		/>
 	</svg>
 );
@@ -124,7 +99,7 @@ export const SvgCenter = () => (
 	</svg>
 );
 
-export const SvgPlusCircle = () => (
+export const SvgSpacingPlus = () => (
 	<svg
 		width='100%'
 		height='100%'
@@ -133,7 +108,7 @@ export const SvgPlusCircle = () => (
 		xmlns='http://www.w3.org/2000/svg'
 	>
 		<path
-			d='M12 8V16M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z'
+			d='M6 12H10.5M6 12L8 9M6 12L8 15M18 12H13.5M18 12L16 9M18 12L16 15M21 21V3M3 21V3'
 			stroke='#fff'
 			strokeWidth='2'
 			strokeLinecap='round'
@@ -142,7 +117,7 @@ export const SvgPlusCircle = () => (
 	</svg>
 );
 
-export const SvgMinusCircle = () => (
+export const SvgSpacingMinus = () => (
 	<svg
 		width='100%'
 		height='100%'
@@ -151,7 +126,7 @@ export const SvgMinusCircle = () => (
 		xmlns='http://www.w3.org/2000/svg'
 	>
 		<path
-			d='M8 12H16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z'
+			d='M12 3V21M22 12H15.5M15.5 12L19.5 16M15.5 12L19.5 8M2 12H8.5M8.5 12L4.5 16M8.5 12L4.5 8'
 			stroke='#fff'
 			strokeWidth='2'
 			strokeLinecap='round'

@@ -85,8 +85,8 @@ const App = () => {
 				}}
 			>
 				<RowColumnToggle />
-				<CenterToggle />
 				<SpacingControl />
+				<CenterToggle />
 				<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
 				<div className='relative w-auto items-center'>
 					<More />
