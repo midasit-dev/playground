@@ -16,6 +16,12 @@ const App = () => {
 	const setUseDockbar = useSetRecoilState(UseDockbarState);
 	const [rotation, setRotation] = useRecoilState(DockbarIconRotationState);
 
+	React.useEffect(() => {
+		if (!guideBoxProps) return;
+		if(guideBoxProps['row']) setRotation(0);
+		else setRotation(90); 
+	}, [guideBoxProps]);
+
 	function rotateHandler() {
 		setRotation(rotation + 90);
 	}

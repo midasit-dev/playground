@@ -166,7 +166,7 @@ export const UseDockbarState = atom<boolean>({
 
 export const DockbarIconRotationState = atom<number>({
 	key: 'DockbarIconRotationState',
-	default: 0,
+	default: 90,
 });
 
 export const UndoRedoDockbar = atom<UndoRedoDockbarType>({

@@ -16,9 +16,10 @@ import CenterToggle from './CenterToggle';
 import SpacingControl from './SpacingControl';
 import More from './More';
 import Tag from './Tag';
+import UndoRedo from './UndoRedo';
 import { Layer, Layers } from '../../../Common/types';
 
-const App = () => {
+const App = (props:{Undo:any, Redo:any}) => {
 	//선택된 Layer Id
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 	//선택된 Layer Id의 Layer State
@@ -68,7 +69,7 @@ const App = () => {
 
 	return (
 		<motion.div
-			className='w-[594px] h-24 bottom-20 left-1/2 -ml-[297px] py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
+			className='w-[690px] h-24 bottom-20 left-1/2 -ml-[345px] py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
 			style={{ zIndex: zindex_dockbar }}
 			initial={{ y: 100, opacity: 0 }}
 			animate={{
@@ -78,7 +79,7 @@ const App = () => {
 			}}
 		>
 			<div
-				className='w-auto space-x-10 flex flex-row items-center'
+				className='w-auto space-x-8 flex flex-row items-center'
 				style={{
 					pointerEvents: selectedLayerId ? 'auto' : 'none',
 					opacity: selectedLayerId ? 1 : 0.6,
@@ -86,8 +87,11 @@ const App = () => {
 			>
 				<RowColumnToggle />
 				<SpacingControl />
-				<CenterToggle />
+				<UndoRedo Undo={props.Undo} Redo={props.Redo}/>
 				<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
+				<div className='relative w-auto items-center'>
+					<CenterToggle />
+				</div>
 				<div className='relative w-auto items-center'>
 					<More />
 				</div>
