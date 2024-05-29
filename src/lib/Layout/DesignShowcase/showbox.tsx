@@ -64,7 +64,7 @@ export default function ShowBox() {
 							setLockDraggingCanvas(!lockDraggingCanvas);
 						}}
 					/>
-					<Icon iconName='Close' opacity={1} toButton={true} onClick={onClickReset} />
+					{/* <Icon iconName='Close' opacity={1} toButton={true} onClick={onClickReset} /> */}
 				</div>
 				<div
 					className='wrapper-box shadow-xl shadow-black/10 border border-pg-gray-medium rounded-md bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg'
