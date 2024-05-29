@@ -13,6 +13,8 @@ import {
 	SelectedLayerGuideBoxPropsState,
 } from '../recoilState';
 
+import ReactFlow from './ReactFlow';
+
 const App = () => {
 	const setSelectedLayerId = useSetRecoilState(SelectedLayerIdState);
 	const [layers, setLayers] = useRecoilState(LayersState);
@@ -101,7 +103,8 @@ const App = () => {
 				tabIndex={0}
 				onKeyDown={onKeyDown}
 			>
-				<Canvas />
+				{/* <Canvas /> */}
+				<ReactFlow />
 				<Dockbar Undo={UndoLayoutState} Redo={RedoLayoutState} />
 				<PanelLeft />
 				<PanelRight />
