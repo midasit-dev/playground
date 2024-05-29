@@ -19,7 +19,7 @@ import Tag from './Tag';
 import UndoRedo from './UndoRedo';
 import { Layer, Layers } from '../../../Common/types';
 
-const App = (props:{Undo:any, Redo:any}) => {
+const App = (props: { Undo: any; Redo: any }) => {
 	//선택된 Layer Id
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 	//선택된 Layer Id의 Layer State
@@ -87,7 +87,7 @@ const App = (props:{Undo:any, Redo:any}) => {
 			>
 				<RowColumnToggle />
 				<SpacingControl />
-				<UndoRedo Undo={props.Undo} Redo={props.Redo}/>
+				<UndoRedo Undo={props.Undo} Redo={props.Redo} />
 				<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
 				<div className='relative w-auto items-center'>
 					<CenterToggle />

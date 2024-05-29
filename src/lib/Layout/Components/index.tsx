@@ -102,7 +102,7 @@ const App = () => {
 				onKeyDown={onKeyDown}
 			>
 				<Canvas />
-				<Dockbar Undo={UndoLayoutState} Redo={RedoLayoutState}/>
+				<Dockbar Undo={UndoLayoutState} Redo={RedoLayoutState} />
 				<PanelLeft />
 				<PanelRight />
 			</motion.div>

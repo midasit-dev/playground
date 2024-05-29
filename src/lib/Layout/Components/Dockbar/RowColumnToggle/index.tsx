@@ -18,8 +18,8 @@ const App = () => {
 
 	React.useEffect(() => {
 		if (!guideBoxProps) return;
-		if(guideBoxProps['row']) setRotation(0);
-		else setRotation(90); 
+		if (guideBoxProps['row']) setRotation(0);
+		else setRotation(90);
 	}, [guideBoxProps]);
 
 	function rotateHandler() {
