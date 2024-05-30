@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PanelLeft from './PanelLeft';
 import PanelRight from './PanelRight';
-import Canvas from './Canvas';
 import Dockbar from './Dockbar';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import {
@@ -13,7 +12,7 @@ import {
 	SelectedLayerGuideBoxPropsState,
 } from '../recoilState';
 
-import ReactFlow from './ReactFlow';
+import ComponentFlow from './ComponentFlow';
 
 const App = () => {
 	const setSelectedLayerId = useSetRecoilState(SelectedLayerIdState);
@@ -103,8 +102,7 @@ const App = () => {
 				tabIndex={0}
 				onKeyDown={onKeyDown}
 			>
-				{/* <Canvas /> */}
-				<ReactFlow />
+				<ComponentFlow />
 				<Dockbar Undo={UndoLayoutState} Redo={RedoLayoutState} />
 				<PanelLeft />
 				<PanelRight />

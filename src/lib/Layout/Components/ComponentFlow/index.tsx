@@ -1,11 +1,10 @@
-import { useCallback, useState, useEffect } from 'react';
+import React from 'react';
 import ReactFlow, {
 	addEdge,
 	applyEdgeChanges,
 	applyNodeChanges,
 	useNodesState,
 	useEdgesState,
-	Controls,
 	Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
@@ -29,17 +28,17 @@ const initialNodes = [
 // you could also use useMemo inside the component
 const nodeTypes = { textfieldV2: TextFieldV2Comp, button: ButtonComp };
 
-function Flow() {
+function ComponentFlow() {
 	const [nodes, setNodes] = useNodesState(initialNodes);
 	const [edges, setEdges] = useEdgesState([]);
 
-	useEffect(() => {
-		console.log('nodes', nodes);
-	}, [nodes]);
+	// React.useEffect(() => {
+	// 	console.log('nodes', nodes);
+	// }, [nodes]);
 
-	useEffect(() => {
-		console.log('edges', edges);
-	}, [edges]);
+	// React.useEffect(() => {
+	// 	console.log('edges', edges);
+	// }, [edges]);
 
 	const onClickButtonComp = (nodeId: any, _edges: any) => {
 		const isConnected = _edges.some((edge: any) => {
@@ -59,26 +58,26 @@ function Flow() {
 	};
 
 	function onClickButton() {
-		setNodes((nds: any) =>
-			nds.concat({
+		setNodes((nds: any) => {
+			return nds.concat({
 				id: 'node-2',
 				type: 'button',
 				position: { x: 0, y: 100 },
 				data: { onclick: onClickButtonComp },
-			}),
-		);
+			});
+		});
 	}
 
-	const onNodesChange = useCallback(
+	const onNodesChange = React.useCallback(
 		(changes: any) => setNodes((nds: any) => applyNodeChanges(changes, nds)),
 		[setNodes],
 	);
 
-	const onEdgesChange = useCallback(
+	const onEdgesChange = React.useCallback(
 		(changes: any) => setEdges((eds: any) => applyEdgeChanges(changes, eds)),
 		[setEdges],
 	);
-	const onConnect = useCallback(
+	const onConnect = React.useCallback(
 		(connection: any) => setEdges((eds: any) => addEdge(connection, eds)),
 		[setEdges],
 	);
@@ -86,8 +85,8 @@ function Flow() {
 	return (
 		<div
 			style={{
-				width: "100%",
-				height: "100%",
+				width: '100%',
+				height: '100%',
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
@@ -106,10 +105,10 @@ function Flow() {
 				nodeTypes={nodeTypes}
 				fitView
 			>
-        <Background />
+				<Background />
 			</ReactFlow>
 		</div>
 	);
 }
 
-export default Flow;
+export default ComponentFlow;
