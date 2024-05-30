@@ -5,6 +5,8 @@ import ReactFlow, {
 	applyNodeChanges,
 	useNodesState,
 	useEdgesState,
+	Controls,
+	Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
@@ -12,11 +14,7 @@ import TextFieldV2Comp from './TextField';
 import ButtonComp from './Button';
 import { Button } from '@midasit-dev/moaui';
 
-import './text-updater-node.css';
-
-const rfStyle = {
-	backgroundColor: '#B8CEFF',
-};
+// import './text-updater-node.css';
 
 const initialNodes = [
 	{
@@ -88,11 +86,12 @@ function Flow() {
 	return (
 		<div
 			style={{
-				width: 600,
-				height: 600,
+				width: "100%",
+				height: "100%",
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
+				flexDirection: 'column',
 			}}
 		>
 			<Button variant='contained' width='200px' color='normal' onClick={onClickButton}>
@@ -106,8 +105,9 @@ function Flow() {
 				onConnect={onConnect}
 				nodeTypes={nodeTypes}
 				fitView
-				style={rfStyle}
-			/>
+			>
+        <Background />
+			</ReactFlow>
 		</div>
 	);
 }

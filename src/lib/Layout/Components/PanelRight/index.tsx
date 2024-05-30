@@ -9,7 +9,7 @@ import { PropComponentLayerModifyValueState, SelectedLayerIdState } from '../../
 import ModButton from './ModButton';
 
 const App = () => {
-	const [showPanel, setShowPanel] = React.useState(true);
+	const [showPanel, setShowPanel] = React.useState(false);
 	const selectedLayerId = useRecoilValue(SelectedLayerIdState);
 
 	//Modify에 사용할 임시 저장공간을 가져온다.
@@ -25,7 +25,7 @@ const App = () => {
 			initial={{ x: 200, opacity: 0 }}
 			animate={{
 				x: showPanel ? 0 : 350 - (24 + 20 + 24),
-				opacity: showPanel ? 1 : 0.6,
+				opacity: 1
 			}}
 			className='fixed w-[350px] h-[calc(100vh-56px)] right-0 top-[56px] bg-gray-200 bg-opacity-90 p-6 box-border'
 			style={{ zIndex: zindex_components_panel }}
