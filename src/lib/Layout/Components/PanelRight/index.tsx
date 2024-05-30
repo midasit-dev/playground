@@ -25,7 +25,7 @@ const App = () => {
 			initial={{ x: 200, opacity: 0 }}
 			animate={{
 				x: showPanel ? 0 : 350 - (24 + 20 + 24),
-				opacity: 1
+				opacity: 1,
 			}}
 			className='fixed w-[350px] h-[calc(100vh-56px)] right-0 top-[56px] bg-gray-200 bg-opacity-90 p-6 box-border'
 			style={{ zIndex: zindex_components_panel }}
