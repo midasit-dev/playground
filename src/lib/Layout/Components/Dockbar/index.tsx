@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
 	LayersState,
@@ -17,6 +17,7 @@ import SpacingControl from './SpacingControl';
 import More from './More';
 import Tag from './Tag';
 import UndoRedo from './UndoRedo';
+import Canvas from './Canvas';
 import { Layer, Layers } from '../../../Common/types';
 
 const App = (props: { Undo: any; Redo: any }) => {
@@ -28,6 +29,29 @@ const App = (props: { Undo: any; Redo: any }) => {
 	const [guideBoxProps, setGuideBoxProps] = useRecoilState(SelectedLayerGuideBoxPropsState);
 
 	const [useDockbar, setUseDockbar] = useRecoilState(UseDockbarState);
+
+	const [divWidth, setDivWidth] = React.useState(0);
+
+	React.useLayoutEffect(() => {
+		const updateWidth = () => {
+			const dockbarRootDiv = document.getElementById('dockbar_root_div');
+			if (dockbarRootDiv) {
+				// Use setTimeout to wait for the next render cycle
+				setTimeout(() => {
+					const width = dockbarRootDiv.offsetWidth;
+					setDivWidth(width);
+				}, 500); // Adjust delay as needed
+			}
+		};
+
+		updateWidth();
+
+		// Re-calculate width on window resize
+		window.addEventListener('resize', updateWidth);
+
+		return () => window.removeEventListener('resize', updateWidth);
+	}, []);
+
 	//선택된 Layer Id가 변경될 경우, guideBoxProps를 초기화
 	useEffect(() => {
 		if (selectedLayerId !== null) {
@@ -68,38 +92,45 @@ const App = (props: { Undo: any; Redo: any }) => {
 	}, [useDockbar]);
 
 	return (
-		<motion.div
-			className='w-[690px] h-24 bottom-20 left-1/2 -ml-[345px] py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center'
-			style={{ zIndex: zindex_dockbar }}
-			initial={{ y: 100, opacity: 0 }}
-			animate={{
-				y: 0,
-				opacity: 1,
-				backgroundColor: selectedLayerId ? '#0786c8' : '#62baf3',
-			}}
-		>
-			<div
-				className='w-auto space-x-8 flex flex-row items-center'
-				style={{
-					pointerEvents: selectedLayerId ? 'auto' : 'none',
-					opacity: selectedLayerId ? 1 : 0.6,
+		<AnimatePresence>
+			<motion.div
+				id={'dockbar_root_div'}
+				className={`w-auto h-24 bottom-10 left-1/2 ${
+					divWidth > 0 ? `-ml-[${divWidth / 2}px]` : ''
+				} py-7 px-14 rounded-md shadow-lg box-border fixed space-x-10 flex flex-row items-center`}
+				style={{ zIndex: zindex_dockbar }}
+				initial={{ opacity: 0 }}
+				animate={{
+					y: 0,
+					opacity: divWidth > 0 ? 1 : 0,
+					backgroundColor: '#181818',
 				}}
+				transition={{ duration: 0.5 }}
 			>
-				<RowColumnToggle />
-				<SpacingControl />
-				<UndoRedo Undo={props.Undo} Redo={props.Redo} />
-				<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
-				<div className='relative w-auto items-center'>
-					<CenterToggle />
+				<div
+					className='w-auto space-x-8 flex flex-row items-center'
+					style={{
+						pointerEvents: 'auto',
+						opacity: 1,
+					}}
+				>
+					<Canvas />
+					<RowColumnToggle />
+					<SpacingControl />
+					<UndoRedo Undo={props.Undo} Redo={props.Redo} />
+					<div className='border border-pg-blue-medium w-[1px] h-[30px]' />
+					<div className='relative w-auto items-center'>
+						<CenterToggle />
+					</div>
+					<div className='relative w-auto items-center'>
+						<More />
+					</div>
+					<div className='relative w-auto items-center'>
+						<Tag />
+					</div>
 				</div>
-				<div className='relative w-auto items-center'>
-					<More />
-				</div>
-				<div className='relative w-auto items-center'>
-					<Tag />
-				</div>
-			</div>
-		</motion.div>
+			</motion.div>
+		</AnimatePresence>
 	);
 };
 
